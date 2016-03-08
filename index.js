@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 14:34:31
+ * @Last Modified time: 2016-03-08 14:54:42
  */
 
 import koa from "koa";
@@ -26,9 +26,9 @@ app.use(middlewares.page);
 app.use(middlewares.view);
 app.use(middlewares.index);
 
-app.use(routes['admin.user'].routes());
-app.use(routes['admin.oauth'].routes());
-app.use(routes['api.user'].routes());
-app.use(routes.auth.routes());
+app.use(routes.admin.user.routes());
+app.use(routes.admin.oauth.routes());
+app.use(routes.api.user.routes());
+app.use(routes.public.user.routes());
 
 app.listen(3000, () => console.log('server listen 3000'));

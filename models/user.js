@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-02-26 13:48:17
+* @Last Modified time: 2016-03-08 15:23:56
 */
 
 'use strict';
@@ -101,6 +101,12 @@ module.exports = (sequelize, DataTypes) => {
         avatar: {
             type: DataTypes.BLOB,
             allowNull: true
+        },
+        gender: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            // 0 is man 1 is girl
+            defaultValue: false
         }
     }, {
         associate: (models) => {

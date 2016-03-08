@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-02-29 16:16:06
+* @Last Modified time: 2016-03-08 15:06:57
 */
 
 'use strict';
@@ -49,17 +49,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         callback_url: {
-            type: DataTypes.STRING(512),
-            allowNull: false,
-            defaultValue: "",
-            validate: {
-                len: {
-                    args: [1, 512],
-                    msg: '长度必须为1-512位'
-                }
-            }
-        },
-        hook_url: {
             type: DataTypes.STRING(512),
             allowNull: false,
             defaultValue: "",
