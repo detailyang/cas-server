@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 11:14:52
+ * @Last Modified time: 2016-03-08 11:18:06
  */
 
 import session from "koa-session2";
@@ -82,12 +82,12 @@ app.use(async (ctx, next) => {
 app.use(convert(views(`${__dirname}/views`)))
 
 app.use(async (ctx, next) => {
-  ctx.render = co.wrap(ctx.render.bind(ctx))
-  await next()
-})
+  ctx.render = co.wrap(ctx.render.bind(ctx));
+  await next();
+});
 
 // static
-app.use(convert(koastatic(`${__dirname}/static`)))
+app.use(convert(koastatic(`${__dirname}/static`)));
 
 // record log
 app.use(async (ctx, next) => {
@@ -107,7 +107,7 @@ app.use(async (ctx, next) => {
     ctx.request.page = page;
     ctx.request.per_page = per_page;
     await next();
-})
+});
 
 const routes = require('./routes');
 
@@ -117,7 +117,7 @@ app.use(async (ctx, next) => {
        await ctx.render('index.html')
     }
     await next();
-})
+});
 
 app.use(routes.admin.routes());
 app.use(routes.auth.routes());
