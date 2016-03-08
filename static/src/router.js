@@ -59,5 +59,4 @@ export default Backbone.Router.extend({
             node || this.app
         )
     }
-
 })

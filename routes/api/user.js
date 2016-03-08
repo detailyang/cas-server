@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 14:50:48
+ * @Last Modified time: 2016-03-08 15:22:52
  */
 
 'use strict'
@@ -19,14 +19,13 @@ const router = koarouter({
 module.exports = router;
 
 router.get('/self', async(ctx, next) => {
-    if (!ctx.session) {
-        ctx.return['data']['value'] = {
-            id: 0,
-            username: 'nobody',
-            is_admin: false
-        };
-    } else {
-        ctx.return['data']['value'] = ctx.session;
-    }
+    const user = await models['user'].findOne({
+        attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+        where: {
+            is_delete: false,
+            id: ctx.params.id
+        }
+    })
+    ctx.return['data']['value'] = user
     ctx.body = ctx.return;
 })
