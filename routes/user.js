@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 14:07:30
+ * @Last Modified time: 2016-03-08 14:19:49
  */
 
 'use strict'
@@ -19,7 +19,8 @@ router.get('/self', async(ctx, next) => {
     if (!ctx.session) {
         ctx.return['data']['value'] = {
             id: 0,
-            username: 'nobody'
+            username: 'nobody',
+            is_admin: false
         };
     } else {
         ctx.return['data']['value'] = ctx.session;
