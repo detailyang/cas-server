@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-02 15:21:55
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-02 16:34:58
+ * @Last Modified time: 2016-03-08 16:58:13
  */
 
 'use strict';
@@ -23,9 +23,6 @@ module.exports = {
         loaders: [{
             test: /\.css$/,
             loaders: ['style', 'css']
-        }, {
-            test: /\.scss$/,
-            loaders: ['style', 'css', 'sass']
         }, {
             test: /\.jsx?$/,
             exclude: /node_modules/,

@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 15:23:56
+* @Last Modified time: 2016-03-08 17:27:13
 */
 
 'use strict';
@@ -42,9 +42,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: "",
             validate: {
-                is: {
-                    args: /^[\u4e00-\u9fa5]+$/,
-                    msg: '必须为汉字'
+                len: {
+                    args: [1, 128],
+                    msg: '长度必须为1-128位'
                 }
             }
         },

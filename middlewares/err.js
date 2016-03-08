@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-03-08 12:04:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 13:30:05
+* @Last Modified time: 2016-03-08 17:22:20
 */
 
 'use strict';
@@ -16,14 +16,11 @@ module.exports = async (ctx, next) => {
     } catch (err) {
         console.log(err);
         if (err instanceof sequelize.ValidationError) {
-            const errors = [];
+            const errors = {};
             for (let e in err.errors) {
-                errors.push({
-                    field:err.errors[e].path,
-                    msg: err.errors[e].message
-                });
+                errors[err.errors[e].path] = err.errors[e].message
             }
-            ctx.return['data']['value'] = errors;
+            ctx.return['data']['errors'] = errors;
         } else if (err instanceof sequelize.DatabaseError
                 || err instanceof ReferenceError
                 || err instanceof TypeError
