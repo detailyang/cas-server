@@ -2,12 +2,12 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-07 21:59:25
+ * @Last Modified time: 2016-03-08 14:07:30
  */
 
 'use strict'
 const router = require('koa-router')({
-    prefix: '/api/users'
+    prefix: '/users'
 })
 const sequelize = require('sequelize')
 const models = require('../models')

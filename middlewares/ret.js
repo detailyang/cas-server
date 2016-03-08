@@ -2,11 +2,12 @@
 * @Author: detailyang
 * @Date:   2016-03-08 11:56:01
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 11:59:28
+* @Last Modified time: 2016-03-08 13:30:20
 */
 
 'use strict';
 import utils from "../utils";
+
 
 module.exports = async (ctx, next) => {
     ctx.return = {
