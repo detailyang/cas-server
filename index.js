@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 11:10:19
+ * @Last Modified time: 2016-03-08 11:14:52
  */
 
 import session from "koa-session2";
@@ -62,7 +62,7 @@ app.use(async (ctx, next) => {
                 || err instanceof ReferenceError
                 || err instanceof TypeError
                 || err instanceof sequelize.ConnectionRefusedError
-                || err instanceof sequelize.SequelizeConnectionError
+                || err instanceof sequelize.ConnectionError
             ) {
             // production record log
             ctx.return['code'] = utils.return.getCode('servererror');
