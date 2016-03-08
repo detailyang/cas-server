@@ -2,23 +2,26 @@
 * @Author: detailyang
 * @Date:   2016-03-07 19:59:56
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 14:31:14
+* @Last Modified time: 2016-03-08 14:50:38
 */
 
 'use strict';
-const router = require('koa-router')({
+import koarouter from "koa-router";
+import sequelize from "sequelize";
+import models from "../../models";
+import config from "../../config";
+import utils from "../../utils";
+
+
+const router = koarouter({
     prefix: '/admin/users'
-})
-const sequelize = require('sequelize')
-const models = require('../models')
-const config = require('../config')
-const utils = require('../utils')
-module.exports = router
+});
+module.exports = router;
 
 router.get('/', async (ctx, next) => {
     const where = {
         is_delete: false
-    }
+    };
 
     // it's not necessary to await in parallel for performance
     const users = await models['user'].findAll({

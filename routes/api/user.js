@@ -2,18 +2,21 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 14:29:59
+ * @Last Modified time: 2016-03-08 14:50:48
  */
 
 'use strict'
-const router = require('koa-router')({
+import koarouter from "koa-router";
+import sequelize from "sequelize";
+import models from "../../models";
+import config from "../../config";
+import utils from "../../utils";
+
+
+const router = koarouter({
     prefix: '/api/users'
-})
-const sequelize = require('sequelize')
-const models = require('../models')
-const config = require('../config')
-const utils = require('../utils')
-module.exports = router
+});
+module.exports = router;
 
 router.get('/self', async(ctx, next) => {
     if (!ctx.session) {
