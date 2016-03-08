@@ -5,20 +5,20 @@
  * @Last Modified time: 2016-03-08 12:55:36
  */
 
-import koa from "koa";
-import convert from "koa-convert";
-import bodyParser from "koa-bodyparser";
-import config from "./config" ;
-import proxy from "koa-proxy";
+import koa from 'koa';
+import convert from 'koa-convert';
+import bodyParser from 'koa-bodyparser';
+import config from './config';
+import proxy from 'koa-proxy';
 
-import middlewares from "./middlewares";
-import routes from "./routes";
+import middlewares from './middlewares';
+import routes from './routes';
 
 const app = new koa();
 if (process.env.NODE_ENV === 'dev') {
     app.use(convert(proxy({
-      host:'http://0.0.0.0:8080/build',
-      match: /^\/build\//
+        host: 'http://0.0.0.0:8080/build',
+        match: /^\/build\//
     })));
 }
 
@@ -36,4 +36,4 @@ app.use(routes.auth.routes());
 app.use(routes.user.routes());
 app.use(routes.oauth.routes());
 
-app.listen(3000, () => console.log("server listen 3000"));
+app.listen(3000, () => console.log('server listen 3000'));
