@@ -51,6 +51,7 @@ export default React.createClass({
             <Modal
                 title={this.props.id ? '编辑' : '新建'}
                 visible={this.props.visible}
+                confirmLoading={this.state.confirmLoading}
                 onOk={this.handleEditModalOk}
                 onCancel={this.handleEditModalCancel}>
                 <Form>

@@ -77,7 +77,8 @@ export default React.createClass({
             {title: 'id', dataIndex: 'id', key: 'id'},
             {title: '头像', dataIndex: 'avatar', key: 'avatar'},
             {title: '用户名', dataIndex: 'username', key: 'username'},
-            {title: '真实姓名', dataIndex: 'realname', key: 'realname'},
+            {title: '真实姓名', dataIndex: 'chinesename', key: 'chinesename'},
+            {title: '花名', dataIndex: 'aliasname', key: 'aliasname'},
             {title: 'email', dataIndex: 'email', key: 'email'},
             {title: '手机', dataIndex: 'mobile', key: 'mobile'},
             {title: '操作', dataIndex: 'x', key: 'x'}
