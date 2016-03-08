@@ -5,21 +5,18 @@ import {Menu} from 'antd'
 export default React.createClass({
 
     getInitialState() {
-        console.log(this.props)
         return {
             current: this.props.current
         }
     },
 
     componentWillReceiveProps(nextProps) {
-        console.log('hehe', nextProps.current)
         this.setState({
             current: nextProps.current
         })
     },
 
     render() {
-        console.log('render')
         return (
             <Menu
                 onClick={this.handleClick}
