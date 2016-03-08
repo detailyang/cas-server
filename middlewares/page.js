@@ -2,11 +2,12 @@
 * @Author: detailyang
 * @Date:   2016-03-08 12:02:12
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 12:51:21
+* @Last Modified time: 2016-03-08 13:30:18
 */
 
 'use strict';
 import config from "../config";
+
 
 module.exports = async (ctx, next) => {
     const page = ctx.query.page || 1;
