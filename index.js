@@ -31,4 +31,4 @@ app.use(routes.admin.oauth.routes());
 app.use(routes.api.user.routes());
 app.use(routes.public.user.routes());
 
-app.listen(3000, () => console.log("server listen 3000"));
+app.listen(3000, () => console.log('server listen 3000'));
