@@ -20,9 +20,7 @@ module.exports = async (ctx, next) => {
             for (let e in err.errors) {
                 errors[err.errors[e].path] = err.errors[e].message
             }
-            ctx.return['data']['value'] = {
-                'errors': errors;
-            };
+            ctx.return['data']['errors'] = errors;
         } else if (err instanceof sequelize.DatabaseError
                 || err instanceof ReferenceError
                 || err instanceof TypeError
