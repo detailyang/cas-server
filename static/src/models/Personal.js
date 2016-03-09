@@ -18,7 +18,7 @@ export default Backbone.Model.extend({
 
     fetch() {
         return ajax({
-            url: `/admin/users/${this.get('id')}/`
+            url: `/api/users/self/`
         }).done((data) => {
             this.set(data.value)
             this.trigger('sync')
@@ -29,7 +29,7 @@ export default Backbone.Model.extend({
 
     save() {
         const id = this.get('id')
-        const url = `/admin/users/${ id ? id + '/' : ''}`
+        const url = `/api/users/self`
 
         return ajax({
             url: url,

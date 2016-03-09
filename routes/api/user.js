@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 15:22:52
+ * @Last Modified time: 2016-03-09 19:41:43
  */
 
 'use strict'
@@ -20,10 +20,10 @@ module.exports = router;
 
 router.get('/self', async(ctx, next) => {
     const user = await models['user'].findOne({
-        attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+        attributes: ['id', 'username', 'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
         where: {
             is_delete: false,
-            id: ctx.params.id
+            id: ctx.session.id
         }
     })
     ctx.return['data']['value'] = user

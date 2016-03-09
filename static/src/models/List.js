@@ -20,9 +20,7 @@ export default Backbone.Model.extend({
         // keyword的搜索字段
         field: 'name',
         // 搜索关键字
-        keyword: '',
-        sort_field: 'id',
-        sort_order: 'descend'
+        keyword: ''
     },
 
     fetch() {
@@ -79,7 +77,7 @@ export default Backbone.Model.extend({
 
         return ajax({
             url: url,
-            type: 'POST',
+            type: item.id ? 'PUT' : 'POST',
             data: item
         })
     },

@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2015-02-19 14:09:05
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 11:08:02
+* @Last Modified time: 2016-03-09 17:23:15
 */
 
 'use strict';
@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'dev') {
     };
     config['password'] = {
         'default': process.env.CAS_PASSWORD_DEFAULT || 'password',
+        'bcryptlength': 15
     }
 } else if (process.env.NODE_ENV === 'test'){
 } else {

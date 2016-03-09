@@ -1,3 +1,39 @@
 #app {
     padding: 20px;
 }
+
+.text-rigth {
+    text-align: right;
+}
+
+.gray {
+    filter: grayscale(1) opacity(.2);
+    -webkit-filter: grayscale(1) opacity(.4);
+}
+
+.green-point {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: #00CC33;
+}
+
+.black-point {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background: #000000;
+}
+
+.box {
+    border: 1px solid #E9E9E9;
+    border-radius: 6px;
+    display: inline-block;
+    position: relative;
+    padding: 25px;
+    margin: 0 0 16px 0;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+}

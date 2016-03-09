@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 17:27:13
+* @Last Modified time: 2016-03-09 10:55:25
 */
 
 'use strict';
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         mobile: {
             type: DataTypes.STRING(18),
-            allowNull: false,
+            allowNull: true,
             defaultValue: "",
             validate: {
                 len: {
@@ -65,7 +65,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         email: {
             type: DataTypes.STRING(64),
-            allowNull: false,
+            allowNull: true,
             defaultValue: "",
             validate: {
                 isEmail: {

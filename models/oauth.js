@@ -2,14 +2,14 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 15:06:57
+* @Last Modified time: 2016-03-09 16:08:39
 */
 
 'use strict';
 const validator = require('../utils')['validator'];
 
 module.exports = (sequelize, DataTypes) => {
-    var OauthClient = sequelize.define('oauth_client', {
+    var Oauth = sequelize.define('oauth', {
         name: {
                 type: DataTypes.STRING(128),
                 allowNull: false,
@@ -48,6 +48,17 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
+        desc: {
+            type: DataTypes.STRING(512),
+            allowNull: false,
+            defaultValue: "",
+            validate: {
+                len: {
+                    args: [1, 512],
+                    msg: '长度必须为1-512位'
+                }
+            }
+        },
         callback_url: {
             type: DataTypes.STRING(512),
             allowNull: false,
@@ -58,6 +69,11 @@ module.exports = (sequelize, DataTypes) => {
                     msg: '长度必须为1-512位'
                 }
             }
+        },
+        is_admin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: false
         },
         is_delete: {
             type: DataTypes.BOOLEAN,
@@ -72,5 +88,5 @@ module.exports = (sequelize, DataTypes) => {
         underscored: true,
     });
 
-    return OauthClient;
+    return Oauth;
 }

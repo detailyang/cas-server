@@ -43,7 +43,6 @@ export default React.createClass({
     render() {
         const formData = this.state.formData
         const formErrors = this.state.formErrors
-        console.log(formErrors)
         const errorStatus = (field) => formErrors[field] ? 'error' : ''
         const help = (field) => formErrors[field]
 
@@ -62,6 +61,24 @@ export default React.createClass({
                             onChange={this.setValue.bind(this, 'username')} />
                     </Form.Item>
                     <Row>
+                    <Col span="11">
+                    <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
+                        <RadioGroup value={formData.gender + ''} onChange={this.setValue.bind(this, 'gender')}>
+                            <Radio value="0">男</Radio>
+                            <Radio value="1">女</Radio>
+                        </RadioGroup>
+                    </Form.Item>
+                    </Col>
+                    <Col span="11" offset="2">
+                    <Form.Item label="状态：" validateStatus={errorStatus('is_delete')} help={help('is_delete')}>
+                        <RadioGroup value={formData.is_delete ? 1 : 0} onChange={this.setValue.bind(this, 'is_delete')}>
+                            <Radio value={0}>在职</Radio>
+                            <Radio value={1}>离职</Radio>
+                        </RadioGroup>
+                    </Form.Item>
+                    </Col>
+                    </Row>
+                    <Row>
                         <Col span="11">
                             <Form.Item label="真实姓名：" validateStatus={errorStatus('chinesename')} help={help('chinesename')}>
                                 <Input
@@ -77,22 +94,22 @@ export default React.createClass({
                             </Form.Item>
                         </Col>
                     </Row>
+                    <Row>
+                    <Col span="11">
                     <Form.Item label="email：" validateStatus={errorStatus('email')} help={help('email')}>
                         <Input
                             value={formData.email}
                             onChange={this.setValue.bind(this, 'email')} />
                     </Form.Item>
-                    <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
-                        <RadioGroup value={formData.gender + ''} onChange={this.setValue.bind(this, 'gender')}>
-                            <Radio value="0">男</Radio>
-                            <Radio value="1">女</Radio>
-                        </RadioGroup>
-                    </Form.Item>
+                    </Col>
+                    <Col span="11" offset="2">
                     <Form.Item label="手机号：" validateStatus={errorStatus('mobile')} help={help('mobile')}>
                         <Input
                             value={formData.mobile}
                             onChange={this.setValue.bind(this, 'mobile')} />
                     </Form.Item>
+                    </Col>
+                    </Row>
                     <Form.Item label="Key：" validateStatus={errorStatus('key')} help={help('key')}>
                         <Input
                             value={formData.key}

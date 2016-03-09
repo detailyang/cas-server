@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-03-07 19:59:56
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 17:28:14
+* @Last Modified time: 2016-03-09 17:24:26
 */
 
 'use strict';
@@ -19,9 +19,37 @@ const router = koarouter({
 module.exports = router;
 
 router.get('/', async (ctx, next) => {
-    const where = {
-        is_delete: false
-    };
+    let is_delete = ctx.request.query['is_delete[]'] || [];
+    const keyword = ctx.request.query.keyword;
+    const where = {};
+
+    if (is_delete.length > 0) {
+        if (!(is_delete instanceof Array)) {
+            is_delete = [is_delete];
+        }
+        where['is_delete'] = {
+            $in: is_delete
+        }
+    }
+    if (keyword.length > 0) {
+       where['$or'] = [
+            {
+                username: {
+                    $like: `%${keyword}%`
+                },
+            },
+            {
+                chinesename: {
+                    $like: `%${keyword}%`
+                },
+            },
+            {
+                aliasname: {
+                    $like: `%${keyword}%`
+                },
+            },
+       ];
+    }
 
     // it's not necessary to await in parallel for performance
     const users = await models['user'].findAll({
@@ -39,12 +67,12 @@ router.get('/', async (ctx, next) => {
         total: count.dataValues.count,
         per_page: ctx.request.per_page,
         page: ctx.request.page
-    }
-    ctx.body = ctx.return
+    };
+    ctx.body = ctx.return;
 })
 
 router.post('/', async (ctx, next) => {
-    var salt = utils.password.genSalt(15)
+    var salt = utils.password.genSalt(config.password.bcryptlength)
     if (!ctx.request.body.password) {
         ctx.request.body.password = utils.password.encrypt(
             config.password.default, salt)
@@ -52,24 +80,20 @@ router.post('/', async (ctx, next) => {
         ctx.request.body.password = utils.password.encrypt(
             ctx.request.body.password, salt)
     }
-    const user = await models['user'].create(ctx.request.body)
-    ctx.return['data'] = {
-        value: null
-    }
-    ctx.body = ctx.return
+    const user = await models['user'].create(ctx.request.body);
+    ctx.body = ctx.return;
 })
 
 router.get('/:id(\\d+)', async (ctx, next) => {
     const user = await models['user'].findOne({
-        attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+        attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'key', 'is_delete'],
         where: {
-            is_delete: false,
             id: ctx.params.id
         }
     })
 
-    ctx.return['data']['value'] = user
-    ctx.body = ctx.return
+    ctx.return['data']['value'] = user;
+    ctx.body = ctx.return;
 })
 
 router.delete('/:id(\\d+)', async (ctx, next) => {
@@ -80,20 +104,19 @@ router.delete('/:id(\\d+)', async (ctx, next) => {
             id: ctx.params.id
         }
     })
-    ctx.body = ctx.return
+    ctx.body = ctx.return;
 })
 
 router.put('/:id(\\d+)', async (ctx, next) => {
-    delete ctx.request.body.username
-    if (ctx.request.body.password) {
-        var salt = utils.password.genSalt(12)
-        ctx.request.body.password = utils.password.encrypt(
-            ctx.request.body.password, salt)
+    if (!ctx.request.body.reset) {
+        return;
     }
+    var salt = utils.password.genSalt(config.password.bcryptlength);
+    ctx.request.body.password = utils.password.encrypt(config.password.default, salt)
     const user = await models['user'].update(ctx.request.body, {
         where: {
             id: ctx.params.id
         }
-    })
-    ctx.body = ctx.return
+    });
+    ctx.body = ctx.return;
 })
