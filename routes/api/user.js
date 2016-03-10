@@ -2,17 +2,21 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 16:53:54
+ * @Last Modified time: 2016-03-10 20:28:25
  */
 
 'use strict'
 import koarouter from "koa-router";
 import sequelize from "sequelize";
+import convert from "koa-convert";
+import koaBody from "koa-body";
+
 import models from "../../models";
 import config from "../../config";
 import utils from "../../utils";
 
 
+const koabody = koaBody({multipart: true})
 const router = koarouter({
     prefix: '/api/users'
 });
@@ -60,6 +64,34 @@ router.get('/self/avatar', async(ctx, next) => {
     ctx.response.set('Cache-Control', `public, max-age=${config.avatar.cache}`);
     ctx.body = user.avatar;
 })
+
+import fs from "fs";
+
+router.post('/self/avatar', convert(koabody), async (ctx, next) => {
+    if (!ctx.request.body.files.avatar) {
+        throw new Error('please upload avatar');
+    }
+    const avatar = ctx.request.body.files.avatar;
+
+    if (avatar.size >= config.avatar.maxsize) {
+        throw new Error('avatar too large');
+    }
+    const buffer = await new Promise((resolve, reject) => {
+        fs.readFile(avatar.path, (err, data) => {
+            if (err) return reject(err);
+            return resolve(data)
+        })
+    })
+    const rv = await models['user'].update({
+        avatar: buffer
+    }, {
+        where: {
+            id: ctx.session.id
+        }
+    });
+
+    ctx.body = ctx.return;
+});
 
 router.post('/self/dynamicpassword', async(ctx, next) => {
     const dp = ctx.request.body.dynamicpassword;

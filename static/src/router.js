@@ -24,32 +24,40 @@ export default Backbone.Router.extend({
         this.app = document.getElementById('app')
 
         this.show(Header, null, this.header)
-        this.show(Nav, {current: 'user'}, this.nav)
+        this.show(Nav, {
+            current: 'user'
+        }, this.nav)
     },
 
     user() {
         this.show(User)
-        this.show(Nav, {current: 'user'}, this.nav)
+        this.show(Nav, {
+            current: 'user'
+        }, this.nav)
     },
 
     oauth() {
         this.show(OAuth)
-        this.show(Nav, {current: 'oauth'}, this.nav)
+        this.show(Nav, {
+            current: 'oauth'
+        }, this.nav)
     },
 
     personal() {
         this.show(Personal)
-        this.show(Nav, {current: 'personal'}, this.nav)
+        this.show(Nav, {
+            current: 'personal'
+        }, this.nav)
     },
 
     index() {
-        this.navigate('!/user', {trigger: true, replace: true})
+        this.navigate('!/user', {
+            trigger: true,
+            replace: true
+        })
     },
 
     show(components, props, node) {
-        ReactDOM.render(
-            React.createElement(components, props),
-            node || this.app
-        )
+        ReactDOM.render(React.createElement(components, props), node || this.app)
     }
 })

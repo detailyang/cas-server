@@ -1,9 +1,9 @@
 /*
-* @Author: detailyang
-* @Date:   2016-02-18 19:34:42
-* @Last Modified by:   detailyang
-* @Last Modified time: 2016-02-29 10:32:59
-*/
+ * @Author: detailyang
+ * @Date:   2016-02-18 19:34:42
+ * @Last Modified by:   detailyang
+ * @Last Modified time: 2016-02-29 10:32:59
+ */
 
 'use strict';
 var validator = require('validator');

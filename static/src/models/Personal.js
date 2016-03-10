@@ -14,7 +14,8 @@ export default Backbone.Model.extend({
         is_delete: false,
         gender: '0',
         key: '',
-        notp: ''
+        notp: '',
+        upload_url: '/api/users/self/avatar'
     },
 
     fetch() {
@@ -62,5 +63,9 @@ export default Backbone.Model.extend({
                 dynamicpassword: password
             }
         })
+    },
+
+    upload(a,b,c,d) {
+        console.log(a,b,c,d);
     }
 })

@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2015-02-19 14:09:05
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-10 14:15:45
+* @Last Modified time: 2016-03-10 20:25:49
 */
 
 'use strict';
@@ -36,7 +36,8 @@ if (process.env.NODE_ENV === 'dev') {
     };
     config['avatar'] = {
         width: 100,
-        cache: 3 * 24 * 60 * 60
+        cache: 3 * 24 * 60 * 60,
+        maxsize: 1073741824
     };
     config['notp'] = {
         'label': process.env.CAS_NOTP_LABEL || 'cas',

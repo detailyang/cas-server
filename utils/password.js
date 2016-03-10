@@ -1,9 +1,9 @@
 /*
-* @Author: detailyang
-* @Date:   2016-02-26 13:53:51
-* @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-10 14:17:28
-*/
+ * @Author: detailyang
+ * @Date:   2016-02-26 13:53:51
+ * @Last Modified by:   detailyang
+ * @Last Modified time: 2016-03-10 14:17:28
+ */
 
 'use strict';
 import bcrypt from 'bcrypt';
@@ -20,13 +20,13 @@ function encrypt(plaintext, salt) {
     return bcrypt.hashSync(plaintext, salt);
 }
 
-function otpqrcode(key,label) {
+function otpqrcode(key, label) {
     // encoded will be the secret key, base32 encoded
     var encoded = base32.encode(key);
     label = label || 'cas';
 
     // Google authenticator doesn't like equal signs
-    var encodedForGoogle = encoded.toString().replace(/=/g,'');
+    var encodedForGoogle = encoded.toString().replace(/=/g, '');
 
     // to create a URI for a qr code (change totp to hotp if using hotp)
     var uri = 'otpauth://totp/' + label + '?secret=' + encodedForGoogle;
