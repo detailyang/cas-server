@@ -14,15 +14,15 @@ import config from "../../config";
 import utils from "../../utils";
 
 
-const router = koarouter({
+let router = koarouter({
     prefix: '/admin/users'
 });
 module.exports = router;
 
 router.get('/', async (ctx, next) => {
     let is_delete = ctx.request.query['is_delete[]'] || [];
-    const keyword = ctx.request.query.keyword;
-    const where = {};
+    let keyword = ctx.request.query.keyword;
+    let where = {};
 
     if (is_delete.length > 0) {
         if (!(is_delete instanceof Array)) {
@@ -53,13 +53,13 @@ router.get('/', async (ctx, next) => {
     }
 
     // it's not necessary to await in parallel for performance
-    const users = await models['user'].findAll({
+    let users = await models['user'].findAll({
         attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'is_delete'],
         where: where,
         offset: (ctx.request.page - 1) * ctx.request.per_page,
         limit: ctx.request.per_page
     })
-    const count = await models['user'].findOne({
+    let count = await models['user'].findOne({
         attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']],
         where: where
     })
@@ -81,17 +81,17 @@ router.post('/', async (ctx, next) => {
         ctx.request.body.password = utils.password.encrypt(
             ctx.request.body.password, salt)
     }
-    const width = ctx.request.query.width || config.avatar.width;
-    const avatar = await utils.avatar.generate(uuid.v1(),
+    let width = ctx.request.query.width || config.avatar.width;
+    let avatar = await utils.avatar.generate(uuid.v1(),
         ctx.request.gender ? 'female' : 'male', width);
 
     ctx.request.body.avatar = avatar;
-    const user = await models['user'].create(ctx.request.body);
+    let user = await models['user'].create(ctx.request.body);
     ctx.body = ctx.return;
 })
 
 router.get('/:id(\\d+)', async (ctx, next) => {
-    const user = await models['user'].findOne({
+    let user = await models['user'].findOne({
         attributes: ['id', 'username', 'chinesename', 'aliasname', 'mobile', 'email', 'key', 'is_delete'],
         where: {
             id: ctx.params.id
@@ -103,7 +103,7 @@ router.get('/:id(\\d+)', async (ctx, next) => {
 });
 
 router.delete('/:id(\\d+)', async (ctx, next) => {
-    const user = await models['user'].update({
+    let user = await models['user'].update({
         is_delete: true
     }, {
         where: {
@@ -117,9 +117,9 @@ router.put('/:id(\\d+)/staticpassword', async (ctx, next) => {
     if (!ctx.request.body.reset) {
         return;
     }
-    const salt = utils.password.genSalt(config.password.bcryptlength);
+    let salt = utils.password.genSalt(config.password.bcryptlength);
     ctx.request.body.password = utils.password.encrypt(config.password.default, salt)
-    const user = await models['user'].update(ctx.request.body, {
+    let user = await models['user'].update(ctx.request.body, {
         where: {
             id: ctx.params.id
         }
@@ -131,7 +131,7 @@ router.put('/:id(\\d+)', async (ctx, next) => {
     delete ctx.request.body.username;
     delete ctx.request.body.password;
     delete ctx.request.body.id;
-    const user = await models['user'].update(ctx.request.body, {
+    let user = await models['user'].update(ctx.request.body, {
         where: {
             id: ctx.params.id
         }

@@ -25,8 +25,8 @@ export default Backbone.Model.extend({
     },
 
     save() {
-        const id = this.get('id')
-        const url = `/admin/oauths/${ id ? id + '/' : ''}`
+        let id = this.get('id')
+        let url = `/admin/oauths/${ id ? id + '/' : ''}`
 
         return ajax({
             url: url,

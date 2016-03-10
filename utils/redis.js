@@ -16,7 +16,7 @@ export default class RedisStore extends Store {
     }
 
     async get(sid) {
-        const data = await this.redis.get(`${this.key}:${sid}`);
+        let data = await this.redis.get(`${this.key}:${sid}`);
         return JSON.parse(data)
     }
 

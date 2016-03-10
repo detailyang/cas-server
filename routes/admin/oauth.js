@@ -15,14 +15,14 @@ import config from "../../config";
 import utils from "../../utils";
 
 
-const router = koarouter({
+let router = koarouter({
     prefix: '/admin/oauths'
 })
 module.exports = router
 
 router.get('/', async (ctx, next) => {
-    const keyword = ctx.request.query.keyword;
-    const where = {
+    let keyword = ctx.request.query.keyword;
+    let where = {
         is_delete: 0
     };
 
@@ -42,13 +42,13 @@ router.get('/', async (ctx, next) => {
     }
 
     // it's not necessary to await in parallel for performance
-    const ocs = await models['oauth'].findAll({
+    let ocs = await models['oauth'].findAll({
         attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback_url', 'is_admin'],
         where: where,
         offset: (ctx.request.page - 1) * ctx.request.per_page,
         limit: ctx.request.per_page
     })
-    const count = await models['oauth'].findOne({
+    let count = await models['oauth'].findOne({
         attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']],
         where: where
     })
@@ -63,7 +63,7 @@ router.get('/', async (ctx, next) => {
 
 router.post('/', async (ctx, next) => {
     ctx.request.body.secret = uuid.v1()
-    const oc = await models['oauth'].create(ctx.request.body)
+    let oc = await models['oauth'].create(ctx.request.body)
     ctx.return['data'] = {
         value: null
     }
@@ -72,7 +72,7 @@ router.post('/', async (ctx, next) => {
 
 router.put('/', async (ctx, next) => {
     delete request.body.secret
-    const oc = await models['oauth'].create(ctx.request.body)
+    let oc = await models['oauth'].create(ctx.request.body)
     ctx.return['data'] = {
         value: null
     }
@@ -80,7 +80,7 @@ router.put('/', async (ctx, next) => {
 })
 
 router.delete('/:id(\\d+)', async (ctx, next) => {
-    const oc = await models['oauth'].update({
+    let oc = await models['oauth'].update({
         is_delete: true
     }, {
         where: {
@@ -91,7 +91,7 @@ router.delete('/:id(\\d+)', async (ctx, next) => {
 })
 
 router.get('/:id(\\d+)', async (ctx, next) => {
-    const oc = await models['oauth'].findOne({
+    let oc = await models['oauth'].findOne({
         where: {
             is_delete: false,
             id: ctx.params.id
@@ -103,7 +103,7 @@ router.get('/:id(\\d+)', async (ctx, next) => {
 
 router.put('/:id(\\d+)', async (ctx, next) => {
     delete ctx.request.body.secret
-    const user = await models['oauth'].update(ctx.request.body, {
+    let user = await models['oauth'].update(ctx.request.body, {
         where: {
             id: ctx.params.id
         }

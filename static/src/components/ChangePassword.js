@@ -10,8 +10,8 @@ import React from 'react'
 import classNames from 'classnames'
 import zxcvbn from 'zxcvbn'
 
-const FormItem = Form.Item
-const noop = function() {}
+let FormItem = Form.Item
+let noop = function() {}
 
 export default Form.create()(React.createClass({
     getInitialState() {
@@ -69,7 +69,7 @@ export default Form.create()(React.createClass({
     },
 
     checkPass(rule, value, callback) {
-        const form = this.props.form;
+        let form = this.props.form;
         this.getPassStrenth(value, 'pass');
 
         if (form.getFieldValue('pass')) {
@@ -80,7 +80,7 @@ export default Form.create()(React.createClass({
     },
 
     checkPass2(rule, value, callback) {
-        const form = this.props.form;
+        let form = this.props.form;
         this.getPassStrenth(value, 'rePass');
 
         if (value && value !== form.getFieldValue('pass')) {
@@ -91,16 +91,16 @@ export default Form.create()(React.createClass({
     },
 
     renderPassStrengthBar(type) {
-        const strength = type === 'pass'
+        let strength = type === 'pass'
             ? this.state.passStrength
             : this.state.rePassStrength;
-        const classSet = classNames({
+        let classSet = classNames({
             'ant-pwd-strength': true,
             'ant-pwd-strength-low': strength === 'L',
             'ant-pwd-strength-medium': strength === 'M',
             'ant-pwd-strength-high': strength === 'H'
         });
-        const level = {
+        let level = {
             L: '低',
             M: '中',
             H: '高'
@@ -121,9 +121,9 @@ export default Form.create()(React.createClass({
     },
 
     render() {
-        const {getFieldProps} = this.props.form;
+        let {getFieldProps} = this.props.form;
 
-        const oldPassProps = getFieldProps('oldpass', {
+        let oldPassProps = getFieldProps('oldpass', {
             rules: [
                 {
                     required: true,
@@ -132,7 +132,7 @@ export default Form.create()(React.createClass({
                 }
             ]
         });
-        const passProps = getFieldProps('pass', {
+        let passProps = getFieldProps('pass', {
             rules: [
                 {
                     required: true,
@@ -143,7 +143,7 @@ export default Form.create()(React.createClass({
                 }
             ]
         });
-        const rePassProps = getFieldProps('rePass', {
+        let rePassProps = getFieldProps('rePass', {
             rules: [
                 {
                     required: true,
@@ -154,7 +154,7 @@ export default Form.create()(React.createClass({
                 }
             ]
         });
-        const formItemLayout = {
+        let formItemLayout = {
             labelCol: {
                 span: 6
             },
@@ -162,7 +162,7 @@ export default Form.create()(React.createClass({
                 span: 18
             }
         };
-        const style = {
+        let style = {
             'margin': '10px'
         }
 

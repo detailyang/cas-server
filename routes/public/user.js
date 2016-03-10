@@ -13,7 +13,7 @@ import config from "../../config";
 import utils from "../../utils";
 
 
-const router = koarouter({
+let router = koarouter({
     prefix: '/public/users'
 });
 module.exports = router;
@@ -22,7 +22,7 @@ router.post('/login', async (ctx, next) => {
     if (!ctx.request.body.password || !ctx.request.body.username) {
         throw new Error("password or username cannot be null")
     }
-    const user = await models['user'].findOne({
+    let user = await models['user'].findOne({
         attributes: ['id', 'password', 'is_admin'],
         where: {
             is_delete: false,

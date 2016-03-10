@@ -1,6 +1,6 @@
 import Antd from 'antd'
 
-const handleEditModalOk = function() {
+let handleEditModalOk = function() {
     this.model.set(this.state.formData)
     this.setState({confirmLoading: true})
 
@@ -9,7 +9,7 @@ const handleEditModalOk = function() {
             this.setState({confirmLoading: false})
         })
         .done(() => {
-            const msg = this.model.get('id') ? '编辑成功' : '创建成功'
+            let msg = this.model.get('id') ? '编辑成功' : '创建成功'
             Antd.message.success(msg)
             this.props.onOk()
         })
@@ -21,7 +21,7 @@ const handleEditModalOk = function() {
         })
 }
 
-const handleEditModalCancel = function() {
+let handleEditModalCancel = function() {
     this.props.onCancel()
 }
 

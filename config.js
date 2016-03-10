@@ -4,10 +4,7 @@
 * @Last Modified by:   detailyang
 * @Last Modified time: 2016-03-10 20:25:49
 */
-
-'use strict';
-
-var config = module.exports;
+let config = module.exports;
 
 config['paginator'] = {
     per_page: 30

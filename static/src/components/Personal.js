@@ -16,9 +16,9 @@ import EditModal from '../mixins/EditModal'
 import ChangePassword from '../components/ChangePassword'
 import DynamicPassword from '../components/DynamicPassword'
 
-const RadioGroup = Radio.Group
-const FormItem = Form.Item
-const noop = function() {}
+let RadioGroup = Radio.Group
+let FormItem = Form.Item
+let noop = function() {}
 
 export default React.createClass({
     mixins: [
@@ -40,13 +40,13 @@ export default React.createClass({
     },
 
     render() {
-        const formData = this.state.formData
-        const formErrors = this.state.formErrors
-        const errorStatus = (field) => formErrors[field]
+        let formData = this.state.formData
+        let formErrors = this.state.formErrors
+        let errorStatus = (field) => formErrors[field]
             ? 'error'
             : ''
-        const help = (field) => formErrors[field]
-        const formItemLayout = {
+        let help = (field) => formErrors[field]
+        let formItemLayout = {
             labelCol: {
                 span: 6
             },
@@ -54,7 +54,7 @@ export default React.createClass({
                 span: 14
             }
         };
-        const style = {
+        let style = {
             'margin': '10px'
         }
         return (
@@ -142,7 +142,7 @@ export default React.createClass({
         this.model.set(this.state.formData).save().always(() => {
             this.setState({confirmLoading: false})
         }).done(() => {
-            const msg = this.model.get('id')
+            let msg = this.model.get('id')
                 ? '编辑成功'
                 : '创建成功'
             Antd.message.success(msg)

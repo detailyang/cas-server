@@ -8,7 +8,7 @@ import Antd, {
     Icon,
     Popconfirm
 } from 'antd'
-const InputGroup = Input.Group
+let InputGroup = Input.Group
 
 import UserEditModal from '../components/UserEditModal'
 import ModelMixin from '../mixins/model'
@@ -80,9 +80,9 @@ export default React.createClass({
     },
 
     renderTable() {
-        const _this = this
-        const model = this.model
-        const columns = [
+        let _this = this
+        let model = this.model
+        let columns = [
             {
                 title: 'id',
                 dataIndex: 'id',
@@ -158,7 +158,7 @@ export default React.createClass({
                 }
             }
         ]
-        const pagination = {
+        let pagination = {
             total: model.get('total'),
             current: model.get('page'),
             pageSize: model.get('per_page'),

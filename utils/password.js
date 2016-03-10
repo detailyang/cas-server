@@ -5,14 +5,13 @@
  * @Last Modified time: 2016-03-10 14:17:28
  */
 
-'use strict';
 import bcrypt from 'bcrypt';
-import base32 from 'thirty-two'
+import base32 from 'thirty-two';
 import notp from 'notp';
 
 
 function check(plaintext, cipher) {
-    return bcrypt.compareSync(plaintext, cipher)
+    return bcrypt.compareSync(plaintext, cipher);
 }
 
 function encrypt(plaintext, salt) {
@@ -44,5 +43,5 @@ module.exports = {
     encrypt: encrypt,
     genSalt: bcrypt.genSaltSync,
     otpqrcode: otpqrcode,
-    otpcheck: otpcheck
+    otpcheck: otpcheck,
 };

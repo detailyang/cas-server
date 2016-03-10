@@ -5,16 +5,16 @@ import {
     Alert,
     Row,
     Col,
-    Modal
-} from 'antd'
-import React from 'react'
-import QRCode from 'qrcode.react'
+    Modal,
+} from 'antd';
+import React from 'react';
+import QRCode from 'qrcode.react';
 
-const FormItem = Form.Item
-const noop = function() {}
+const FormItem = Form.Item;
+const noop = () => {};
 
 export default Form.create()(React.createClass({
-    getDefaultProps: function() {
+    getDefaultProps() {
         return {value: '', onSubmit: noop};
     },
 
@@ -51,8 +51,8 @@ export default Form.create()(React.createClass({
     },
 
     render() {
-        const {getFieldProps} = this.props.form;
-        const passProps = getFieldProps('pass', {
+        let {getFieldProps} = this.props.form;
+        let passProps = getFieldProps('pass', {
             rules: [
                 {
                     required: true,
@@ -63,7 +63,7 @@ export default Form.create()(React.createClass({
                 }
             ]
         });
-        const formItemLayout = {
+        let formItemLayout = {
             labelCol: {
                 span: 6
             },
@@ -71,7 +71,7 @@ export default Form.create()(React.createClass({
                 span: 18
             }
         };
-        const style = {
+        let style = {
             'margin': '10px'
         }
 

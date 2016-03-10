@@ -16,14 +16,14 @@ import config from "../../config";
 import utils from "../../utils";
 
 
-const koabody = koaBody({multipart: true})
-const router = koarouter({
+let koabody = koaBody({multipart: true})
+let router = koarouter({
     prefix: '/api/users'
 });
 module.exports = router;
 
 router.get('/self', async(ctx, next) => {
-    const user = await models['user'].findOne({
+    let user = await models['user'].findOne({
         attributes: ['id', 'username', 'password', 'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
         where: {
             is_delete: false,
@@ -43,7 +43,7 @@ router.put('/self', async(ctx, next) => {
     delete ctx.request.body.username;
     delete ctx.request.body.password;
     delete ctx.request.body.id;
-    const user = await models['user'].update(ctx.request.body, {
+    let user = await models['user'].update(ctx.request.body, {
         where: {
             id: ctx.session.id
         }
@@ -52,7 +52,7 @@ router.put('/self', async(ctx, next) => {
 })
 
 router.get('/self/avatar', async(ctx, next) => {
-    const user = await models['user'].findOne({
+    let user = await models['user'].findOne({
         attributes: ['avatar'],
         where: {
             is_delete: false,
@@ -71,18 +71,18 @@ router.post('/self/avatar', convert(koabody), async (ctx, next) => {
     if (!ctx.request.body.files.avatar) {
         throw new Error('please upload avatar');
     }
-    const avatar = ctx.request.body.files.avatar;
+    let avatar = ctx.request.body.files.avatar;
 
     if (avatar.size >= config.avatar.maxsize) {
         throw new Error('avatar too large');
     }
-    const buffer = await new Promise((resolve, reject) => {
+    let buffer = await new Promise((resolve, reject) => {
         fs.readFile(avatar.path, (err, data) => {
             if (err) return reject(err);
             return resolve(data)
         })
     })
-    const rv = await models['user'].update({
+    let rv = await models['user'].update({
         avatar: buffer
     }, {
         where: {
@@ -94,8 +94,8 @@ router.post('/self/avatar', convert(koabody), async (ctx, next) => {
 });
 
 router.post('/self/dynamicpassword', async(ctx, next) => {
-    const dp = ctx.request.body.dynamicpassword;
-    const user = await models['user'].findOne({
+    let dp = ctx.request.body.dynamicpassword;
+    let user = await models['user'].findOne({
         attributes: ['username', 'password'],
         where: {
             is_delete: false,
@@ -117,10 +117,10 @@ router.post('/self/dynamicpassword', async(ctx, next) => {
 })
 
 router.put('/self/staticpassword', async(ctx, next) => {
-    const oldpassword = ctx.request.body.oldpassword;
-    const newpassword = ctx.request.body.newpassword;
+    let oldpassword = ctx.request.body.oldpassword;
+    let newpassword = ctx.request.body.newpassword;
 
-    const user = await models['user'].findOne({
+    let user = await models['user'].findOne({
         attributes: ['id', 'password'],
         where: {
             is_delete: false,
@@ -140,7 +140,7 @@ router.put('/self/staticpassword', async(ctx, next) => {
             return
         }
     }
-    const salt = utils.password.genSalt(config.password.bcryptlength);
+    let salt = utils.password.genSalt(config.password.bcryptlength);
     await models['user'].update({
         password: utils.password.encrypt(newpassword, salt)
     }, {

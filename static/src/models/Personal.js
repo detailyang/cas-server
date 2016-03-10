@@ -30,8 +30,8 @@ export default Backbone.Model.extend({
     },
 
     save() {
-        const id = this.get('id')
-        const url = '/api/users/self'
+        let id = this.get('id')
+        let url = '/api/users/self'
 
         return ajax({
             url: url,
@@ -41,7 +41,7 @@ export default Backbone.Model.extend({
     },
 
     resetPassword(oldpassword, newpassword) {
-        const url = '/api/users/self/staticpassword'
+        let url = '/api/users/self/staticpassword'
 
         return ajax({
             url: url,
@@ -54,7 +54,7 @@ export default Backbone.Model.extend({
     },
 
     checkDynamicPassword(password) {
-        const url = '/api/users/self/dynamicpassword'
+        let url = '/api/users/self/dynamicpassword'
 
         return ajax({
             url: url,

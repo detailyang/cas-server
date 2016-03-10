@@ -1,6 +1,6 @@
 import _ from 'underscore'
 
-const clearError = function(field) {
+let clearError = function(field) {
     let formErrors = this.state.formErrors
     if (formErrors[field]) {
         delete formErrors[field]
@@ -8,7 +8,7 @@ const clearError = function(field) {
     }
 }
 
-const setValue = function(field, e) {
+let setValue = function(field, e) {
     var v = e;
     var target = e && e.target;
     if (target) {

@@ -10,8 +10,8 @@ import config from "../config";
 
 
 module.exports = async (ctx, next) => {
-    const page = ctx.query.page || 1;
-    const per_page = ctx.query.per_page || config.paginator.per_page;
+    let page = ctx.query.page || 1;
+    let per_page = ctx.query.per_page || config.paginator.per_page;
     ctx.request.page = +page;
     ctx.request.per_page = +per_page;
     await next();

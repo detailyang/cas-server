@@ -7,7 +7,7 @@ export default List.extend({
     url: '/admin/users/',
 
     reset(id) {
-        const url = `/admin/users/${id}`
+        let url = `/admin/users/${id}`
 
         return ajax({
             url: url,

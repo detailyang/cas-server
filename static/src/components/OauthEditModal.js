@@ -14,8 +14,8 @@ import OauthEditModel from '../models/OauthEdit'
 import FormValidate from '../mixins/FormValidate'
 import EditModal from '../mixins/EditModal'
 
-const RadioGroup = Radio.Group
-const noop = function() {}
+let RadioGroup = Radio.Group
+let noop = function() {}
 
 export default React.createClass({
 
@@ -47,12 +47,12 @@ export default React.createClass({
     },
 
     render() {
-        const formData = this.state.formData
-        const formErrors = this.state.formErrors
-        const errorStatus = (field) => formErrors[field]
+        let formData = this.state.formData
+        let formErrors = this.state.formErrors
+        let errorStatus = (field) => formErrors[field]
             ? 'error'
             : ''
-        const help = (field) => formErrors[field]
+        let help = (field) => formErrors[field]
 
         return (
             <Modal title={this.props.id

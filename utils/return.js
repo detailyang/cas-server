@@ -7,7 +7,7 @@
 
 'use strict';
 
-const _return = {
+let _return = {
     success: {
         code: 0,
         msg: 'ok'

@@ -16,7 +16,7 @@ module.exports = async (ctx, next) => {
     } catch (err) {
         console.log(err);
         if (err instanceof sequelize.ValidationError) {
-            const errors = {};
+            let errors = {};
             for (let e in err.errors) {
                 errors[err.errors[e].path] = err.errors[e].message
             }

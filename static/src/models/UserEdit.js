@@ -28,8 +28,8 @@ export default Backbone.Model.extend({
     },
 
     save() {
-        const id = this.get('id')
-        const url = `/admin/users/${ id ? id + '/' : ''}`
+        let id = this.get('id')
+        let url = `/admin/users/${ id ? id + '/' : ''}`
 
         return ajax({
             url: url,
