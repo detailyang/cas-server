@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-03-07 19:59:56
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-10 13:44:08
+* @Last Modified time: 2016-03-10 16:54:08
 */
 
 'use strict';
@@ -100,7 +100,7 @@ router.get('/:id(\\d+)', async (ctx, next) => {
 
     ctx.return['data']['value'] = user;
     ctx.body = ctx.return;
-})
+});
 
 router.delete('/:id(\\d+)', async (ctx, next) => {
     const user = await models['user'].update({
@@ -111,9 +111,9 @@ router.delete('/:id(\\d+)', async (ctx, next) => {
         }
     })
     ctx.body = ctx.return;
-})
+});
 
-router.put('/:id(\\d+)', async (ctx, next) => {
+router.put('/:id(\\d+)/staticpassword', async (ctx, next) => {
     if (!ctx.request.body.reset) {
         return;
     }
@@ -125,4 +125,16 @@ router.put('/:id(\\d+)', async (ctx, next) => {
         }
     });
     ctx.body = ctx.return;
-})
+});
+
+router.put('/:id(\\d+)', async (ctx, next) => {
+    delete ctx.request.body.username;
+    delete ctx.request.body.password;
+    delete ctx.request.body.id;
+    const user = await models['user'].update(ctx.request.body, {
+        where: {
+            id: ctx.params.id
+        }
+    });
+    ctx.body = ctx.return;
+});

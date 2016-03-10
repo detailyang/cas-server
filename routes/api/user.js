@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
  * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 15:58:12
+ * @Last Modified time: 2016-03-10 16:53:54
  */
 
 'use strict'
@@ -30,11 +30,61 @@ router.get('/self', async(ctx, next) => {
         utils.password.encrypt(
             user.username+user.password, config.notp.salt),
         config.notp.label);
+    delete user.dataValues.password
     ctx.return['data']['value'] = user
     ctx.body = ctx.return;
 })
 
 router.put('/self', async(ctx, next) => {
+    delete ctx.request.body.username;
+    delete ctx.request.body.password;
+    delete ctx.request.body.id;
+    const user = await models['user'].update(ctx.request.body, {
+        where: {
+            id: ctx.session.id
+        }
+    });
+    ctx.body = ctx.return;
+})
+
+router.get('/self/avatar', async(ctx, next) => {
+    const user = await models['user'].findOne({
+        attributes: ['avatar'],
+        where: {
+            is_delete: false,
+            id: ctx.session.id
+        }
+    });
+
+    ctx.response.set('Content-Type', 'image/jpeg');
+    ctx.response.set('Cache-Control', `public, max-age=${config.avatar.cache}`);
+    ctx.body = user.avatar;
+})
+
+router.post('/self/dynamicpassword', async(ctx, next) => {
+    const dp = ctx.request.body.dynamicpassword;
+    const user = await models['user'].findOne({
+        attributes: ['username', 'password'],
+        where: {
+            is_delete: false,
+            id: ctx.session.id
+        }
+    });
+    var rv = utils.password.otpcheck(dp,  utils.password.encrypt(
+            user.username+user.password, config.notp.salt));
+    if (!rv) {
+            ctx.return['code'] = utils.return.getCode('unauthorized');
+            ctx.return['msg'] = utils.return.getMsg('unauthorized');
+    } else {
+        if (rv.delta < config.notp.delta) {
+            ctx.return['code'] = utils.return.getCode('unauthorized');
+            ctx.return['msg'] = utils.return.getMsg('unauthorized');
+        }
+    }
+    ctx.body = ctx.return;
+})
+
+router.put('/self/staticpassword', async(ctx, next) => {
     const oldpassword = ctx.request.body.oldpassword;
     const newpassword = ctx.request.body.newpassword;
 
@@ -66,54 +116,5 @@ router.put('/self', async(ctx, next) => {
             id: ctx.session.id
         }
     })
-    ctx.body = ctx.return;
-})
-
-router.get('/self/pw', async(ctx, next) => {
-    const user = await models['user'].findOne({
-        attributes: ['id', 'username', 'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
-        where: {
-            is_delete: false,
-            id: ctx.session.id
-        }
-    });
-    ctx.return['data']['value'] = user;
-    ctx.body = ctx.return;
-})
-
-router.get('/self/avatar', async(ctx, next) => {
-    const user = await models['user'].findOne({
-        attributes: ['avatar'],
-        where: {
-            is_delete: false,
-            id: ctx.session.id
-        }
-    });
-
-    ctx.response.set('Content-Type', 'image/jpeg');
-    ctx.response.set(`Cache-Control', 'public, max-age=${config.avatar.cache}`);
-    ctx.body = user.avatar;
-})
-
-router.post('/self/dynamic', async(ctx, next) => {
-    const dp = ctx.request.body.dynamicpassword;
-    const user = await models['user'].findOne({
-        attributes: ['username', 'password'],
-        where: {
-            is_delete: false,
-            id: ctx.session.id
-        }
-    });
-    var rv = utils.password.otpcheck(dp,  utils.password.encrypt(
-            user.username+user.password, config.notp.salt));
-    if (!rv) {
-            ctx.return['code'] = utils.return.getCode('unauthorized');
-            ctx.return['msg'] = utils.return.getMsg('unauthorized');
-    } else {
-        if (rv.delta < config.notp.delta) {
-            ctx.return['code'] = utils.return.getCode('unauthorized');
-            ctx.return['msg'] = utils.return.getMsg('unauthorized');
-        }
-    }
     ctx.body = ctx.return;
 })

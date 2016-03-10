@@ -140,8 +140,14 @@ export default Form.create()(React.createClass({
       labelCol: { span: 6 },
       wrapperCol: { span: 18 },
     };
+    const style = {
+        'margin': '10px'
+    }
+
     return (
-      <div>
+      <div
+        style={style}
+      >
         <Button type="primary" onClick={this.showModal}>修改密码</Button>
         <Modal title="修改密码" visible={this.state.visible} onOk={this.handleSubmit} onCancel={this.hideModal}>
           <Form horizontal form={this.props.form}>

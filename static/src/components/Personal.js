@@ -42,6 +42,9 @@ export default React.createClass({
         labelCol: { span: 6 },
         wrapperCol: { span: 14 },
       };
+      const style = {
+        'margin': '10px'
+      }
 
       return (
         <div>
@@ -50,7 +53,7 @@ export default React.createClass({
             <Form>
               <FormItem className="row-flex row-flex-center">
               <Upload name="logo" action="/upload.do" listType="picture" onChange={this.handleUpload}>
-                  <img src="/api/users/self/avatar?width=120" width="120" className="avatar"/>
+                  <img src="/api/users/self/avatar" width="120" className="avatar"/>
               </Upload>
               </FormItem>
                 <Row>
@@ -112,17 +115,17 @@ export default React.createClass({
                         rows="4"
                         onChange={this.setValue.bind(this, 'key')} />
                 </Form.Item>
-                <Row>
-                    <Col style={{ textAlign: 'right' }}>
-                      <Button type="primary" htmlType="submit">确定</Button>
-                      <ChangePassword
-                        onSubmit={this.onChangePassword}
-                      />
-                      <DynamicPassword
-                        onSubmit={this.onDynamicPassword}
-                        value={formData.notp}
-                      />
-                    </Col>
+                <Row className="row-flex row-flex-end">
+                    <ChangePassword
+                      onSubmit={this.onChangePassword}
+                    />
+                    <DynamicPassword
+                      onSubmit={this.onDynamicPassword}
+                      value={formData.notp}
+                    />
+                    <Button
+                    style={style}
+                    type="primary" htmlType="submit" onClick={this.onSubmit}>更新</Button>
                 </Row>
             </Form>
             </div>
@@ -144,6 +147,14 @@ export default React.createClass({
           Antd.message.success('校验成功');
       }).fail((msg) => {
           Antd.message.error('校验失败');
+      });
+    },
+
+    onSubmit(form) {
+      this.model.save().done(()=> {
+          Antd.message.success('更新成功');
+      }).fail((msg) => {
+          Antd.message.success('更新失败');
       });
     }
 })

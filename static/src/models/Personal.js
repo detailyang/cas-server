@@ -40,7 +40,7 @@ export default Backbone.Model.extend({
     },
 
     resetPassword(oldpassword, newpassword) {
-        const url = '/api/users/self'
+        const url = '/api/users/self/staticpassword'
 
         return ajax({
             url: url,
@@ -53,7 +53,7 @@ export default Backbone.Model.extend({
     },
 
     checkDynamicPassword(password) {
-        const url = '/api/users/self/dynamic'
+        const url = '/api/users/self/dynamicpassword'
 
         return ajax({
             url: url,
