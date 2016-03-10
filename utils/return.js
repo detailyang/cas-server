@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 16:09:11
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-02-29 11:04:10
+* @Last Modified time: 2016-03-10 11:46:38
 */
 
 'use strict';
@@ -19,6 +19,14 @@ const _return = {
     'failure': {
         code: 40000,
         msg: 'bad request'
+    },
+    'unauthorized': {
+        code: 40001,
+        msg: 'wrong password'
+    },
+    'notfound': {
+        code: 40004,
+        msg: 'not found'
     },
     'servererror': {
         code: 50000,

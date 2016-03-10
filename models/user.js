@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-18 14:07:19
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-09 10:55:25
+* @Last Modified time: 2016-03-10 13:40:26
 */
 
 'use strict';
@@ -99,7 +99,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: "",
         },
         avatar: {
-            type: DataTypes.BLOB,
+            type: DataTypes.BLOB(),
             allowNull: true
         },
         gender: {

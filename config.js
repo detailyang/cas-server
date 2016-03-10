@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2015-02-19 14:09:05
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-09 17:23:15
+* @Last Modified time: 2016-03-10 14:15:45
 */
 
 'use strict';
@@ -33,7 +33,16 @@ if (process.env.NODE_ENV === 'dev') {
     config['password'] = {
         'default': process.env.CAS_PASSWORD_DEFAULT || 'password',
         'bcryptlength': 15
-    }
+    };
+    config['avatar'] = {
+        width: 100,
+        cache: 3 * 24 * 60 * 60
+    };
+    config['notp'] = {
+        'label': process.env.CAS_NOTP_LABEL || 'cas',
+        'delta': process.env.CAS_NOTP_DELTA || '-3',
+        'salt': process.env.CAS_NOTP_SALT || '$2a$10$jsZ0onecMnHOeKUfRG9AYe'
+    };
 } else if (process.env.NODE_ENV === 'test'){
 } else {
 

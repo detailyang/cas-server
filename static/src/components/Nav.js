@@ -27,7 +27,6 @@ export default React.createClass({
                 <Menu.Item key="user">用户列表</Menu.Item>
                 <Menu.Item key="oauth">OAuth列表</Menu.Item>
                 <Menu.Item key="personal">个人信息</Menu.Item>
-                <Menu.Item key="password">修改密码</Menu.Item>
 
             </Menu>
         )

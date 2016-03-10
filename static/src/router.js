@@ -8,7 +8,6 @@ import Nav from './components/Nav'
 import User from './views/User'
 import OAuth from './views/OAuth'
 import Personal from './views/Personal'
-import Password from './views/Password'
 
 export default Backbone.Router.extend({
 
@@ -16,7 +15,6 @@ export default Backbone.Router.extend({
         '!/user': 'user',
         '!/oauth': 'oauth',
         '!/personal': 'personal',
-        '!/password': 'password',
         '*index': 'index'
     },
 
@@ -42,11 +40,6 @@ export default Backbone.Router.extend({
     personal() {
         this.show(Personal)
         this.show(Nav, {current: 'personal'}, this.nav)
-    },
-
-    password() {
-        this.show(Password)
-        this.show(Nav, {current: 'password'}, this.nav)
     },
 
     index() {

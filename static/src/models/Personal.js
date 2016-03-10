@@ -13,12 +13,13 @@ export default Backbone.Model.extend({
         email: '',
         is_delete: false,
         gender: '0',
-        key: ''
+        key: '',
+        notp: ''
     },
 
     fetch() {
         return ajax({
-            url: `/api/users/self/`
+            url: '/api/users/self/'
         }).done((data) => {
             this.set(data.value)
             this.trigger('sync')
@@ -29,7 +30,7 @@ export default Backbone.Model.extend({
 
     save() {
         const id = this.get('id')
-        const url = `/api/users/self`
+        const url = '/api/users/self'
 
         return ajax({
             url: url,
@@ -37,4 +38,29 @@ export default Backbone.Model.extend({
             data: this.toJSON()
         })
     },
+
+    resetPassword(oldpassword, newpassword) {
+        const url = '/api/users/self'
+
+        return ajax({
+            url: url,
+            type: 'PUT',
+            data: {
+                oldpassword: oldpassword,
+                newpassword: newpassword
+            }
+        })
+    },
+
+    checkDynamicPassword(password) {
+        const url = '/api/users/self/dynamic'
+
+        return ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                dynamicpassword: password
+            }
+        })
+    }
 })

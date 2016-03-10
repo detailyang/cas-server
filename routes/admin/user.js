@@ -2,12 +2,13 @@
 * @Author: detailyang
 * @Date:   2016-03-07 19:59:56
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-09 17:24:26
+* @Last Modified time: 2016-03-10 13:44:08
 */
 
 'use strict';
 import koarouter from "koa-router";
 import sequelize from "sequelize";
+import uuid from "uuid";
 import models from "../../models";
 import config from "../../config";
 import utils from "../../utils";
@@ -80,6 +81,11 @@ router.post('/', async (ctx, next) => {
         ctx.request.body.password = utils.password.encrypt(
             ctx.request.body.password, salt)
     }
+    const width = ctx.request.query.width || config.avatar.width;
+    const avatar = await utils.avatar.generate(uuid.v1(),
+        ctx.request.gender ? 'female' : 'male', width);
+
+    ctx.request.body.avatar = avatar;
     const user = await models['user'].create(ctx.request.body);
     ctx.body = ctx.return;
 })
@@ -111,7 +117,7 @@ router.put('/:id(\\d+)', async (ctx, next) => {
     if (!ctx.request.body.reset) {
         return;
     }
-    var salt = utils.password.genSalt(config.password.bcryptlength);
+    const salt = utils.password.genSalt(config.password.bcryptlength);
     ctx.request.body.password = utils.password.encrypt(config.password.default, salt)
     const user = await models['user'].update(ctx.request.body, {
         where: {

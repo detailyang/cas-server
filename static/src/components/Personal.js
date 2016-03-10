@@ -1,8 +1,10 @@
 import React from 'react'
-import Antd, {Modal, Form, Input, Radio, Row, Col} from 'antd'
+import Antd, {Modal, Upload, Icon, Form, Button, Input, Radio, Row, Col} from 'antd'
 import FormValidate from '../mixins/FormValidate'
 import PersonalModel from '../models/Personal'
 import EditModal from '../mixins/EditModal'
+import ChangePassword from '../components/ChangePassword'
+import DynamicPassword from '../components/DynamicPassword'
 
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
@@ -45,91 +47,103 @@ export default React.createClass({
         <div>
           <div className="row-flex row-flex-center">
             <div className="col-12 box">
-            <Form >
-              <Row>
-              <Col span="11">
-              <Form.Item label="用户名：" validateStatus={errorStatus('username')} help={help('username')}>
-                  <Input
-                    disabled
-                    value={formData.username}
-                    placeholder="填写字母、下划线、数字"
-                    onChange={this.setValue.bind(this, 'username')} />
-              </Form.Item>
-              </Col>
-              <Col span="11" offset="2">
-              <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
-                  <RadioGroup value={formData.gender + ''} onChange={this.setValue.bind(this, 'gender')}>
-                      <Radio value="0">男</Radio>
-                      <Radio value="1">女</Radio>
-                  </RadioGroup>
-              </Form.Item>
-              </Col>
-              </Row>
-              <Row>
-                  <Col span="11">
-                      <Form.Item label="真实姓名：" validateStatus={errorStatus('chinesename')} help={help('chinesename')}>
-                          <Input
-                              value={formData.chinesename}
-                              onChange={this.setValue.bind(this, 'chinesename')} />
-                      </Form.Item>
-                  </Col>
-                  <Col span="11" offset="2">
-                      <Form.Item label="花名：" validateStatus={errorStatus('aliasname')} help={help('aliasname')}>
-                          <Input
-                              value={formData.aliasname}
-                              onChange={this.setValue.bind(this, 'aliasname')} />
-                      </Form.Item>
-                  </Col>
-              </Row>
-              <Row>
-              <Col span="11">
-              <Form.Item label="email：" validateStatus={errorStatus('email')} help={help('email')}>
-                  <Input
-                      value={formData.email}
-                      onChange={this.setValue.bind(this, 'email')} />
-              </Form.Item>
-              </Col>
-              <Col span="11" offset="2">
-              <Form.Item label="手机号：" validateStatus={errorStatus('mobile')} help={help('mobile')}>
-                  <Input
-                      value={formData.mobile}
-                      onChange={this.setValue.bind(this, 'mobile')} />
-              </Form.Item>
-              </Col>
-              </Row>
-              <Form.Item label="Key：" validateStatus={errorStatus('key')} help={help('key')}>
-                  <Input
-                      type="textarea"
-                      value={formData.key}
-                      placeholder="your public ssh key (cat ~/.ssh/id_rsa.pub|pbcopy)"
-                      rows="5"
-                      onChange={this.setValue.bind(this, 'key')} />
-              </Form.Item>
-            </Form>
-            </div>
-          </div>
-          <div className="row-flex row-flex-center">
-            <div className="col-12 box">
-            <Form horizontal>
-             <FormItem
-                {...formItemLayout}
-                label="当前密码：">
-                <Input type="password" placeholder="请输入密码" />
+            <Form>
+              <FormItem className="row-flex row-flex-center">
+              <Upload name="logo" action="/upload.do" listType="picture" onChange={this.handleUpload}>
+                  <img src="/api/users/self/avatar?width=120" width="120" className="avatar"/>
+              </Upload>
               </FormItem>
-              <FormItem
-                 {...formItemLayout}
-                label="新密码：">
-                <Input type="password" placeholder="请输入密码" />
-              </FormItem>
-              <FormItem
-               {...formItemLayout}
-                label="再次新密码：">
-                <Input type="password" placeholder="请输入密码" />
-              </FormItem>
+                <Row>
+                <Col span="11">
+                <Form.Item label="用户名：" validateStatus={errorStatus('username')} help={help('username')}>
+                    <Input
+                      disabled
+                      value={formData.username}
+                      placeholder="填写字母、下划线、数字"
+                      onChange={this.setValue.bind(this, 'username')} />
+                </Form.Item>
+                </Col>
+                <Col span="11" offset="2">
+                <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
+                    <RadioGroup value={formData.gender + ''} onChange={this.setValue.bind(this, 'gender')}>
+                        <Radio value="0">男</Radio>
+                        <Radio value="1">女</Radio>
+                    </RadioGroup>
+                </Form.Item>
+                </Col>
+                </Row>
+                <Row>
+                    <Col span="11">
+                        <Form.Item label="真实姓名：" validateStatus={errorStatus('chinesename')} help={help('chinesename')}>
+                            <Input
+                                value={formData.chinesename}
+                                onChange={this.setValue.bind(this, 'chinesename')} />
+                        </Form.Item>
+                    </Col>
+                    <Col span="11" offset="2">
+                        <Form.Item label="花名：" validateStatus={errorStatus('aliasname')} help={help('aliasname')}>
+                            <Input
+                                value={formData.aliasname}
+                                onChange={this.setValue.bind(this, 'aliasname')} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row>
+                <Col span="11">
+                <Form.Item label="Email：" validateStatus={errorStatus('email')} help={help('email')}>
+                    <Input
+                        value={formData.email}
+                        onChange={this.setValue.bind(this, 'email')} />
+                </Form.Item>
+                </Col>
+                <Col span="11" offset="2">
+                <Form.Item label="手机号：" validateStatus={errorStatus('mobile')} help={help('mobile')}>
+                    <Input
+                        value={formData.mobile}
+                        onChange={this.setValue.bind(this, 'mobile')} />
+                </Form.Item>
+                </Col>
+                </Row>
+                <Form.Item label="Key：" validateStatus={errorStatus('key')} help={help('key')}>
+                    <Input
+                        type="textarea"
+                        value={formData.key}
+                        placeholder="your public ssh key (cat ~/.ssh/id_rsa.pub|pbcopy)"
+                        rows="4"
+                        onChange={this.setValue.bind(this, 'key')} />
+                </Form.Item>
+                <Row>
+                    <Col style={{ textAlign: 'right' }}>
+                      <Button type="primary" htmlType="submit">确定</Button>
+                      <ChangePassword
+                        onSubmit={this.onChangePassword}
+                      />
+                      <DynamicPassword
+                        onSubmit={this.onDynamicPassword}
+                        value={formData.notp}
+                      />
+                    </Col>
+                </Row>
             </Form>
             </div>
           </div>
         </div>
         )
+    },
+
+    onChangePassword(oldpassword, newpassword) {
+      this.model.resetPassword(oldpassword, newpassword).done(() => {
+          Antd.message.success('修改密码成功')
+      }).fail((msg) => {
+          Antd.message.error(msg)
+      });
+    },
+
+    onDynamicPassword(password) {
+      this.model.checkDynamicPassword(password).done(() => {
+          Antd.message.success('校验成功');
+      }).fail((msg) => {
+          Antd.message.error('校验失败');
+      });
     }
 })

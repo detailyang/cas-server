@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-02-29 14:32:13
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 14:53:53
+* @Last Modified time: 2016-03-10 13:24:05
 */
 
 'use strict';
@@ -36,7 +36,8 @@ router.post('/login', async (ctx, next) => {
         ctx.session = {
             'id': user.id,
             'username': ctx.request.body.username,
-            'is_admin': user.is_admin
+            'is_admin': user.is_admin,
+            'gender': user.gender
         }
         ctx.body = ctx.return
     } else {

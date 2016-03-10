@@ -112,6 +112,8 @@ export default React.createClass({
                     </Row>
                     <Form.Item label="Key：" validateStatus={errorStatus('key')} help={help('key')}>
                         <Input
+                            type="textarea"
+                            rows="4"
                             value={formData.key}
                             onChange={this.setValue.bind(this, 'key')} />
                     </Form.Item>

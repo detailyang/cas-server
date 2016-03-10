@@ -2,11 +2,14 @@
 * @Author: detailyang
 * @Date:   2016-02-26 13:53:51
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-02-29 09:58:11
+* @Last Modified time: 2016-03-10 14:17:28
 */
 
 'use strict';
-var bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+import base32 from 'thirty-two'
+import notp from 'notp';
+
 
 function check(plaintext, cipher) {
     return bcrypt.compareSync(plaintext, cipher)
@@ -17,8 +20,29 @@ function encrypt(plaintext, salt) {
     return bcrypt.hashSync(plaintext, salt);
 }
 
+function otpqrcode(key,label) {
+    // encoded will be the secret key, base32 encoded
+    var encoded = base32.encode(key);
+    label = label || 'cas';
+
+    // Google authenticator doesn't like equal signs
+    var encodedForGoogle = encoded.toString().replace(/=/g,'');
+
+    // to create a URI for a qr code (change totp to hotp if using hotp)
+    var uri = 'otpauth://totp/' + label + '?secret=' + encodedForGoogle;
+
+    return uri;
+}
+
+//google auth token and user key
+function otpcheck(token, key) {
+    return notp.totp.verify(token, key);
+}
+
 module.exports = {
     check: check,
     encrypt: encrypt,
-    genSalt: bcrypt.genSaltSync
+    genSalt: bcrypt.genSaltSync,
+    otpqrcode: otpqrcode,
+    otpcheck: otpcheck
 };

@@ -5,7 +5,6 @@ import UserEditModal from '../components/UserEditModal'
 import Personal from '../components/Personal'
 import ModelMixin from '../mixins/model'
 import UserModel from '../models/User'
-import ResetPassword from '../components/ResetPassword'
 
 
 export default React.createClass({
@@ -21,16 +20,11 @@ export default React.createClass({
         return (
             <div>
                 {this.renderInfo()}
-                {this.renderPassword()}
             </div>
         )
     },
 
     renderInfo() {
         return <Personal/>
-    },
-
-    renderPassword() {
-        return <ResetPassword />
-    },
+    }
 })
