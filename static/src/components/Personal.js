@@ -127,11 +127,11 @@ export default React.createClass({
                     help={help('gender')}
                   >
                     <RadioGroup
-                      value={`${formData.gender}`}
+                      value={formData.gender ? 1 : 0}
                       onChange={this.setValue.bind(this, 'gender')}
                     >
-                      <Radio value="0">男</Radio>
-                      <Radio value="1">女</Radio>
+                      <Radio value={0}>男</Radio>
+                      <Radio value={1}>女</Radio>
                     </RadioGroup>
                   </Form.Item>
                 </Col>

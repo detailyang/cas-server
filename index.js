@@ -17,8 +17,10 @@ if (process.env.NODE_ENV === 'dev') {
 }
 app.use(middlewares.error);
 app.use(middlewares.log);
-app.use(middlewares.session);
 app.use(middlewares.return);
+app.use(middlewares.session);
+// use acl
+app.use(middlewares.acl);
 app.use(bodyParser());
 app.use(middlewares.page);
 app.use(middlewares.view);

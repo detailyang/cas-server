@@ -22,7 +22,7 @@ module.exports = router;
 
 router.get('/', async (ctx, next) => {
     let is_delete = ctx.request.query['is_delete[]'] || [];
-    let keyword = ctx.request.query.keyword;
+    let keyword = ctx.request.query.keyword || "";
     let where = {};
 
     if (is_delete.length > 0) {
@@ -60,6 +60,7 @@ router.get('/', async (ctx, next) => {
         offset: (ctx.request.page - 1) * ctx.request.per_page,
         limit: ctx.request.per_page
     })
+    if (!users) throw new utils.error.NotFoundError();
     let count = await models['user'].findOne({
         attributes: [[sequelize.fn('COUNT', sequelize.col('id')), 'count']],
         where: where

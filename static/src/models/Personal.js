@@ -11,7 +11,7 @@ export default Backbone.Model.extend({
     mobile: '',
     email: '',
     is_delete: false,
-    gender: '0',
+    gender: false,
     key: '',
     notp: '',
     upload_url: '',

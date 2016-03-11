@@ -14,7 +14,7 @@ module.exports = async (ctx, next) => {
     try {
         await next();
     } catch (err) {
-        console.log(err);
+      console.log("asdfasdf", err);
         if (err instanceof sequelize.ValidationError) {
             let errors = {};
             for (let e in err.errors) {
@@ -28,8 +28,19 @@ module.exports = async (ctx, next) => {
                 || err instanceof sequelize.ConnectionError
             ) {
             // production record log
+            console.log(err);
             ctx.return['code'] = utils.return.getCode('servererror');
             ctx.return['msg'] = utils.return.getMsg('servererror');
+            ctx.body = ctx.return;
+            return
+        } else if (err instanceof utils.error.PermissionError) {
+            ctx.return['code'] = utils.return.getCode('permission');
+            ctx.return['msg'] = utils.return.getMsg('permission');
+            ctx.body = ctx.return;
+            return
+        } else if (err instanceof utils.error.NotFoundError) {
+            ctx.return['code'] = utils.return.getCode('notfound');
+            ctx.return['msg'] = utils.return.getMsg('notfound');
             ctx.body = ctx.return;
             return
         } else {

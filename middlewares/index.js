@@ -15,6 +15,7 @@ import page from "./page";
 import err from "./err";
 import view from "./view";
 import webpack from "./webpack";
+import acl from "./acl";
 
 
 module.exports = {
@@ -25,6 +26,7 @@ module.exports = {
     "error": err,
     "view": view,
     "webpack": webpack,
+    "acl": acl,
     "index": async (ctx, next) => {
         ctx.render = co.wrap(ctx.render.bind(ctx));
         if (ctx.request.path == '/') {
