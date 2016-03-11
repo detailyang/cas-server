@@ -1,0 +1,38 @@
+.login-backdrop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.login-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 400px;
+    padding: 20px;
+    margin-left: -200px;
+    margin-top: -200px;
+
+    background: #FFF;
+    border-radius: 8px;
+    box-sizing: border-box;
+    z-index: 1001;
+}
+
+.check-login {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 300px;
+    background: #fff;
+    text-align: center;
+    z-index: 1000;
+}
