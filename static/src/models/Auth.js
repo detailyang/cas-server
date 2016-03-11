@@ -52,7 +52,7 @@ let AuthModel = Backbone.Model.extend({
 
     logout() {
         return ajax({
-            url: '/public/users/logout,
+            url: '/public/users/logout',
             type: 'POST'
         })
     }
