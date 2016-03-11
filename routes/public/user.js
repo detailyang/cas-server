@@ -19,7 +19,7 @@ module.exports = router;
 
 router.post('/login', async(ctx, next) => {
   if (!ctx.request.body.password || !ctx.request.body.username) {
-    throw new Error("password or username cannot be null")
+    throw new utils.error.
   }
   let user = await models['user'].findOne({
     attributes: ['id', 'password', 'is_admin'],

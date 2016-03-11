@@ -19,34 +19,38 @@ module.exports = async(ctx, next) => {
         if (!err.errors.hasOwnProperty(e)) continue;
         errors[err.errors[e].path] = err.errors[e].message;
       }
-      ctx.return['data']['errors'] = errors;
-    } else if (err instanceof sequelize.DatabaseError || err instanceof ReferenceError || err instanceof TypeError || err instanceof sequelize.ConnectionRefusedError || err instanceof sequelize.ConnectionError) {
+      ctx.return.data.errors = errors;
+    } else if (err instanceof sequelize.DatabaseError
+            || err instanceof ReferenceError
+            || err instanceof TypeError
+            || err instanceof sequelize.ConnectionRefusedError
+            || err instanceof sequelize.ConnectionError) {
       // production record log
       console.log(err);
-      ctx.return['code'] = utils.return.getCode('servererror');
-      ctx.return['msg'] = utils.return.getMsg('servererror');
+      ctx.return.code = utils.return.getCode('servererror');
+      ctx.return.msg = utils.return.getMsg('servererror');
       ctx.body = ctx.return;
-      return
+      return;
     } else if (err instanceof utils.error.PermissionError) {
-      ctx.return['code'] = utils.return.getCode('permission');
-      ctx.return['msg'] = utils.return.getMsg('permission');
+      ctx.return.code = utils.return.getCode('permission');
+      ctx.return.msg = utils.return.getMsg('permission');
       ctx.body = ctx.return;
-      return
+      return;
     } else if (err instanceof utils.error.NotFoundError) {
-      ctx.return['code'] = utils.return.getCode('notfound');
-      ctx.return['msg'] = utils.return.getMsg('notfound');
+      ctx.return.code = utils.return.getCode('notfound');
+      ctx.return.msg = utils.return.getMsg('notfound');
       ctx.body = ctx.return;
-      return
+      return;
     } else if (err instanceof utils.error.PasswordNotRightError) {
-      ctx.return['code'] = utils.return.getCode('unauthorized');
-      ctx.return['msg'] = utils.return.getMsg('unauthorized');
+      ctx.return.code = utils.return.getCode('unauthorized');
+      ctx.return.msg = utils.return.getMsg('unauthorized');
       ctx.body = ctx.return;
-      return
+      return;
     } else {
-      ctx.return['data']['value'] = err.message;
+      ctx.return.data.value = err.message;
     }
-    ctx.return['code'] = utils.return.getCode('failure');
-    ctx.return['msg'] = utils.return.getMsg('failure');
+    ctx.return.code = utils.return.getCode('failure');
+    ctx.return.msg = utils.return.getMsg('failure');
     ctx.body = ctx.return;
   }
-}
+};
