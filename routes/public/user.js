@@ -45,6 +45,6 @@ router.post('/login', async(ctx, next) => {
 })
 
 router.post('/logout', async(ctx, next) => {
-  ctx.session.user = {}
-  ctx.body = ctx.return
+  ctx.session = {};
+  ctx.body = ctx.return;
 })
