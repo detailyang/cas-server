@@ -1,16 +1,18 @@
 {
-    "rules": {
-        "indent": 2,
-        "react/prefer-es6-class": 0,
-        "react/jsx-no-bind": 0,
-        "no-console": 0,
-        "no-new": 0,
-        "quote-props": 0,
-        "object-shorthand": 0,
-        "func-names": 0,
+    'rules': {
+        'indent': 2,
+        'react/prefer-es6-class': 0,
+        'react/jsx-no-bind': 0,
+        'no-console': 0,
+        'no-new': 0,
+        'quote-props': 0,
+        'object-shorthand': 0,
+        'func-names': 0,
+        'no-param-reassign': [2, {'props': false}],
     },
-    "plugins": [
-        "react",
+    'plugins': [
+        'react',
     ],
-    "extends": ["airbnb"],
+    'extends': ['airbnb'],
+    'parser': 'babel-eslint'
 }

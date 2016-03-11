@@ -43,3 +43,19 @@ error.NotFoundError = function(message, errors) {
   }
 };
 util.inherits(error.NotFoundError, error.BaseError);
+
+error.PasswordNotRightError = function(message, errors) {
+  error.BaseError.apply(this, arguments);
+  this.name = 'password not right';
+  this.message = 'password not right';
+  this.errors = errors || [];
+
+  if (message) {
+    this.message = message;
+  } else if (this.errors.length > 0 && this.errors[0].message) {
+    this.message = this.errors.map((err) => {
+      return `${err.type}: ${err.message}`;
+    }).join(',\n');
+  }
+};
+util.inherits(error.PasswordNotRightError, error.BaseError);
