@@ -3,7 +3,7 @@ import './login.scss'
 import React from 'react'
 import Antd, { Form, Input, Row, Col, Button } from 'antd'
 
-import FormValidate from '../../mixins/FormValidate'
+import FormValidate from '../mixins/FormValidate'
 import {authModelInstance} from '../models/Auth'
 
 export default React.createClass({
