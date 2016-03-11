@@ -19,7 +19,7 @@ module.exports = router;
 
 router.post('/login', async(ctx, next) => {
   if (!ctx.request.body.password || !ctx.request.body.username) {
-    throw new utils.error.
+    throw new utils.error.PasswordNotRightError();
   }
   let user = await models['user'].findOne({
     attributes: ['id', 'password', 'is_admin'],
