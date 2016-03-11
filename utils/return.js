@@ -28,6 +28,10 @@ let _return = {
         code: 40004,
         msg: 'not found'
     },
+    'password': {
+        code: 40005,
+        msg: 'password strength is too low'
+    },
     'servererror': {
         code: 50000,
         msg: 'server internal error'

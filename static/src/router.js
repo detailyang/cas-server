@@ -1,63 +1,62 @@
-import Backbone from 'backbone'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import Backbone from 'backbone';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import Header from './components/Header'
-import Nav from './components/Nav'
+import Header from './components/Header';
+import Nav from './components/Nav';
 
-import User from './views/User'
-import OAuth from './views/OAuth'
-import Personal from './views/Personal'
+import User from './views/User';
+import OAuth from './views/OAuth';
+import Personal from './views/Personal';
 
 export default Backbone.Router.extend({
+  routes: {
+    '!/user': 'user',
+    '!/oauth': 'oauth',
+    '!/personal': 'personal',
+    '*index': 'index',
+  },
 
-    routes: {
-        '!/user': 'user',
-        '!/oauth': 'oauth',
-        '!/personal': 'personal',
-        '*index': 'index'
-    },
+  initialize() {
+    this.header = document.getElementById('header');
+    this.nav = document.getElementById('nav');
+    this.app = document.getElementById('app');
 
-    initialize() {
-        this.header = document.getElementById('header')
-        this.nav = document.getElementById('nav')
-        this.app = document.getElementById('app')
+    this.show(Header, null, this.header);
+    this.show(Nav, {
+      current: 'user',
+    }, this.nav);
+  },
 
-        this.show(Header, null, this.header)
-        this.show(Nav, {
-            current: 'user'
-        }, this.nav)
-    },
+  user() {
+    this.show(User);
+    this.show(Nav, {
+      current: 'user',
+    }, this.nav);
+  },
 
-    user() {
-        this.show(User)
-        this.show(Nav, {
-            current: 'user'
-        }, this.nav)
-    },
+  oauth() {
+    this.show(OAuth);
+    this.show(Nav, {
+      current: 'oauth',
+    }, this.nav);
+  },
 
-    oauth() {
-        this.show(OAuth)
-        this.show(Nav, {
-            current: 'oauth'
-        }, this.nav)
-    },
+  personal() {
+    this.show(Personal);
+    this.show(Nav, {
+      current: 'personal',
+    }, this.nav);
+  },
 
-    personal() {
-        this.show(Personal)
-        this.show(Nav, {
-            current: 'personal'
-        }, this.nav)
-    },
+  index() {
+    this.navigate('!/user', {
+      trigger: true,
+      replace: true,
+    });
+  },
 
-    index() {
-        this.navigate('!/user', {
-            trigger: true,
-            replace: true
-        })
-    },
-
-    show(components, props, node) {
-        ReactDOM.render(React.createElement(components, props), node || this.app)
-    }
-})
+  show(components, props, node) {
+    ReactDOM.render(React.createElement(components, props), node || this.app);
+  },
+});

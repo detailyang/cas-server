@@ -1,18 +1,19 @@
-import List from './List'
-import ajax from '../utils/ajax'
-
+import List from './List';
+import ajax from '../utils/ajax';
 
 export default List.extend({
-    // 获取列表数据的API地址
-    url: '/admin/users/',
+  // 获取列表数据的API地址
+  url: '/admin/users/',
 
-    reset(id) {
-        let url = `/admin/users/${id}`
+  reset(id) {
+    const url = `/admin/users/${id}/staticpassword`;
 
-        return ajax({
-            url: url,
-            type: 'PUT',
-            data: {reset: true}
-        })
-    }
-})
+    return ajax({
+      url: url,
+      type: 'PUT',
+      data: {
+        reset: true,
+      },
+    });
+  },
+});

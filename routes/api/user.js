@@ -10,6 +10,7 @@ import koarouter from "koa-router";
 import sequelize from "sequelize";
 import convert from "koa-convert";
 import koaBody from "koa-body";
+import zxcvbn from 'zxcvbn';
 
 import models from "../../models";
 import config from "../../config";
@@ -22,7 +23,7 @@ let router = koarouter({
 });
 module.exports = router;
 
-router.get('/self', async(ctx, next) => {
+router.get('/self', async (ctx, next) => {
     let user = await models['user'].findOne({
         attributes: ['id', 'username', 'password', 'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
         where: {
@@ -81,13 +82,19 @@ router.post('/self/avatar', convert(koabody), async (ctx, next) => {
             if (err) return reject(err);
             return resolve(data)
         })
-    })
+    });
     let rv = await models['user'].update({
         avatar: buffer
     }, {
         where: {
             id: ctx.session.id
         }
+    });
+    await new Promise((resolve, reject) => {
+      fs.unlink(avatar.path, (err, data) => {
+        if (err) return reject(err);
+        return resolve(data);
+      })
     });
 
     ctx.body = ctx.return;
@@ -120,6 +127,13 @@ router.put('/self/staticpassword', async(ctx, next) => {
     let oldpassword = ctx.request.body.oldpassword;
     let newpassword = ctx.request.body.newpassword;
 
+    const value = zxcvbn(newpassword);
+    if (value.score <= 1) {
+      ctx.return.code = utils.return.getCode('password');
+      ctx.return.msg = utils.return.getMsg('password');
+      ctx.body = ctx.return;
+      return;
+    }
     let user = await models['user'].findOne({
         attributes: ['id', 'password'],
         where: {

@@ -51,8 +51,8 @@ export default Form.create()(React.createClass({
     },
 
     render() {
-        let {getFieldProps} = this.props.form;
-        let passProps = getFieldProps('pass', {
+        const {getFieldProps} = this.props.form;
+        const passProps = getFieldProps('pass', {
             rules: [
                 {
                     required: true,
@@ -63,7 +63,7 @@ export default Form.create()(React.createClass({
                 }
             ]
         });
-        let formItemLayout = {
+        const formItemLayout = {
             labelCol: {
                 span: 6
             },
@@ -71,7 +71,7 @@ export default Form.create()(React.createClass({
                 span: 18
             }
         };
-        let style = {
+        const style = {
             'margin': '10px'
         }
 

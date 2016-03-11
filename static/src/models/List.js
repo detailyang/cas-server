@@ -45,7 +45,7 @@ export default Backbone.Model.extend({
 
     // 生成请求数据
     generateQueryData() {
-        let query = this.toJSON()
+        const query = this.toJSON()
 
         delete query.value
         delete query.total
@@ -73,7 +73,7 @@ export default Backbone.Model.extend({
     // 保存对象
     save(item) {
         item = item || {}
-        let url = item.id ? `${this.url}${item.id}/` : this.url
+        const url = item.id ? `${this.url}${item.id}/` : this.url
 
         return ajax({
             url: url,
