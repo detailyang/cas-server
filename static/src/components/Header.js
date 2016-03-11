@@ -20,8 +20,8 @@ const menu = (
 );
 
 const AvatarStyle = {
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     borderRadius: '50%'
 }
 
@@ -32,8 +32,9 @@ const HeaderStyle = {
 
 const OptStyle = {
     fontSize: 16,
-    lineHeight: '48px',
-    marginRight: 20
+    marginRight: 20,
+    marginTop: 10,
+    display: 'inline-block'
 }
 
 export default React.createClass({
@@ -45,7 +46,7 @@ export default React.createClass({
                         className="ant-dropdown-link"
                         href="#"
                         style={OptStyle}>
-                        <img src="/api/user/self/avatar"></img>
+                        <img style={AvatarStyle} src="/api/users/self/avatar"></img>
                     </a>
                 </Dropdown>
             </div>
