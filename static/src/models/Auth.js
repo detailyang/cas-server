@@ -2,12 +2,12 @@ import Backbone from 'backbone'
 import ajax from '../utils/ajax'
 
 let AuthModel = Backbone.Model.extend({
-
     defaults: {
         // 是否已经登录
         isLogin: false,
         username: '',
-        password: ''
+        password: '',
+        isAdmin: false
     },
 
     self() {
@@ -16,7 +16,8 @@ let AuthModel = Backbone.Model.extend({
         }).done((data) => {
             this.set({
                 isLogin: true,
-                username: data.username
+                username: data.username,
+                isAdmin: data.is_admin
             })
         }).fail((data) => {
             this.set({

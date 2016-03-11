@@ -19,6 +19,12 @@ const menu = (
     </Menu>
 );
 
+const AvatarStyle = {
+    height: 20,
+    width: 20,
+    borderRadius: '50%'
+}
+
 const HeaderStyle = {
     height: 48,
     float: 'right'
@@ -39,10 +45,10 @@ export default React.createClass({
                         className="ant-dropdown-link"
                         href="#"
                         style={OptStyle}>
-                        操作<Icon type="down" />
-                </a>
-            </Dropdown>
-        </div>
-    )
-}
+                        <img src="/api/user/self/avatar"></img>
+                    </a>
+                </Dropdown>
+            </div>
+        )
+    }
 })

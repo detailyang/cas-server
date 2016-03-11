@@ -17,8 +17,9 @@ authModelInstance.self().done(initApplication).fail(() => {
     show(Login, document.getElementById('app'))
 })
 
-function initApplication() {
-    new Router();
+function initApplication(data) {
+    console.log(data.value.is_admin);
+    new Router({isAdmin: data.value.is_admin});
 	Backbone.history.start();
 }
 

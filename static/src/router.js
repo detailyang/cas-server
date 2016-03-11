@@ -10,6 +10,7 @@ import OAuth from './views/OAuth';
 import Personal from './views/Personal';
 
 export default Backbone.Router.extend({
+
   routes: {
     '!/user': 'user',
     '!/oauth': 'oauth',
@@ -17,14 +18,18 @@ export default Backbone.Router.extend({
     '*index': 'index',
   },
 
-  initialize() {
+  initialize(attr) {
     this.header = document.getElementById('header');
     this.nav = document.getElementById('nav');
     this.app = document.getElementById('app');
+    this.isAdmin = attr.isAdmin;
+
+    console.log('init', attr);
 
     this.show(Header, null, this.header);
     this.show(Nav, {
-      current: 'user',
+      current: 'personal',
+      isAdmin: this.isAdmin
     }, this.nav);
   },
 
@@ -32,6 +37,7 @@ export default Backbone.Router.extend({
     this.show(User);
     this.show(Nav, {
       current: 'user',
+      isAdmin: this.isAdmin
     }, this.nav);
   },
 
@@ -39,6 +45,7 @@ export default Backbone.Router.extend({
     this.show(OAuth);
     this.show(Nav, {
       current: 'oauth',
+      isAdmin: this.isAdmin
     }, this.nav);
   },
 
@@ -46,6 +53,7 @@ export default Backbone.Router.extend({
     this.show(Personal);
     this.show(Nav, {
       current: 'personal',
+      isAdmin: this.isAdmin
     }, this.nav);
   },
 
