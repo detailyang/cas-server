@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-10 17:34:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:58:34+08:00
+* @Last modified time: 2016-03-13T04:02:03+08:00
  */
 import utils from '../utils';
 import models from '../models';
@@ -19,7 +19,7 @@ module.exports = async(ctx, next) => {
     }
     throw new utils.error.PermissionError('you have not login');
   } else if (ctx.request.path.indexOf('/oauth') === 0) {
-    const authorization = ctx.headers.authorization;
+    const authorization = ctx.request.headers.authorization;
     if (!authorization) {
       throw new utils.error.ParamsError('lack authorization secret like `oauth $secret`');
     }
