@@ -96,13 +96,13 @@ export default React.createClass({
             </Col>
             <Col span="11" offset="2">
               <Form.Item
-                label="callback_url: "
-                validateStatus={errorStatus('callback_url')}
-                help={help('callback_url')}
+                label="callback: "
+                validateStatus={errorStatus('callback')}
+                help={help('callback')}
               >
                 <Input
-                  value={formData.callback_url}
-                  onChange={this.setValue.bind(this, 'callback_url')}
+                  value={formData.callback}
+                  onChange={this.setValue.bind(this, 'callback')}
                 />
               </Form.Item>
             </Col>

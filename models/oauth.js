@@ -36,14 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     domain: {
       type: DataTypes.STRING(512),
-      allowNull: false,
+      allowNull: true,
       defaultValue: '',
-      validate: {
-        len: {
-          args: [1, 512],
-          msg: '长度必须为1-512位',
-        },
-      },
     },
     desc: {
       type: DataTypes.STRING(512),
@@ -56,16 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    callback_url: {
+    callback: {
       type: DataTypes.STRING(512),
-      allowNull: false,
+      allowNull: true,
       defaultValue: '',
-      validate: {
-        len: {
-          args: [1, 512],
-          msg: '长度必须为1-512位',
-        },
-      },
     },
     is_admin: {
       type: DataTypes.BOOLEAN,

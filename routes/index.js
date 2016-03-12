@@ -1,14 +1,14 @@
 /*
 * @Author: detailyang
 * @Date:   2016-02-18 12:46:08
-* @Last Modified by:   detailyang
-* @Last Modified time: 2016-03-08 14:54:07
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T02:30:13+08:00
 */
 
-'use strict';
 
 module.exports = {
-    'admin': require('./admin'),
-    'api': require('./api'),
-    'public': require('./public'),
-}
+  'admin': require('./admin'),
+  'api': require('./api'),
+  'oauth': require('./oauth'),
+  'public': require('./public'),
+};

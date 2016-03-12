@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 20:28:25
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T02:23:45+08:00
  */
 import koarouter from 'koa-router';
 import fs from 'fs';

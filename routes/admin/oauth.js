@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-29 10:18:29
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-09 16:58:15
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T02:39:49+08:00
  */
 import koarouter from 'koa-router';
 import sequelize from 'sequelize';
@@ -36,7 +36,7 @@ router.get('/', async(ctx) => {
 
   // it's not necessary to await in parallel for performance
   const ocs = await models.oauth.findAll({
-    attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback_url', 'is_admin'],
+    attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback', 'is_admin'],
     where: where,
     offset: (ctx.request.page - 1) * ctx.request.per_page,
     limit: ctx.request.per_page,

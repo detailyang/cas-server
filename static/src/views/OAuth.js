@@ -133,9 +133,9 @@ export default React.createClass({
         dataIndex: 'domain',
         key: 'domain',
       }, {
-        title: 'callback_url',
-        dataIndex: 'callback_url',
-        key: 'callback_url',
+        title: 'callback',
+        dataIndex: 'callback',
+        key: 'callback',
       }, {
         title: 'secret',
         dataIndex: 'secret',

@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 20:00:28
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T02:34:57+08:00
  */
 
 import Koa from 'koa';
@@ -27,7 +27,7 @@ app.use(middlewares.view);
 app.use(middlewares.index);
 
 app.use(routes.admin.user.routes());
-app.use(routes.admin.oauth.routes());
+app.use(routes.oauth.user.routes());
 app.use(routes.api.user.routes());
 app.use(routes.public.user.routes());
 
