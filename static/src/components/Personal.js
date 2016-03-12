@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-11T12:16:28+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T03:11:05+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import React from 'react';
 import Antd, {
     Upload,
@@ -58,8 +68,9 @@ export default React.createClass({
   handleChangePassword(oldpassword, newpassword) {
     this.model.resetPassword(oldpassword, newpassword).done(() => {
       Antd.message.success('修改密码成功');
-    }).fail((msg) => {
-      Antd.message.error(msg);
+    }).fail((msg, resp) => {
+      const info = resp.code !== 0 && resp.data.value ? resp.data.value : msg;
+      Antd.message.error(info);
     });
   },
 

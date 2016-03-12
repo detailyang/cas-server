@@ -2,17 +2,13 @@
  * @Author: detailyang
  * @Date:   2016-02-18 12:43:02
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T02:23:45+08:00
+* @Last modified time: 2016-03-13T02:59:43+08:00
  */
 import koarouter from 'koa-router';
-import fs from 'fs';
 import convert from 'koa-convert';
 import koaBody from 'koa-body';
-import zxcvbn from 'zxcvbn';
+import controllers from '../../controllers';
 
-import models from '../../models';
-import config from '../../config';
-import utils from '../../utils';
 
 const koabody = koaBody({
   multipart: true,
@@ -22,143 +18,9 @@ const router = koarouter({
 });
 module.exports = router;
 
-router.get('/self', async(ctx) => {
-  const user = await models.user.findOne({
-    attributes: ['id', 'username', 'is_admin', 'gender', 'password',
-                 'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
-    where: {
-      is_delete: false,
-      id: ctx.session.id,
-    },
-  });
-  if (!user) {
-    throw new utils.error.NotFoundError('dont found user');
-  }
-  user.dataValues.notp = utils.password.otpqrcode(
-    utils.password.encrypt(
-      user.username + user.password, config.notp.salt),
-    config.notp.label);
-  delete user.dataValues.password;
-  ctx.return.data.value = user;
-  ctx.body = ctx.return;
-});
-
-router.put('/self', async(ctx) => {
-  delete ctx.request.body.username;
-  delete ctx.request.body.password;
-  delete ctx.request.body.id;
-  const user = await models.user.update(ctx.request.body, {
-    where: {
-      id: ctx.session.id,
-    },
-  });
-  if (!user) {
-    throw new utils.error.ServerError('update user error');
-  }
-  ctx.body = ctx.return;
-});
-
-router.get('/self/avatar', async(ctx) => {
-  const user = await models.user.findOne({
-    attributes: ['avatar'],
-    where: {
-      is_delete: false,
-      id: ctx.session.id,
-    },
-  });
-
-  ctx.response.set('Content-Type', 'image/jpeg');
-  ctx.response.set('Cache-Control', `public, max-age=${config.avatar.cache}`);
-  ctx.body = user.avatar;
-});
-
-
-router.post('/self/avatar', convert(koabody), async(ctx) => {
-  if (!ctx.request.body.files.avatar) {
-    throw new Error('please upload avatar');
-  }
-  const avatar = ctx.request.body.files.avatar;
-
-  if (avatar.size >= config.avatar.maxsize) {
-    throw new Error('avatar too large');
-  }
-  const buffer = await new Promise((resolve, reject) => {
-    fs.readFile(avatar.path, (err, data) => {
-      if (err) return reject(err);
-      return resolve(data);
-    });
-  });
-  const user = await models.user.update({
-    avatar: buffer,
-  }, {
-    where: {
-      id: ctx.session.id,
-    },
-  });
-  if (!user) {
-    throw new utils.error.ServerError('update user error');
-  }
-
-  await new Promise((resolve, reject) => {
-    fs.unlink(avatar.path, (err, data) => {
-      if (err) return reject(err);
-      return resolve(data);
-    });
-  });
-
-  ctx.body = ctx.return;
-});
-
-router.post('/self/dynamicpassword', async(ctx) => {
-  const dp = ctx.request.body.dynamicpassword;
-  const user = await models.user.findOne({
-    attributes: ['username', 'password'],
-    where: {
-      is_delete: false,
-      id: ctx.session.id,
-    },
-  });
-  const rv = utils.password.otpcheck(dp, utils.password.encrypt(
-    user.username + user.password, config.notp.salt));
-  if (!rv) {
-    throw new utils.error.ParamsError('optcode not right');
-  } else {
-    if (rv.delta < config.notp.delta) {
-      throw new utils.error.ParamsError('optcode not right');
-    }
-  }
-  ctx.body = ctx.return;
-});
-
-router.put('/self/staticpassword', async(ctx) => {
-  const oldpassword = ctx.request.body.oldpassword;
-  const newpassword = ctx.request.body.newpassword;
-
-  const value = zxcvbn(newpassword);
-  if (value.score <= 1) {
-    throw new utils.error.ParamsError('password strength is too low');
-  }
-  const user = await models.user.findOne({
-    attributes: ['id', 'password'],
-    where: {
-      is_delete: false,
-      id: ctx.session.id,
-    },
-  });
-  if (!user) {
-    throw new utils.error.NotFoundError('dont found user');
-  } else {
-    if (!utils.password.check(oldpassword, user.password)) {
-      throw new utils.error.ParamsError('old password not right');
-    }
-  }
-  const salt = utils.password.genSalt(config.password.bcryptlength);
-  await models.user.update({
-    password: utils.password.encrypt(newpassword, salt),
-  }, {
-    where: {
-      id: ctx.session.id,
-    },
-  });
-  ctx.body = ctx.return;
-});
+router.get('/self', controllers.user.detail.get);
+router.put('/self', controllers.user.detail.put);
+router.get('/self/avatar', controllers.user.detail.avatar.get);
+router.post('/self/avatar', convert(koabody), controllers.user.detail.avatar.post);
+router.post('/self/dynamicpassword', controllers.user.detail.dynamicpassword.post);
+router.put('/self/staticpassword', controllers.user.detail.staticpassword.put);

@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 10:18:29
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T02:39:49+08:00
+* @Last modified time: 2016-03-13T03:06:12+08:00
  */
 import koarouter from 'koa-router';
 import sequelize from 'sequelize';
