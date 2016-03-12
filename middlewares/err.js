@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-03-08 12:04:19
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-08 17:22:20
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T03:58:47+08:00
  */
 
 import sequelize from 'sequelize';
@@ -27,7 +27,7 @@ module.exports = async(ctx, next) => {
             || err instanceof sequelize.ConnectionRefusedError
             || err instanceof sequelize.ConnectionError) {
       // production record log
-      conosle.log(err);
+      console.log(err);
       ctx.return.code = utils.return.getCode('servererror');
       ctx.return.msg = utils.return.getMsg('servererror');
       ctx.body = ctx.return;
