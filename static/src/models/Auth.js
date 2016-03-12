@@ -1,66 +1,68 @@
-import Backbone from 'backbone'
-import ajax from '../utils/ajax'
+import Backbone from 'backbone';
+import ajax from '../utils/ajax';
 
-let AuthModel = Backbone.Model.extend({
-    defaults: {
-        // 是否已经登录
+const AuthModel = Backbone.Model.extend({
+  defaults: {
+    // 是否已经登录
+    isLogin: false,
+    username: '',
+    password: '',
+    isAdmin: false,
+  },
+
+  self() {
+    return ajax({
+      url: '/api/users/self',
+    }).done((data) => {
+      this.set({
+        isLogin: true,
+        username: data.username,
+        isAdmin: data.is_admin,
+      });
+    }).fail(() => {
+      this.set({
         isLogin: false,
         username: '',
+      });
+    });
+  },
+
+  login(username, password) {
+    return ajax({
+      url: '/public/users/login',
+      type: 'POST',
+      data: {
+        username,
+        password,
+      },
+    }).done(() => {
+      this.set({
+        isLogin: true,
+        username: username,
         password: '',
-        isAdmin: false
-    },
+      });
+      this.trigger('login-success');
+    }).fail(() => {
+      this.set({
+        isLogin: false,
+        username: '',
+      });
+      this.trigger('login-error');
+    });
+  },
 
-    self() {
-        return ajax({
-            url: '/api/users/self'
-        }).done((data) => {
-            this.set({
-                isLogin: true,
-                username: data.username,
-                isAdmin: data.is_admin
-            })
-        }).fail((data) => {
-            this.set({
-                isLogin: false,
-                username: ''
-            })
-        })
-    },
-
-    login(username, password) {
-        return ajax({
-            url: '/public/users/login',
-            type: 'POST',
-            data: {
-                username,
-                password
-            }
-        }).done((data) => {
-            this.set({
-                isLogin: true,
-                username: username,
-                password: ''
-            })
-            this.trigger('login-success')
-        }).fail((data) => {
-            this.set({
-                isLogin: false,
-                username: ''
-            })
-            this.trigger('login-error')
-        })
-    },
-
-    logout() {
-        return ajax({
-            url: '/public/users/logout',
-            type: 'POST'
-        })
-    }
+  logout() {
+    return ajax({
+      url: '/public/users/logout',
+      type: 'POST',
+    });
+  },
 
 });
 
-let authModelInstance = new AuthModel()
+const authModelInstance = new AuthModel();
 
-export default AuthModel
-export { authModelInstance }
+export default AuthModel;
+export {
+  authModelInstance,
+};

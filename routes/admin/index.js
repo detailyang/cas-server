@@ -5,9 +5,8 @@
  * @Last Modified time: 2016-03-08 14:48:01
  */
 
-'use strict';
-import user from "./user"
-import oauth from "./oauth"
+import user from './user';
+import oauth from './oauth';
 
 module.exports = {
   'user': user,

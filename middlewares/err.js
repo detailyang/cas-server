@@ -12,7 +12,6 @@ module.exports = async(ctx, next) => {
   try {
     await next();
   } catch (err) {
-    console.log('asdfasdf', err);
     if (err instanceof sequelize.ValidationError) {
       const errors = {};
       for (const e in err.errors) {
@@ -20,13 +19,14 @@ module.exports = async(ctx, next) => {
         errors[err.errors[e].path] = err.errors[e].message;
       }
       ctx.return.data.errors = errors;
+      ctx.return.code = utils.return.getCode('failure');
+      ctx.return.msg = utils.return.getMsg('failure');
+      ctx.body = ctx.return;
+      return;
     } else if (err instanceof sequelize.DatabaseError
-            || err instanceof ReferenceError
-            || err instanceof TypeError
             || err instanceof sequelize.ConnectionRefusedError
             || err instanceof sequelize.ConnectionError) {
       // production record log
-      console.log(err);
       ctx.return.code = utils.return.getCode('servererror');
       ctx.return.msg = utils.return.getMsg('servererror');
       ctx.body = ctx.return;
@@ -34,23 +34,22 @@ module.exports = async(ctx, next) => {
     } else if (err instanceof utils.error.PermissionError) {
       ctx.return.code = utils.return.getCode('permission');
       ctx.return.msg = utils.return.getMsg('permission');
+      ctx.return.data.value = err.message;
       ctx.body = ctx.return;
       return;
     } else if (err instanceof utils.error.NotFoundError) {
       ctx.return.code = utils.return.getCode('notfound');
       ctx.return.msg = utils.return.getMsg('notfound');
-      ctx.body = ctx.return;
-      return;
-    } else if (err instanceof utils.error.PasswordNotRightError) {
-      ctx.return.code = utils.return.getCode('unauthorized');
-      ctx.return.msg = utils.return.getMsg('unauthorized');
-      ctx.body = ctx.return;
-      return;
-    } else {
       ctx.return.data.value = err.message;
+      ctx.body = ctx.return;
+      return;
+    } else if (err instanceof utils.error.ParamsError) {
+      ctx.return.code = utils.return.getCode('param');
+      ctx.return.msg = utils.return.getMsg('param');
+      ctx.return.data.value = err.message;
+      ctx.body = ctx.return;
+      return;
     }
-    ctx.return.code = utils.return.getCode('failure');
-    ctx.return.msg = utils.return.getMsg('failure');
-    ctx.body = ctx.return;
+    throw err;
   }
 };

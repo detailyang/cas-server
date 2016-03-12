@@ -45,6 +45,7 @@
     "koa-session2": "^0.1.4",
     "koa-static": "^2.0.0",
     "koa-views": "^4.1.0",
+    "minimist": "^1.2.0",
     "mysql": "^2.10.2",
     "notp": "^2.0.3",
     "qrcode.react": "^0.6.0",

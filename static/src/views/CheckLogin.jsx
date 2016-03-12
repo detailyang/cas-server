@@ -1,15 +1,14 @@
-import './login.scss'
+import './login.scss';
 
-import React from 'react'
-import {Spin} from 'antd'
+import React from 'react';
+import { Spin } from 'antd';
 
 export default React.createClass({
-
-    render() {
-        return (
-            <div className='check-login'>
-                <Spin />
-            </div>
-        )
-    }
-})
+  render() {
+    return (
+      <div className="check-login">
+        <Spin />
+      </div>
+    );
+  },
+});

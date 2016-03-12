@@ -107,7 +107,10 @@ export default React.createClass({
                   action="/api/users/self/avatar"
                   onChange={this.props.onUpload}
                 >
-                  <img src="/api/users/self/avatar" width="120" className="avatar" />
+                  <img src={`/api/users/self/avatar?${new Date().getTime()}`}
+                    width="120"
+                    className="avatar"
+                  />
                 </Upload>
               </FormItem>
               <Row>

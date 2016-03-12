@@ -12,16 +12,16 @@ config.paginator = {
 
 if (process.env.NODE_ENV === 'dev') {
   config.database = {
-    username: 'cas',
-    password: 'showmemoney',
+    username: 'root',
+    password: '123456',
     database: 'cas',
-    host: '192.168.66.202',
+    host: '127.0.0.1',
     port: '3306',
     dialect: 'mysql',
     logging: false,
   };
   config.redis = {
-    host: '192.168.66.202',
+    host: '127.0.0.1',
     port: '6379',
     ttl: 3600,
     db: 0,
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'dev') {
     salt: process.env.CAS_NOTP_SALT || '$2a$10$jsZ0onecMnHOeKUfRG9AYe',
   };
 } else if (process.env.NODE_ENV === 'test') {
-  ;
+  console.log('test');
 } else {
-  ;
+  console.log('prod');
 }

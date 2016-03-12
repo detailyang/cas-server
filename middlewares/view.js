@@ -5,9 +5,8 @@
 * @Last Modified time: 2016-03-08 13:30:24
 */
 
-'use strict';
-import convert from "koa-convert";
-import views from "koa-views";
+import convert from 'koa-convert';
+import views from 'koa-views';
 
 
 module.exports = convert(views(`${__dirname}/../views`));

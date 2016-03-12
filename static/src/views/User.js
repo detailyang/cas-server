@@ -84,11 +84,8 @@ export default React.createClass({
         title: 'id',
         dataIndex: 'id',
         key: 'id',
-      }, {
-        title: '头像',
-        dataIndex: 'avatar',
-        key: 'avatar',
-      }, {
+      },
+      {
         title: '状态',
         dataIndex: 'is_delete',
         key: 'is_delete',

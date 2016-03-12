@@ -11,9 +11,9 @@ import bodyParser from 'koa-bodyparser';
 import middlewares from './middlewares';
 import routes from './routes';
 
-let app = new Koa();
+const app = new Koa();
 if (process.env.NODE_ENV === 'dev') {
-    app.use(middlewares.webpack);
+  app.use(middlewares.webpack);
 }
 app.use(middlewares.error);
 app.use(middlewares.log);
@@ -32,5 +32,5 @@ app.use(routes.api.user.routes());
 app.use(routes.public.user.routes());
 
 app.listen(3000, () => {
-    console.log('server listen 3000');
+  console.log('server listen 3000');
 });
