@@ -82,7 +82,7 @@ module.exports = {
       },
     });
     if (!user) {
-      throw new utils.error.NotFoundError('dont found user');
+      throw new utils.error.NotFoundError('dont find user');
     }
     user.dataValues.notp = utils.password.otpqrcode(
       utils.password.encrypt(
@@ -106,7 +106,7 @@ module.exports = {
       where: where,
     });
     if (!user) {
-      throw new utils.error.NotFoundError('dont found user');
+      throw new utils.error.NotFoundError('dont find user');
     }
 
     ctx.return.data.value = user;
@@ -126,7 +126,7 @@ module.exports = {
       where: where,
     });
     if (!user) {
-      throw new utils.error.NotFoundError('dont found user');
+      throw new utils.error.NotFoundError('dont find user');
     }
 
     ctx.return.data.value = user;
@@ -238,7 +238,7 @@ module.exports = {
         },
       });
       if (!user) {
-        throw new utils.error.NotFoundError('dont found user');
+        throw new utils.error.NotFoundError('dont find user');
       } else {
         if (!utils.password.check(oldpassword, user.password)) {
           throw new utils.error.ParamsError('old password not right');

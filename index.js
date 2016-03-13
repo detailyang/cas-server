@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T22:10:24+08:00
+* @Last modified time: 2016-03-14T00:26:23+08:00
  */
 
 import Koa from 'koa';
@@ -26,6 +26,7 @@ app.use(middlewares.page);
 app.use(middlewares.view);
 app.use(middlewares.index);
 app.use(middlewares.queue);
+app.use(middlewares.cache);
 
 app.use(routes.admin.user.routes());
 app.use(routes.admin.oauth.routes());

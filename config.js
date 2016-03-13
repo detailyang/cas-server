@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:17:31+08:00
+* @Last modified time: 2016-03-14T00:28:20+08:00
  */
 const config = module.exports;
 
@@ -52,6 +52,15 @@ if (process.env.NODE_ENV === 'dev') {
     hostname: '127.0.0.1',
     port: 6379,
     db: '1',
+  };
+  config.cache = {
+    host: '127.0.0.1',
+    port: '6379',
+    ttl: 3600,
+    db: '2',
+  };
+  config.oauth = {
+    ttl: 1 * 60,
   };
 } else if (process.env.NODE_ENV === 'test') {
   console.log('test');

@@ -3,12 +3,14 @@
 * @Date:   2016-03-13T22:43:06+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T00:04:54+08:00
+* @Last modified time: 2016-03-14T00:18:29+08:00
 * @License: The MIT License (MIT)
 */
 
 
-import { Icon, Button, Row, Col, message} from 'antd';
+import { Icon, Button, Row, Col, message } from 'antd';
+import url from 'url';
+import querystring from 'querystring';
 import React from 'react';
 import Ajax from '../utils/ajax';
 
@@ -27,6 +29,8 @@ export default React.createClass({
   },
 
   render() {
+    const qs = querystring.parse(url.parse(location.href).query);
+    const name = qs.name || '';
     const AvatarStyle = {
       height: 100,
       width: 100,
@@ -50,6 +54,9 @@ export default React.createClass({
       'marginTop': 25,
       'marginBottom': 15,
     };
+    const NameStyle = {
+      color: 'red',
+    };
 
     return (
       <div className="row-flex row-flex-center">
@@ -65,7 +72,7 @@ export default React.createClass({
           <Col span="18">
             <h1 style={H1Style}>Authorize application</h1>
             <p>
-              Application would like permission to access your account
+              <strong style={NameStyle}>{name}</strong> would like permission to access your account
             </p>
           </Col>
           <Col span="6">

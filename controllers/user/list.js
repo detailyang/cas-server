@@ -53,7 +53,7 @@ module.exports = {
       limit: ctx.request.per_page,
     });
     if (!users.length) {
-      throw new utils.error.NotFoundError('dont found users');
+      throw new utils.error.NotFoundError('dont find users');
     }
 
     if (!users) throw new utils.error.NotFoundError();
@@ -105,7 +105,7 @@ module.exports = {
       });
 
       if (!user) {
-        throw new utils.error.NotFoundError('dont found user');
+        throw new utils.error.NotFoundError('dont find user');
       }
       ctx.return.data.value = user;
       ctx.body = ctx.return;

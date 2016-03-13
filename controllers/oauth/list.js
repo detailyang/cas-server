@@ -38,7 +38,7 @@ module.exports = {
       limit: ctx.request.per_page,
     });
     if (!ocs) {
-      throw new utils.error.NotFoundError('dont found oauths');
+      throw new utils.error.NotFoundError('dont find oauths');
     }
     const count = await models.oauth.findOne({
       attributes: [
