@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:06:22+08:00
+* @Last modified time: 2016-03-13T19:32:16+08:00
  */
 
 import Koa from 'koa';
@@ -15,8 +15,8 @@ const app = new Koa();
 if (process.env.NODE_ENV === 'dev') {
   app.use(middlewares.webpack);
 }
-app.use(middlewares.error);
 app.use(middlewares.log);
+app.use(middlewares.error);
 app.use(middlewares.return);
 app.use(middlewares.session);
 // use acl

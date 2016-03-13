@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-10 17:34:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T14:29:34+08:00
+* @Last modified time: 2016-03-13T19:17:02+08:00
  */
 import utils from '../utils';
 import models from '../models';
@@ -45,7 +45,7 @@ module.exports = async(ctx, next) => {
       throw new utils.error.PermissionError('secret is not right ');
     }
     ctx.oauth = oc;
-    await next();
+    return await next();
   }
 
   return await next();

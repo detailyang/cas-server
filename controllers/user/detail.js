@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T02:56:55+08:00
+* @Last modified time: 2016-03-13T18:02:25+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -14,30 +14,55 @@ import config from '../../config';
 
 module.exports = {
   async login(ctx) {
-    if (!ctx.request.body.password || !ctx.request.body.username) {
+    const id = ctx.request.body.id;
+    const username = ctx.request.body.username;
+    const password = ctx.request.body.password;
+    const dynamic = ctx.request.body.dynamic;
+
+    if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
     }
+    const where = {
+      is_delete: false,
+    };
+
+    if (username) {
+      where.username = username;
+    }
+    if (id) {
+      where.id = id;
+    }
+
     const user = await models.user.findOne({
       attributes: ['id', 'password', 'is_admin'],
-      where: {
-        is_delete: false,
-        username: ctx.request.body.username,
-      },
+      where: where,
     });
     if (!user) {
       throw new utils.error.NotFoundError(`no username: ${ctx.request.body.username}`);
     }
 
-    if (utils.password.check(ctx.request.body.password, user.dataValues.password)) {
-      const value = {
-        'id': user.id,
-        'username': ctx.request.body.username,
-        'is_admin': user.is_admin,
-        'gender': user.gender,
-      };
-      ctx.return.data.value = ctx.session = value;
-      ctx.body = ctx.return;
+    if (dynamic) {
+      const rv = utils.password.otpcheck(ctx.request.password, utils.password.encrypt(
+        user.username + user.password, config.notp.salt));
+      if (!rv) {
+        throw new utils.error.ParamsError('optcode not right');
+      } else {
+        if (rv.delta < config.notp.delta) {
+          throw new utils.error.ParamsError('optcode not right');
+        }
+      }
     } else {
+      if (utils.password.check(ctx.request.body.password, user.dataValues.password)) {
+        const value = {
+          'id': user.id,
+          'username': ctx.request.body.username,
+          'is_admin': user.is_admin,
+          'gender': user.gender,
+        };
+        ctx.return.data.value = ctx.session = value;
+        ctx.body = ctx.return;
+        return;
+      }
       throw new utils.error.ParamsError('password not right');
     }
   },
@@ -64,6 +89,48 @@ module.exports = {
         user.username + user.password, config.notp.salt),
       config.notp.label);
     delete user.dataValues.password;
+    ctx.return.data.value = user;
+    ctx.body = ctx.return;
+  },
+
+  async filter(ctx) {
+    const field = ctx.request.query.field;
+    const value = ctx.request.query.value;
+    const where = { is_delete: false };
+    if (field && value) {
+      where[field] = value;
+    }
+    console.log(where);
+    const user = await models.user.findAll({
+      attributes: ['id', 'username', 'gender',
+                   'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+      where: where,
+    });
+    if (!user) {
+      throw new utils.error.NotFoundError('dont found user');
+    }
+
+    ctx.return.data.value = user;
+    ctx.body = ctx.return;
+  },
+
+  async getOne(ctx) {
+    const field = ctx.request.query.field;
+    const value = ctx.request.query.value;
+    const where = { is_delete: false };
+    if (field && value) {
+      where[field] = value;
+    }
+    console.log(where);
+    const user = await models.user.findOne({
+      attributes: ['id', 'username', 'gender',
+                   'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+      where: where,
+    });
+    if (!user) {
+      throw new utils.error.NotFoundError('dont found user');
+    }
+
     ctx.return.data.value = user;
     ctx.body = ctx.return;
   },

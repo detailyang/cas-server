@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 20:25:49
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T19:15:28+08:00
  */
 const config = module.exports;
 
@@ -40,6 +40,12 @@ if (process.env.NODE_ENV === 'dev') {
     label: process.env.CAS_NOTP_LABEL || 'cas',
     delta: process.env.CAS_NOTP_DELTA || '-3',
     salt: process.env.CAS_NOTP_SALT || '$2a$10$jsZ0onecMnHOeKUfRG9AYe',
+  };
+  config.syslog = {
+    tag: 'cas',
+    facility: 'local6',
+    hostname: '192.168.66.204',
+    port: 514,
   };
 } else if (process.env.NODE_ENV === 'test') {
   console.log('test');

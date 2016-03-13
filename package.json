@@ -16,6 +16,7 @@
   "author": "nino, detailyang",
   "license": "MIT",
   "dependencies": {
+    "ain2": "^1.5.3",
     "antd": "^0.12.5",
     "avatar-generator": "^1.0.7",
     "babel": "^6.5.2",
