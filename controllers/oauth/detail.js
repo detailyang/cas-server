@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T00:46:16+08:00
+* @Last modified time: 2016-03-14T00:55:33+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -18,8 +18,9 @@ import config from '../../config';
 module.exports = {
   authorize: {
     async get(ctx) {
+      const name = ctx.request.query.name;
       if (!ctx.session || !ctx.session.id) {
-        return ctx.redirect('/public/oauth');
+        return ctx.redirect(`/public/oauth?name=${name}`);
       }
 
       return await ctx.render('authorize.html');
@@ -54,6 +55,10 @@ module.exports = {
 
   oauth: {
     async get(ctx) {
+      const name = ctx.request.query.name || '';
+      if (ctx.session && ctx.session.id) {
+        return ctx.redirect(`/public/oauth/authorize?name=${name}`);
+      }
       await ctx.render('oauth.html');
       return true;
     },
