@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:17:59+08:00
+* @Last modified time: 2016-03-13T21:27:35+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
@@ -116,16 +116,24 @@ module.exports = {
         is_delete: true,
       }, {
         where: {
+          is_delete: false,
           id: ctx.params.id,
         },
       });
-      if (!user.length) {
-        throw new utils.error.ServerError('delete user error');
+      if (!user[0]) {
+        throw new utils.error.NotFoundError('not found user');
       }
       ctx.body = ctx.return;
+      ctx.queue.add({
+        event: 'user.offline',
+        value: {
+          id: ctx.params.id,
+        },
+      });
     },
 
     async put(ctx) {
+      const is_delete = ctx.request.body.is_delete;
       // id username password should not be changed
       delete ctx.request.body.username;
       delete ctx.request.body.password;
@@ -135,10 +143,16 @@ module.exports = {
           id: ctx.params.id,
         },
       });
-      if (!user) {
-        throw new utils.error.ServerError('update user error');
+      if (!user[0]) {
+        throw new utils.error.NotFoundError('not found user');
       }
       ctx.body = ctx.return;
+      ctx.queue.add({
+        event: +is_delete ? 'user.offline' : 'user.online',
+        value: {
+          id: ctx.params.id,
+        },
+      });
     },
 
     staticpassword: {

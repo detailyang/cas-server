@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-11T19:48:51+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T22:17:08+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import Backbone from 'backbone';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -24,12 +34,10 @@ export default Backbone.Router.extend({
     this.app = document.getElementById('app');
     this.isAdmin = attr.isAdmin;
 
-    console.log('init', attr);
-
     this.show(Header, null, this.header);
     this.show(Nav, {
       current: 'personal',
-      isAdmin: this.isAdmin
+      isAdmin: this.isAdmin,
     }, this.nav);
   },
 
@@ -37,7 +45,7 @@ export default Backbone.Router.extend({
     this.show(User);
     this.show(Nav, {
       current: 'user',
-      isAdmin: this.isAdmin
+      isAdmin: this.isAdmin,
     }, this.nav);
   },
 
@@ -45,7 +53,7 @@ export default Backbone.Router.extend({
     this.show(OAuth);
     this.show(Nav, {
       current: 'oauth',
-      isAdmin: this.isAdmin
+      isAdmin: this.isAdmin,
     }, this.nav);
   },
 
@@ -53,7 +61,7 @@ export default Backbone.Router.extend({
     this.show(Personal);
     this.show(Nav, {
       current: 'personal',
-      isAdmin: this.isAdmin
+      isAdmin: this.isAdmin,
     }, this.nav);
   },
 

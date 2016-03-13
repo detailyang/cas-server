@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 10:18:29
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:24:54+08:00
+* @Last modified time: 2016-03-13T22:00:20+08:00
  */
 import uuid from 'uuid';
 import sequelize from 'sequelize';
@@ -32,7 +32,7 @@ module.exports = {
 
     // it's not necessary to await in parallel for performance
     const ocs = await models.oauth.findAll({
-      attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback', 'is_admin'],
+      attributes: ['id', 'name', 'secret', 'identify', 'domain', 'desc', 'callback', 'is_admin'],
       where: where,
       offset: (ctx.request.page - 1) * ctx.request.per_page,
       limit: ctx.request.per_page,
@@ -56,24 +56,11 @@ module.exports = {
   },
 
   async post(ctx) {
-    ctx.request.body.secret = uuid.v1();
+    ctx.request.body.secret = uuid.v4();
+    ctx.request.body.identify = uuid.v4();
     const oc = await models.oauth.create(ctx.request.body);
     if (!oc) {
       throw new utils.error.ServerError('create oauth error');
-    }
-    ctx.body = ctx.return;
-  },
-
-  async delete(ctx) {
-    const oc = await models.oauth.update({
-      is_delete: true,
-    }, {
-      where: {
-        id: ctx.params.id,
-      },
-    });
-    if (!oc) {
-      throw new utils.error.ServerError('delete oauth error');
     }
     ctx.body = ctx.return;
   },
@@ -87,6 +74,20 @@ module.exports = {
         },
       });
       ctx.return.data.value = oc;
+      ctx.body = ctx.return;
+    },
+
+    async delete(ctx) {
+      const oc = await models.oauth.update({
+        is_delete: true,
+      }, {
+        where: {
+          id: ctx.params.id,
+        },
+      });
+      if (!oc) {
+        throw new utils.error.ServerError('delete oauth error');
+      }
       ctx.body = ctx.return;
     },
 

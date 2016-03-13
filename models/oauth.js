@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-09 16:08:39
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T21:42:40+08:00
  */
 
 module.exports = (sequelize, DataTypes) => {
@@ -24,6 +24,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     secret: {
+      type: DataTypes.STRING(36),
+      allowNull: false,
+      defaultValue: '',
+      validate: {
+        len: {
+          args: [36, 36],
+          msg: '长度必须为36位',
+        },
+      },
+    },
+    identify: {
       type: DataTypes.STRING(36),
       allowNull: false,
       defaultValue: '',

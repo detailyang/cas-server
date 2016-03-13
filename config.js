@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T19:15:28+08:00
+* @Last modified time: 2016-03-13T21:17:31+08:00
  */
 const config = module.exports;
 
@@ -46,6 +46,12 @@ if (process.env.NODE_ENV === 'dev') {
     facility: 'local6',
     hostname: '192.168.66.204',
     port: 514,
+  };
+  config.queue = {
+    name: 'cas',
+    hostname: '127.0.0.1',
+    port: 6379,
+    db: '1',
   };
 } else if (process.env.NODE_ENV === 'test') {
   console.log('test');

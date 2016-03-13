@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-11T12:16:28+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T21:56:43+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import _ from 'underscore';
 import React from 'react';
 import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';
@@ -140,6 +150,10 @@ export default React.createClass({
         title: 'secret',
         dataIndex: 'secret',
         key: 'secret',
+      }, {
+        title: 'identify',
+        dataIndex: 'identify',
+        key: 'identify',
       }, {
         title: '操作',
         dataIndex: 'x',

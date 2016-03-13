@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:33:50+08:00
+* @Last modified time: 2016-03-13T22:06:04+08:00
  */
 import koarouter from 'koa-router';
 

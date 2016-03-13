@@ -100,7 +100,6 @@ module.exports = {
     if (field && value) {
       where[field] = value;
     }
-    console.log(where);
     const user = await models.user.findAll({
       attributes: ['id', 'username', 'gender',
                    'chinesename', 'aliasname', 'mobile', 'email', 'key'],
@@ -121,7 +120,6 @@ module.exports = {
     if (field && value) {
       where[field] = value;
     }
-    console.log(where);
     const user = await models.user.findOne({
       attributes: ['id', 'username', 'gender',
                    'chinesename', 'aliasname', 'mobile', 'email', 'key'],

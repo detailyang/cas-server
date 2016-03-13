@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-11T12:16:28+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-13T21:54:42+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import React from 'react';
 import Antd, {
   Modal,
@@ -80,6 +90,16 @@ export default React.createClass({
               disabled
               value={formData.secret}
               onChange={this.setValue.bind(this, 'secret')}
+            />
+          </Form.Item>
+          <Form.Item label="identify: "
+            validateStatus={errorStatus('secret')}
+            help={help('secret')}
+          >
+            <Input
+              disabled
+              value={formData.identify}
+              onChange={this.setValue.bind(this, 'identify')}
             />
           </Form.Item>
           <Row>

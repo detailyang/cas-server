@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:15:39+08:00
+* @Last modified time: 2016-03-13T21:56:59+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -17,6 +17,7 @@ export default Backbone.Model.extend({
     id: null,
     name: '',
     secret: '',
+    identify: '',
     doamin: '',
     callback: '',
     desc: '',
