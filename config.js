@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T15:24:55+08:00
+* @Last modified time: 2016-03-14T15:31:54+08:00
  */
 const config = module.exports;
 
@@ -78,7 +78,7 @@ if (process.env.NODE_ENV === 'dev') {
     host: process.env.CAS_REDIS_HOST,
     port: process.env.CAS_REDIS_PORT,
     ttl: process.env.CAS_REDIS_TTL || 3600,
-    db: process.env.CAS_REDIS_DB,
+    db: process.env.CAS_REDIS_DB || 0,
     key: process.env.CAS_REDIS_KEY || 'momtellmewhy',
   };
   config.password = {
@@ -99,7 +99,7 @@ if (process.env.NODE_ENV === 'dev') {
     tag: process.env.CAS_SYSLOG_TAG || 'cas',
     facility: process.env.CAS_SYSLOG_FACILITY || 'local6',
     hostname: process.env.CAS_SYSLOG_HOSTNAME || '192.168.66.204',
-    port: process.env.CAS_SYSLOG_PORT,
+    port: process.env.CAS_SYSLOG_PORT || 514,
   };
   config.queue = {
     name: process.env.CAS_QUEUE_NAME || 'cas',

@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T00:26:23+08:00
+* @Last modified time: 2016-03-14T15:48:04+08:00
  */
 
 import Koa from 'koa';
@@ -12,13 +12,16 @@ import middlewares from './middlewares';
 import routes from './routes';
 
 const app = new Koa();
-if (process.env.NODE_ENV === 'dev') {
-  app.use(middlewares.webpack);
-}
+
 app.use(middlewares.log);
 app.use(middlewares.error);
 app.use(middlewares.return);
 app.use(middlewares.session);
+if (process.env.NODE_ENV === 'dev') {
+  app.use(middlewares.webpack);
+} else {
+  app.use(middlewares.serve);
+}
 // use acl
 app.use(middlewares.acl);
 app.use(bodyParser());
