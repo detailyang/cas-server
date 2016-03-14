@@ -11,7 +11,7 @@ config.paginator = {
 };
 
 config.cas = {
-  port: config.CAS_CAS_PORT || 3000,
+  port: process.env.CAS_CAS_PORT || 3000,
 };
 
 if (process.env.NODE_ENV === 'dev') {
