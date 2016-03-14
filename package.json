@@ -50,6 +50,8 @@
     "thirty-two": "^1.0.1",
     "uuid": "^2.0.1",
     "validator": "^4.9.0",
+    "winston": "^2.2.0",
+    "winston-syslog": "^1.2.1",
     "zxcvbn": "^4.2.0"
   },
   "devDependencies": {
