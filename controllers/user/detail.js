@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T18:02:25+08:00
+* @Last modified time: 2016-03-14T20:36:42+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -162,6 +162,25 @@ module.exports = {
       ctx.response.set('Cache-Control', `public, max-age=${config.avatar.cache}`);
       ctx.body = user.avatar;
     },
+
+    async getByUsername(ctx) {
+      const username = ctx.params.username;
+      const user = await models.user.findOne({
+        attributes: ['avatar'],
+        where: {
+          // is_delete: false, even if it's deleted:)
+          username: username,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+
+      ctx.response.set('Content-Type', 'image/jpeg');
+      ctx.response.set('Cache-Control', `public, max-age=${config.avatar.cache}`);
+      ctx.body = user.avatar;
+    },
+
     async post(ctx) {
       if (!ctx.request.body.files.avatar) {
         throw new Error('please upload avatar');
