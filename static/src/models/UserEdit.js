@@ -3,13 +3,13 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T16:55:55+08:00
+* @Last modified time: 2016-03-14T21:33:17+08:00
 * @License: The MIT License (MIT)
 */
 
 
-import Backbone from 'backbone'
-import ajax from '../utils/ajax'
+import Backbone from 'backbone';
+import ajax from '../utils/ajax';
 
 export default Backbone.Model.extend({
 
@@ -20,9 +20,9 @@ export default Backbone.Model.extend({
     aliasname: '',
     mobile: '',
     email: '',
-    is_delete: false,
-    gender: '0',
     key: '',
+    is_delete: false,
+    gender: true,
   },
 
   fetch() {

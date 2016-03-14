@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T20:57:36+08:00
+* @Last modified time: 2016-03-14T21:02:21+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -143,6 +143,7 @@ export default React.createClass({
                 是否具有admin权限:
                 <Switch
                   style={switchStyle}
+                  size="small"
                   checked={+formData.is_admin}
                   checkedChildren="是"
                   unCheckedChildren="否"

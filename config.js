@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T17:18:00+08:00
+* @Last modified time: 2016-03-14T21:44:42+08:00
  */
 const config = module.exports;
 
@@ -77,6 +77,13 @@ if (process.env.NODE_ENV === 'dev') {
     port: process.env.CAS_DATABASE_PORT,
     dialect: 'mysql',
     logging: false,
+    define: {
+        hooks: {
+            beforeUpdate: function () {
+              console.log('abcd');
+            }
+        }
+    }
   };
   config.redis = {
     host: process.env.CAS_REDIS_HOST,

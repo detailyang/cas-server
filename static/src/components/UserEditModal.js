@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:06:19+08:00
+* @Last modified time: 2016-03-14T21:33:09+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -71,7 +71,8 @@ export default React.createClass({
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
     const help = (field) => formErrors[field];
-
+    console.log(formData.gender);
+    console.log(formData.gender ? 1 : 0);
     return (
       <Modal title={this.props.id ? '编辑' : '新建'}
         visible={this.props.visible}
@@ -91,11 +92,11 @@ export default React.createClass({
             <Col span="11">
               <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
                 <RadioGroup
-                  value={`${formData.gender}`}
+                  value={+formData.gender ? 1 : 0}
                   onChange={this.setValue.bind(this, 'gender')}
                 >
-                  <Radio value="0">男</Radio>
-                  <Radio value="1">女</Radio>
+                  <Radio value={0}>男</Radio>
+                  <Radio value={1}>女</Radio>
                 </RadioGroup>
               </Form.Item>
             </Col>
