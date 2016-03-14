@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:05:37+08:00
+* @Last modified time: 2016-03-14T20:57:36+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -11,9 +11,7 @@
 import React from 'react';
 import Antd, {
   Modal,
-  Tooltip,
-  Icon,
-  Checkbox,
+  Switch,
   Form,
   Input,
   Row,
@@ -71,6 +69,9 @@ export default React.createClass({
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
     const help = (field) => formErrors[field];
+    const switchStyle = {
+      marginLeft: 15,
+    };
 
     return (
       <Modal title={this.props.id ? '编辑' : '新建'}
@@ -136,20 +137,18 @@ export default React.createClass({
             />
           </Form.Item>
           <Form.Item
-            label={
-              <span>admin
-              <Tooltip title = "具有admin权限" >
-                <Icon type="question-circle-o" />
-              </Tooltip>:
-              </span >}
             validateStatus={errorStatus('is_admin')} help={help('is_admin')}
           >
-            <label>
-              <Checkbox checked={formData.is_admin ? 1 : 0}
-                onChange={this.setValue.bind(this, 'is_admin')}
-              />
-              增加admin权限
-            </label>
+              <label>
+                是否具有admin权限:
+                <Switch
+                  style={switchStyle}
+                  checked={+formData.is_admin}
+                  checkedChildren="是"
+                  unCheckedChildren="否"
+                  onChange={this.setValue.bind(this, 'is_admin')}
+                />
+              </label>
           </Form.Item>
         </Form>
       </Modal>

@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T20:36:42+08:00
+* @Last modified time: 2016-03-14T20:37:53+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
