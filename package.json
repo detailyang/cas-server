@@ -4,7 +4,8 @@
   "description": "cas",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "build": "webpack && ls static/build/*.js | xargs -I {} uglifyjs --compress --mangle --output {}.min {}"
   },
   "repository": {
     "type": "git",
