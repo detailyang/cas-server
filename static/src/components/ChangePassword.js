@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:07:41+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import {
   Button,
   Form,
@@ -19,9 +29,11 @@ export default Form.create()(React.createClass({
     onSubmit: React.PropTypes.func,
   },
 
-  defaultProps: {
-    form: {},
-    onSubmit: noop,
+  getDefaultProps() {
+    return {
+      form: {},
+      onSubmit: noop,
+    };
   },
 
   getInitialState() {

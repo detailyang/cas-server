@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:54:42+08:00
+* @Last modified time: 2016-03-14T11:05:37+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -37,11 +37,13 @@ export default React.createClass({
     FormValidate, EditModal,
   ],
 
-  defaultProps: {
-    id: 0,
-    visible: false,
-    onOk: noop,
-    onCancel: noop,
+  getDefaultProps() {
+    return {
+      id: 0,
+      visible: false,
+      onOk: noop,
+      onCancel: noop,
+    };
   },
 
   getInitialState() {

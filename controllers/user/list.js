@@ -34,7 +34,7 @@ module.exports = {
           $like: `%${keyword}%`,
         },
       }, {
-        chinesename: {
+        realname: {
           $like: `%${keyword}%`,
         },
       }, {
@@ -46,7 +46,7 @@ module.exports = {
 
     // it's not necessary to await in parallel for performance
     const users = await models.user.findAll({
-      attributes: ['id', 'username', 'chinesename', 'aliasname',
+      attributes: ['id', 'username', 'realname', 'aliasname',
                    'mobile', 'email', 'is_delete'],
       where: where,
       offset: (ctx.request.page - 1) * ctx.request.per_page,
@@ -97,7 +97,7 @@ module.exports = {
   id: {
     async get(ctx) {
       const user = await models.user.findOne({
-        attributes: ['id', 'username', 'chinesename', 'aliasname',
+        attributes: ['id', 'username', 'realname', 'aliasname',
                      'mobile', 'email', 'key', 'is_delete'],
         where: {
           id: ctx.params.id,

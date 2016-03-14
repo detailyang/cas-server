@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:50:05+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import Backbone from 'backbone';
 import React from 'react';
 import { Menu } from 'antd';
@@ -5,14 +15,14 @@ import { Menu } from 'antd';
 export default React.createClass({
   propTypes: {
     current: React.PropTypes.string,
-    isAdmin: React.PropTypes.bool
+    isAdmin: React.PropTypes.bool,
   },
 
   getDefaultProps() {
-      return {
-          current: '',
-          isAdmin: false
-      };
+    return {
+      current: '',
+      isAdmin: false,
+    };
   },
 
   getInitialState() {
@@ -32,11 +42,10 @@ export default React.createClass({
   },
 
   render() {
-      console.log(this.props.isAdmin);
+    const style = {
+      display: this.props.isAdmin ? 'block' : 'none',
+    };
 
-     const style = {
-         display: this.props.isAdmin ? 'block' : 'none'
-     }
     return (
       <Menu
         onClick={this.handleClick}

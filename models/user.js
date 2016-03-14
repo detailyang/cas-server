@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:47:38+08:00
+* @Last modified time: 2016-03-14T10:36:46+08:00
  */
 
 'use strict';
@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
-    chinesename: {
+    realname: {
       type: DataTypes.STRING(128),
       allowNull: false,
       defaultValue: '',
       validate: {
-        is: {
-          args: /^[\u4e00-\u9fa5]+$/,
-          msg: '必须为汉字',
+        len: {
+          args: [1, 128],
+          msg: '长度必须为1-128位',
         },
       },
     },

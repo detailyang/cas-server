@@ -118,8 +118,8 @@ export default React.createClass({
         key: 'username',
       }, {
         title: '真实姓名',
-        dataIndex: 'chinesename',
-        key: 'chinesename',
+        dataIndex: 'realname',
+        key: 'realname',
       }, {
         title: '花名',
         dataIndex: 'aliasname',

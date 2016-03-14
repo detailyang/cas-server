@@ -7,7 +7,7 @@ export default Backbone.Model.extend({
     defaults: {
         id: null,
         username: '',
-        chinesename: '',
+        realname: '',
         aliasname: '',
         mobile: '',
         email: '',

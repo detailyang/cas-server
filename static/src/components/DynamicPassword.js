@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T16:55:05+08:00
+* @Last modified time: 2016-03-14T11:49:13+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -28,11 +28,6 @@ export default Form.create()(React.createClass({
     value: React.PropTypes.string,
     form: React.PropTypes.object,
     onSubmit: React.PropTypes.func,
-  },
-
-  defaultProps: {
-    form: {},
-    onSubmit: noop,
   },
 
   getDefaultProps() {
@@ -62,13 +57,17 @@ export default Form.create()(React.createClass({
     this.setState({ visible: false });
   },
 
-  handleSubmit(value) {
+  handleSubmit() {
     this.props.form.validateFields((errors, values) => {
       if (!!errors) {
         return;
       }
       this.props.onSubmit(values.pass);
     });
+  },
+
+  handleCopy(e) {
+    e.preventDefault();
   },
 
   render() {
@@ -113,7 +112,7 @@ export default Form.create()(React.createClass({
         >
           <Form horizontal form={this.props.form}>
             <Row>
-              <div className="qrcode row-flex row-flex-center">
+              <div className="qrcode">
                 <QRCode value={this.props.value} />
               </div>
               <div className="text-center">
@@ -121,11 +120,16 @@ export default Form.create()(React.createClass({
               </div>
               <Col span="18">
                 <FormItem {...formItemLayout} label="secret:">
-                  <Input
-                    disabled
-                    type="text"
-                    value={otpsecret}
-                  />
+                  <Row>
+                    <Col span="24">
+                      <Input
+                        disabled
+                        type="text"
+                        value={otpsecret}
+                        onClick={this.handleCopy}
+                      />
+                    </Col>
+                  </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label="动态密码：">
                   <Input
@@ -145,5 +149,5 @@ export default Form.create()(React.createClass({
         </Modal>
       </div>
     );
-  }
+  },
 }));

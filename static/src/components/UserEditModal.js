@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:06:19+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import React from 'react';
 import Antd, {
   Modal,
@@ -27,11 +37,13 @@ export default React.createClass({
     FormValidate, EditModal,
   ],
 
-  defaultProps: {
-    id: 0,
-    visible: false,
-    onOk: noop,
-    onCancel: noop,
+  getDefaultProps() {
+    return {
+      id: 0,
+      visible: false,
+      onOk: noop,
+      onCancel: noop,
+    };
   },
 
   getInitialState() {
@@ -106,12 +118,12 @@ export default React.createClass({
             <Col span="11">
               <Form.Item
                 label="真实姓名："
-                validateStatus={errorStatus('chinesename')}
-                help={help('chinesename')}
+                validateStatus={errorStatus('realname')}
+                help={help('realname')}
               >
                 <Input
-                  value={formData.chinesename}
-                  onChange={this.setValue.bind(this, 'chinesename')}
+                  value={formData.realname}
+                  onChange={this.setValue.bind(this, 'realname')}
                 />
               </Form.Item>
             </Col>

@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:16:47+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import './login.scss';
 
 import React from 'react';
@@ -6,27 +16,41 @@ import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import FormValidate from '../mixins/FormValidate';
 import { authModelInstance } from '../models/Auth';
 
+const noop = () => {};
+
 export default React.createClass({
 
+  propTypes: {
+    onOk: React.PropTypes.func,
+  },
+
   mixins: [FormValidate],
+
+  getDefaultProps() {
+    return {
+      onOk: noop,
+    };
+  },
 
   getInitialState() {
     return { formData: authModelInstance.toJSON(), loading: false };
   },
 
   handleLoginClick(e) {
+    const _this = this;
     e.preventDefault();
     const username = this.state.formData.username;
     const password = this.state.formData.password;
 
     this.setState({ loading: true });
 
-    authModelInstance.login(username, password).fail((msg, resp) => {
+    authModelInstance.login(username, password).done(() => {
+      _this.props.onOk();
+    }).fail((msg, resp) => {
       this.setState({ loading: false });
       const info = resp.code
         ? resp.data.value
         : msg;
-      console.log(msg);
       Antd.message.error(info, 3);
     });
   },

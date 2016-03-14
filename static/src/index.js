@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T19:48:51+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T22:49:22+08:00
+* @Last modified time: 2016-03-14T11:17:01+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -21,7 +21,8 @@ import CheckLogin from './views/CheckLogin';
 import Login from './views/Login';
 
 function initApplication(data) {
-  new Router({ isAdmin: data.value.is_admin });
+  new Router({ isAdmin: (data && data.value && data.value.is_admin)
+    || authModelInstance.get('is_admin') });
   Backbone.history.start();
 }
 

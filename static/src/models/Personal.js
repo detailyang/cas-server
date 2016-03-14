@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:49:05+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import Backbone from 'backbone';
 import ajax from '../utils/ajax';
 
@@ -6,7 +16,7 @@ export default Backbone.Model.extend({
   defaults: {
     id: null,
     username: '',
-    chinesename: '',
+    realname: '',
     aliasname: '',
     mobile: '',
     email: '',
@@ -62,9 +72,5 @@ export default Backbone.Model.extend({
         dynamicpassword: password,
       },
     });
-  },
-
-  upload(a, b, c, d) {
-    console.log(a, b, c, d);
   },
 });

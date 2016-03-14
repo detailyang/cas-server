@@ -75,7 +75,7 @@ module.exports = {
   async get(ctx) {
     const user = await models.user.findOne({
       attributes: ['id', 'username', 'is_admin', 'gender', 'password',
-                   'chinesename', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
+                   'realname', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
       where: {
         is_delete: false,
         id: ctx.session.id,
@@ -102,7 +102,7 @@ module.exports = {
     }
     const user = await models.user.findAll({
       attributes: ['id', 'username', 'gender',
-                   'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+                   'realname', 'aliasname', 'mobile', 'email', 'key'],
       where: where,
     });
     if (!user) {
@@ -122,7 +122,7 @@ module.exports = {
     }
     const user = await models.user.findOne({
       attributes: ['id', 'username', 'gender',
-                   'chinesename', 'aliasname', 'mobile', 'email', 'key'],
+                   'realname', 'aliasname', 'mobile', 'email', 'key'],
       where: where,
     });
     if (!user) {

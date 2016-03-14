@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T03:11:05+08:00
+* @Last modified time: 2016-03-14T11:05:57+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -40,10 +40,12 @@ export default React.createClass({
     FormValidate, EditModal,
   ],
 
-  defaultProps: {
-    onOk: noop,
-    onUpload: noop,
-    onCancel: noop,
+  getDefaultProps() {
+    return {
+      onOk: noop,
+      onUpload: noop,
+      onCancel: noop,
+    };
   },
 
   getInitialState() {
@@ -154,12 +156,12 @@ export default React.createClass({
                 <Col span="11">
                   <Form.Item
                     label="真实姓名："
-                    validateStatus={errorStatus('chinesename')}
-                    help={help('chinesename')}
+                    validateStatus={errorStatus('realname')}
+                    help={help('realname')}
                   >
                     <Input
-                      value={formData.chinesename}
-                      onChange={this.setValue.bind(this, 'chinesename')}
+                      value={formData.realname}
+                      onChange={this.setValue.bind(this, 'realname')}
                     />
                   </Form.Item>
                 </Col>

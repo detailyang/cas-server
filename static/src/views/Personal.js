@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T11:50:22+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import React from 'react';
 import _ from 'underscore';
 import {
@@ -18,9 +28,6 @@ export default React.createClass({
   },
 
   handleUpload(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
     if (info.file.status === 'done') {
       message.success(`${info.file.name} 上传成功。`);
     } else if (info.file.status === 'error') {

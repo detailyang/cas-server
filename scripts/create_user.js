@@ -13,7 +13,7 @@ const co = require('co');
 
 const argv = minimist(process.argv.slice(2));
 const username = argv.username;
-const chinesename = argv.chinesename || '管理员';
+const realname = argv.realname || '管理员';
 const aliasname = argv.aliasname || 'admin';
 const email = argv.email || 'admin@admin.com';
 const mobile = argv.mobile || '01234567890';
@@ -44,7 +44,7 @@ co(createUser({
   username: username,
   is_admin: admin,
   gender: gender,
-  chinesename: chinesename,
+  realname: realname,
   aliasname: aliasname,
   email: email,
   mobile: mobile,
