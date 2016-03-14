@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-02 15:21:55
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T22:36:33+08:00
+* @Last modified time: 2016-03-14T16:41:41+08:00
  */
 
 
@@ -19,7 +19,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'static/build/'),
-    publicPath: '/static/build',
+    publicPath: '/build',
     filename: '[name].bundle.js',
   },
   module: {
