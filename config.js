@@ -2,12 +2,16 @@
  * @Author: detailyang
  * @Date:   2015-02-19 14:09:05
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T15:31:54+08:00
+* @Last modified time: 2016-03-14T17:18:00+08:00
  */
 const config = module.exports;
 
 config.paginator = {
   per_page: 30,
+};
+
+config.cas = {
+  port: config.CAS_CAS_PORT || 3000,
 };
 
 if (process.env.NODE_ENV === 'dev') {

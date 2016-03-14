@@ -2,11 +2,12 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T15:48:04+08:00
+* @Last modified time: 2016-03-14T17:17:36+08:00
  */
 
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
+import config from './config';
 
 import middlewares from './middlewares';
 import routes from './routes';
@@ -38,6 +39,6 @@ app.use(routes.api.user.routes());
 app.use(routes.public.user.routes());
 app.use(routes.public.oauth.routes());
 
-app.listen(3000, () => {
-  console.log('server listen 3000');
+app.listen(config.cas.port, () => {
+  console.log(`server listen ${config.cas.port}`);
 });

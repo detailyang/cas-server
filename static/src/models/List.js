@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T17:05:13+08:00
+* @Last modified time: 2016-03-14T17:10:07+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -23,7 +23,7 @@ export default Backbone.Model.extend({
     // 总条数
     total: 0,
     // 每页多少条
-    per_page: 1,
+    per_page: 20,
     // 当前页码
     page: 1,
     loading: true,
