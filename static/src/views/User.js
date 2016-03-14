@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T16:47:27+08:00
+* @Last modified time: 2016-03-14T17:00:13+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -179,10 +179,6 @@ export default React.createClass({
       current: model.get('page'),
       pageSize: model.get('per_page'),
       showTotal: (total) => `共 ${total} 条`,
-      onChange: (page) => {
-        this.setState({ loading: true });
-        model.set('page', page).fetch();
-      },
     };
     return (
             <Table

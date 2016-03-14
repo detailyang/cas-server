@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T17:05:13+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import _ from 'underscore';
 import Backbone from 'backbone';
 import ajax from '../utils/ajax';
@@ -13,7 +23,7 @@ export default Backbone.Model.extend({
     // 总条数
     total: 0,
     // 每页多少条
-    per_page: 20,
+    per_page: 1,
     // 当前页码
     page: 1,
     loading: true,
@@ -37,7 +47,7 @@ export default Backbone.Model.extend({
       this.trigger('sync');
     }).fail((msg, resp) => {
       if (resp.code === 0) return;
-      const info = resp.code !== 0 && resp.data.value ? resp.data.value : msg;
+      const info = resp.code !== 0 && (resp.data && resp.data.value) ? resp.data.value : msg;
       this.trigger('error', info);
     });
 
