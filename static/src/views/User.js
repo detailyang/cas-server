@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:11+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-14T16:47:27+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import _ from 'underscore';
 import React from 'react';
 import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';

@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:05:57+08:00
+* @Last modified time: 2016-03-14T16:47:54+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -120,7 +120,7 @@ export default React.createClass({
                   action="/api/users/self/avatar"
                   onChange={this.props.onUpload}
                 >
-                  <img src={`/api/users/self/avatar?${new Date().getTime()}`}
+                  <img src="/api/users/self/avatar"
                     width="120"
                     className="avatar"
                   />

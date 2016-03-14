@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node test.js",
-    "build": "webpack && ls static/build/*.js | xargs -I {} uglifyjs --compress --mangle --output {}.min {}"
+    "build": "webpack && ls static/build/*.js | xargs -I {} uglifyjs --compress --mangle --output {} {}"
   },
   "repository": {
     "type": "git",
