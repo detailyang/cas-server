@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T21:33:09+08:00
+* @Last modified time: 2016-03-15T16:18:21+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -16,6 +16,7 @@ import Antd, {
   Radio,
   Row,
   Col,
+  Switch,
 } from 'antd';
 import UserEditModel from '../models/UserEdit';
 import FormValidate from '../mixins/FormValidate';
@@ -71,8 +72,7 @@ export default React.createClass({
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
     const help = (field) => formErrors[field];
-    console.log(formData.gender);
-    console.log(formData.gender ? 1 : 0);
+
     return (
       <Modal title={this.props.id ? '编辑' : '新建'}
         visible={this.props.visible}
@@ -88,33 +88,6 @@ export default React.createClass({
               onChange={this.setValue.bind(this, 'username')}
             />
           </Form.Item>
-          <Row>
-            <Col span="11">
-              <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
-                <RadioGroup
-                  value={+formData.gender ? 1 : 0}
-                  onChange={this.setValue.bind(this, 'gender')}
-                >
-                  <Radio value={0}>男</Radio>
-                  <Radio value={1}>女</Radio>
-                </RadioGroup>
-              </Form.Item>
-            </Col>
-            <Col span="11" offset="2">
-              <Form.Item
-                label="状态："
-                validateStatus={errorStatus('is_delete')}
-                help={help('is_delete')}
-              >
-                <RadioGroup value={formData.is_delete ? 1 : 0}
-                  onChange={this.setValue.bind(this, 'is_delete')}
-                >
-                  <Radio value={0}>在职</Radio>
-                  <Radio value={1}>离职</Radio>
-                </RadioGroup>
-              </Form.Item>
-            </Col>
-          </Row>
           <Row>
             <Col span="11">
               <Form.Item
@@ -156,6 +129,48 @@ export default React.createClass({
                   value={formData.mobile}
                   onChange={this.setValue.bind(this, 'mobile')}
                 />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="8">
+              <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
+                <RadioGroup
+                  value={+formData.gender ? 1 : 0}
+                  onChange={this.setValue.bind(this, 'gender')}
+                >
+                  <Radio value={0}>男</Radio>
+                  <Radio value={1}>女</Radio>
+                </RadioGroup>
+              </Form.Item>
+            </Col>
+            <Col span="8">
+              <Form.Item
+                label="状态："
+                validateStatus={errorStatus('is_delete')}
+                help={help('is_delete')}
+              >
+                <RadioGroup value={formData.is_delete ? 1 : 0}
+                  onChange={this.setValue.bind(this, 'is_delete')}
+                >
+                  <Radio value={0}>在职</Radio>
+                  <Radio value={1}>离职</Radio>
+                </RadioGroup>
+              </Form.Item>
+            </Col>
+            <Col span="8">
+              <Form.Item
+                label="权限："
+                validateStatus={errorStatus('is_admin')}
+                help={help('is_admin')}
+              >
+                <RadioGroup
+                  value={+formData.is_admin ? 1 : 0}
+                  onChange={this.setValue.bind(this, 'is_admin')}
+                >
+                  <Radio value={0}>普通</Radio>
+                  <Radio value={1}>管理员</Radio>
+                </RadioGroup>
               </Form.Item>
             </Col>
           </Row>

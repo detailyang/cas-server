@@ -3,7 +3,7 @@
 * @Date:   2016-03-15T13:39:31+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T14:25:03+08:00
+* @Last modified time: 2016-03-15T15:48:18+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -12,6 +12,7 @@ const express = require('express');
 const app = express();
 const request = require('superagent');
 const cas = {
+  domain: 'http://cas.example.com',
   name: 'demo',
   secret: '977beed4-ab6f-4e1f-b60c-9d84c60e1d5a',
   identify: '24a03e6e-d1ad-4f11-bd02-566b06b39481',

@@ -2,7 +2,7 @@
 # @Date:   2016-03-15T14:47:50+08:00
 # @Email:  detailyang@gmail.com
 # @Last modified by:   detailyang
-# @Last modified time: 2016-03-15T15:44:17+08:00
+# @Last modified time: 2016-03-15T15:51:10+08:00
 # @License: The MIT License (MIT)
 
 
@@ -14,9 +14,9 @@ import requests
 app = Flask(__name__)
 
 cas = {
-  'name': 'demo',
-  'secret': '977beed4-ab6f-4e1f-b60c-9d84c60e1d5a',
-  'identify': '24a03e6e-d1ad-4f11-bd02-566b06b39481',
+    'name': 'demo',
+    'secret': '977beed4-ab6f-4e1f-b60c-9d84c60e1d5a',
+    'identify': '24a03e6e-d1ad-4f11-bd02-566b06b39481',
 };
 
 @app.route('/')

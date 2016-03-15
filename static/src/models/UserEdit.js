@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T21:33:17+08:00
+* @Last modified time: 2016-03-15T16:05:44+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -22,7 +22,8 @@ export default Backbone.Model.extend({
     email: '',
     key: '',
     is_delete: false,
-    gender: true,
+    gender: false,
+    is_admin: false,
   },
 
   fetch() {
