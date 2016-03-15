@@ -7,9 +7,6 @@ Its goal is to make application authorization as easy as possible.It provides a 
 
 [![NPM version][shield-npm]](#)
 [![Node.js version support][shield-node]](#)
-[![Build status][shield-build]](#)
-[![Code coverage][shield-coverage]](#)
-[![Dependencies][shield-dependencies]](#)
 [![MIT licensed][shield-license]](#)
 
 
@@ -74,11 +71,8 @@ Copyright &copy; 2016
 
 [node]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
-[redis]: https://www.mysql.com/
-[mysql]: http://redis.io/
-[shield-coverage]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg
-[shield-dependencies]: https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg
+[mysql]: https://www.mysql.com/
+[redis]: http://redis.io/
 [shield-license]: https://img.shields.io/badge/license-MIT-blue.svg
 [shield-node]: https://img.shields.io/badge/node.js%20support-0.10–5-brightgreen.svg
 [shield-npm]: https://img.shields.io/badge/npm-v3.2.0-blue.svg
-[shield-build]: https://img.shields.io/badge/build-passing-brightgreen.svg
