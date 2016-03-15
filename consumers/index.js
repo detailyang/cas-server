@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T22:05:52+08:00
+* @Last modified time: 2016-03-15T14:02:01+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -46,7 +46,7 @@ queue.process((msg, done) => {
             return true;
           }
           request
-            .get(oc.callback)
+            .post(oc.callback)
             .set('authorization', `oauth ${oc.identify}`)
             .end((err, res) => {
               // maybe we should record the error:)

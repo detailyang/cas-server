@@ -3,7 +3,7 @@
 * @Date:   2016-03-15T13:39:31+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T13:59:01+08:00
+* @Last modified time: 2016-03-15T14:10:58+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -36,7 +36,19 @@ app.get('/cas/oauth/callback', (req, res) => {
 });
 
 app.post('/cas/oauth/callback', (req, res) => {
-  res.send('Hello World!');
+  const authorization = req.headers.authorization;
+  // you must check the authorization code , and it should such as `oauth ${cas.identify}`
+  if (authorization.split(' ') !== 2) {
+    return res.send('authorization format should such as oauth $identify');
+  }
+
+  const identify = authorization.split(' ')[1];
+  if (identify !== cas.identify) {
+    return res.send('fuck you');
+  }
+
+  // TODO maybe i will add some event
+  const data = req.body;
 });
 
 app.listen(3000, () => {
