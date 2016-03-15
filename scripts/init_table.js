@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:41+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-16T01:12:45+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 require('babel-core/register')({
   presets: ['es2015-node5', 'stage-3'],
 });
@@ -18,8 +28,8 @@ fs.readdirSync(modeldir)
   .forEach((file) => {
     const model = sequelize.import(path.join(modeldir, file));
     db[model.name] = model;
-    db[model.name].sync({ force: true }).then((table) => {
-      console.log(table);
+    db[model.name].sync().then((table) => {
+      console.log(`create ${table} success`);
     });
   });
 

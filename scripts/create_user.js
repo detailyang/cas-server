@@ -1,3 +1,13 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:41+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-16T01:13:05+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 require('babel-core/register')({
   presets: ['es2015-node5', 'stage-3'],
 });
@@ -13,7 +23,7 @@ const co = require('co');
 
 const argv = minimist(process.argv.slice(2));
 const username = argv.username;
-const realname = argv.realname || '管理员';
+const realname = argv.realname || 'admin';
 const aliasname = argv.aliasname || 'admin';
 const email = argv.email || 'admin@admin.com';
 const mobile = argv.mobile || '01234567890';
