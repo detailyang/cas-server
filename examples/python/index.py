@@ -21,13 +21,13 @@ cas = {
 
 @app.route('/')
 def hello_world():
-    return redirect('https://cas.qima-inc.com/public/oauth/authorize?name={name}'.format(name=cas['name']));
+    return redirect('http://example.com/public/oauth/authorize?name={name}'.format(name=cas['name']));
 
 @app.route('/cas/oauth/callback')
 def callback():
     code = request.args.get('code', '')
     headers = {'authorization': 'oauth {secret}'.format(secret = cas['secret'])}
-    r = requests.get('https://cas.qima-inc.com/oauth/users/self?code={code}'.format(code=code),
+    r = requests.get('http://example.com/oauth/users/self?code={code}'.format(code=code),
         headers=headers)
     res = r.json()
     if (res['code'] != 0):

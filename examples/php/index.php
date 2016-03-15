@@ -10,11 +10,11 @@ $qs = $_SERVER['QUERY_STRING'];
 switch ($uri) {
   case '/':
     // so i assume you havent login
-    header('Location: https://cas.qima-inc.com/public/oauth/authorize?name=' . $cas["name"]);
+    header('Location: http://example.com/public/oauth/authorize?name=' . $cas["name"]);
     break;
   case '/cas/oauth/callback':
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL,"https://cas.qima-inc.com/oauth/users/self?" . $qs);
+    curl_setopt($ch, CURLOPT_URL,"http://example.com/oauth/users/self?" . $qs);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Authorization: oauth ' . $cas['secret'],
