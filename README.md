@@ -1,6 +1,5 @@
-****************************************
-CAS: center authorization server
-****************************************
+# CAS: center authorization server
+
 
 CAS (pronounced *case*) is an **authorization server**.
 Its goal is to make application authorization as easy as possible.It provides a restful api and ldap support (cas-ldap is be used to support ldap protocol over restful api [RFC 4511](https://tools.ietf.org/html/rfc4511)). CAS can be used to integrate with software which on support restful api or support ldap, and it have used to integrate gitlab、jira、confluence、jenkins、gerrit, vpn device, phabricator.
