@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T00:55:33+08:00
+* @Last modified time: 2016-03-15T14:44:49+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -43,7 +43,12 @@ module.exports = {
         throw new utils.error.NotFoundError('dont find oauth');
       }
       const code = uuid.v4();
-      const rv = await ctx.redis.setex(code, config.oauth.ttl, JSON.stringify(ctx.session));
+      const rv = await ctx.redis.setex(code, config.oauth.ttl,
+        JSON.stringify({
+          id: ctx.session.id,
+          username: ctx.session.username,
+        })
+      );
       if (!rv) {
         throw new utils.error.ServerError('save code error');
       }
