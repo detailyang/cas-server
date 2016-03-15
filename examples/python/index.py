@@ -2,7 +2,7 @@
 # @Date:   2016-03-15T14:47:50+08:00
 # @Email:  detailyang@gmail.com
 # @Last modified by:   detailyang
-# @Last modified time: 2016-03-15T15:37:13+08:00
+# @Last modified time: 2016-03-15T15:44:17+08:00
 # @License: The MIT License (MIT)
 
 
@@ -28,7 +28,7 @@ def callback():
     code = request.args.get('code', '')
     headers = {'authorization': 'oauth {secret}'.format(secret = cas['secret'])}
     r = requests.get('https://cas.qima-inc.com/oauth/users/self?code={code}'.format(code=code),
-        headers=headers, verify=False)
+        headers=headers)
     res = r.json()
     if (res['code'] != 0):
         return res['data']['value'];
