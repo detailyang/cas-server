@@ -3,14 +3,16 @@
 * @Date:   2016-03-13T02:07:46+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T20:15:53+08:00
+* @Last modified time: 2016-03-16T17:20:32+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import koarouter from 'koa-router';
+import utils from '../../utils';
 
 import controllers from '../../controllers';
+
 
 const router = koarouter({
   prefix: '/oauth/users',
@@ -18,7 +20,9 @@ const router = koarouter({
 module.exports = router;
 
 const onlyAdmin = async (ctx, next) => {
-  console.log(ctx.oauth);
+  if (!ctx.oauth.is_admin) {
+    throw new utils.error.PermissionError('you are not admin');
+  }
   await next();
 };
 
