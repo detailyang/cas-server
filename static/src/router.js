@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T19:48:51+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T22:17:08+08:00
+* @Last modified time: 2016-03-16T12:49:06+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -66,7 +66,7 @@ export default Backbone.Router.extend({
   },
 
   index() {
-    this.navigate('!/user', {
+    this.navigate('!/personal', {
       trigger: true,
       replace: true,
     });

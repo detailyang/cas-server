@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T16:10:02+08:00
+* @Last modified time: 2016-03-16T15:10:20+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
@@ -97,8 +97,8 @@ module.exports = {
   id: {
     async get(ctx) {
       const user = await models.user.findOne({
-        attributes: ['id', 'username', 'realname', 'aliasname',
-                     'mobile', 'email', 'key', 'is_delete'],
+        attributes: ['id', 'username', 'realname', 'aliasname', 'is_admin',
+                     'mobile', 'email', 'key', 'is_delete', 'gender'],
         where: {
           id: ctx.params.id,
         },
