@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T20:37:53+08:00
+* @Last modified time: 2016-03-16T16:48:02+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -18,6 +18,7 @@ module.exports = {
     const username = ctx.request.body.username;
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
+    const staticdynamic = ctx.request.body.staticdynamic || '';
 
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
@@ -42,13 +43,39 @@ module.exports = {
     }
 
     if (dynamic) {
-      const rv = utils.password.otpcheck(ctx.request.password, utils.password.encrypt(
-        user.username + user.password, config.notp.salt));
-      if (!rv) {
-        throw new utils.error.ParamsError('optcode not right');
-      } else {
-        if (rv.delta < config.notp.delta) {
+      if (staticdynamic) {
+        const _dynamic = staticdynamic.slice(-6);
+        const _static = staticdynamic.slice(0, -6);
+        const rv = utils.password.otpcheck(_dynamic, utils.password.encrypt(
+          user.username + user.password, config.notp.salt));
+        if (!rv) {
           throw new utils.error.ParamsError('optcode not right');
+        } else {
+          if (rv.delta < config.notp.delta) {
+            throw new utils.error.ParamsError('optcode not right');
+          }
+        }
+
+        if (utils.password.check(_static, user.dataValues.password)) {
+          const value = {
+            'id': user.id,
+            'username': ctx.request.body.username,
+            'is_admin': user.is_admin,
+            'gender': user.gender,
+          };
+          ctx.return.data.value = ctx.session = value;
+          ctx.body = ctx.return;
+          return;
+        }
+      } else {
+        const rv = utils.password.otpcheck(ctx.request.password, utils.password.encrypt(
+          user.username + user.password, config.notp.salt));
+        if (!rv) {
+          throw new utils.error.ParamsError('optcode not right');
+        } else {
+          if (rv.delta < config.notp.delta) {
+            throw new utils.error.ParamsError('optcode not right');
+          }
         }
       }
     } else {
