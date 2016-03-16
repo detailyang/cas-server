@@ -1,11 +1,10 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-18 16:08:50
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 12:54:37
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-16T22:03:40+08:00
  */
 
-'use strict';
 
 module.exports = {
   'return': require('./return'),
@@ -13,4 +12,4 @@ module.exports = {
   'password': require('./password'),
   'avatar': require('./avatar'),
   'error': require('./error'),
-}
+};

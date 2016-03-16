@@ -2,10 +2,9 @@
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T10:36:46+08:00
+* @Last modified time: 2016-03-17T00:01:43+08:00
  */
 
-'use strict';
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
@@ -114,6 +113,5 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     underscored: true,
   });
-
   return User;
 };

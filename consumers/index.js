@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T14:02:01+08:00
+* @Last modified time: 2016-03-17T00:29:26+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -27,7 +27,6 @@ const queue = Queue(
 );
 
 queue.process((msg, done) => {
-  console.log(msg);
   co(function *() {
     const ocs = yield models.oauth.findAll({
       attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback'],
@@ -36,17 +35,15 @@ queue.process((msg, done) => {
       },
     });
 
-    console.log(ocs);
-    switch (msg.data.event) {
-      case 'user.online':
-      case 'user.offline': {
+    switch (msg.data.type) {
+      case 'user.update': {
         ocs.map((oc) => {
-          console.log(oc);
-          if (!oc.callback) {
+          if (!oc.callback && !oc.is_admin) {
             return true;
           }
           request
             .post(oc.callback)
+            .send(msg.data)
             .set('authorization', `oauth ${oc.identify}`)
             .end((err, res) => {
               // maybe we should record the error:)
