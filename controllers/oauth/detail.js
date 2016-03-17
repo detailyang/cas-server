@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T15:50:35+08:00
+* @Last modified time: 2016-03-17T17:31:53+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -21,7 +21,10 @@ module.exports = {
       const name = ctx.request.query.name;
       const debug = ctx.request.query.debug;
       if (!ctx.session || !ctx.session.id) {
-        return ctx.redirect(`/public/oauth?name=${name}&debug=${debug}`);
+        if (debug) {
+          return ctx.redirect(`/public/oauth?name=${name}&debug=${debug}`);
+        }
+        return ctx.redirect(`/public/oauth?name=${name}`);
       }
 
       return await ctx.render('authorize.html');
