@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T14:44:49+08:00
+* @Last modified time: 2016-03-17T12:24:35+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -43,7 +43,7 @@ module.exports = {
         throw new utils.error.NotFoundError('dont find oauth');
       }
       const code = uuid.v4();
-      const rv = await ctx.redis.setex(code, config.oauth.ttl,
+      const rv = await ctx.redis.setex(`${name}:${code}`, config.oauth.ttl,
         JSON.stringify({
           id: ctx.session.id,
           username: ctx.session.username,
@@ -70,7 +70,7 @@ module.exports = {
 
     async getUser(ctx) {
       const code = ctx.request.query.code;
-      const rv = await ctx.redis.get(code);
+      const rv = await ctx.redis.get(`${name}:${code}`);
       if (!rv) {
         throw new utils.error.NotFoundError('dont find users');
       }
