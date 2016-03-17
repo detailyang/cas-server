@@ -3,7 +3,7 @@
 * @Date:   2016-02-18T14:02:21+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T12:34:57+08:00
+* @Last modified time: 2016-03-17T14:13:44+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -41,6 +41,12 @@ fs.readdirSync(__dirname)
     switch (file) {
       case 'user.js':
         model.afterBulkUpdate((object, fn) => {
+          if (object.where.id) {
+            object.attributes.id = object.where.id;
+          }
+          if (object.where.username) {
+            object.attributes.username = object.where.username;
+          }
           queue.add({ type: 'user.update', value: object.attributes });
           fn();
         });

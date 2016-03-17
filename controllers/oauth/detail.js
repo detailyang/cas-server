@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:18:25+08:00
+* @Last modified time: 2016-03-17T14:47:52+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -32,6 +32,7 @@ module.exports = {
         throw new utils.error.PermissionError('you havent login');
       }
       const name = ctx.request.query.name;
+      const debug = ctx.request.query.debug;
       const oc = await models.oauth.findOne({
         attribute: ['id', 'callback', 'callback_debug'],
         where: {
@@ -53,7 +54,10 @@ module.exports = {
       if (!rv) {
         throw new utils.error.ServerError('save code error');
       }
-      const callback = `${oc.callback ? oc.callback_debug : oc.callback}?code=${code}`;
+      let callback = `oc.callback?code=${code}`;
+      if (debug) {
+        callback = `oc.callback_debug?code=${code}`;
+      }
       ctx.return.data.value = callback;
       ctx.body = ctx.return;
     },
