@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:42:40+08:00
+* @Last modified time: 2016-03-17T13:07:12+08:00
  */
 
 module.exports = (sequelize, DataTypes) => {
@@ -62,6 +62,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     callback: {
+      type: DataTypes.STRING(512),
+      allowNull: true,
+      defaultValue: '',
+    },
+    callback_debug: {
       type: DataTypes.STRING(512),
       allowNull: true,
       defaultValue: '',

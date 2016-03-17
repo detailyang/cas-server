@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T21:02:21+08:00
+* @Last modified time: 2016-03-17T13:10:52+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -105,8 +105,6 @@ export default React.createClass({
               onChange={this.setValue.bind(this, 'identify')}
             />
           </Form.Item>
-          <Row>
-            <Col span="11">
               <Form.Item
                 label="domain: "
                 validateStatus={errorStatus('domain')}
@@ -116,20 +114,32 @@ export default React.createClass({
                   onChange={this.setValue.bind(this, 'domain')}
                 />
               </Form.Item>
-            </Col>
-            <Col span="11" offset="2">
-              <Form.Item
-                label="callback: "
-                validateStatus={errorStatus('callback')}
-                help={help('callback')}
-              >
-                <Input
-                  value={formData.callback}
-                  onChange={this.setValue.bind(this, 'callback')}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+            <Row>
+              <Col span="11">
+                <Form.Item
+                  label="callback: "
+                  validateStatus={errorStatus('callback')}
+                  help={help('callback')}
+                >
+                  <Input
+                    value={formData.callback}
+                    onChange={this.setValue.bind(this, 'callback')}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span="11" offset="2">
+                <Form.Item
+                  label="callback_debug: "
+                  validateStatus={errorStatus('callback_debug')}
+                  help={help('callback_debug')}
+                >
+                  <Input
+                    value={formData.callback_debug}
+                    onChange={this.setValue.bind(this, 'callback_debug')}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
           <Form.Item label="desc: " validateStatus={errorStatus('desc')} help={help('desc')}>
             <Input
               value={formData.desc}
