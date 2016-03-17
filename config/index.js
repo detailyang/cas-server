@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 16:08:50
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T15:32:27+08:00
+* @Last modified time: 2016-03-17T18:13:53+08:00
  */
 
 
@@ -30,7 +30,7 @@ module.exports = {
   },
   'password': {
     'default': process.env.CAS_PASSWORD_DEFAULT || 'password',
-    'bcryptlength': process.env.CAS_PASSWORD_BCRYPTLENGTH || 12,
+    'bcryptlength': +process.env.CAS_PASSWORD_BCRYPTLENGTH || 12,
   },
   'avatar': {
     width: 100,
