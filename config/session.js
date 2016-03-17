@@ -3,7 +3,7 @@
 * @Date:   2016-03-16T22:03:58+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T23:25:51+08:00
+* @Last modified time: 2016-03-17T11:57:41+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -26,10 +26,10 @@ if (process.env.NODE_ENV === 'dev') {
   };
 } else {
   module.exports = {
-    host: process.env.CAS_REDIS_HOST,
-    port: process.env.CAS_REDIS_PORT,
-    ttl: process.env.CAS_REDIS_TTL || 3600,
-    db: process.env.CAS_REDIS_DB || 0,
-    key: process.env.CAS_REDIS_KEY || 'iamyoufather',
+    host: process.env.CAS_SESSION_HOST,
+    port: process.env.CAS_SESSION_PORT,
+    ttl: process.env.CAS_SESSION_TTL || 3600,
+    db: process.env.CAS_SESSION_DB || 0,
+    key: process.env.CAS_SESSION_KEY || 'iamyoufather',
   };
 }
