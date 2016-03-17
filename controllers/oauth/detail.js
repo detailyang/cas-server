@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:03:16+08:00
+* @Last modified time: 2016-03-17T13:18:25+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -19,8 +19,9 @@ module.exports = {
   authorize: {
     async get(ctx) {
       const name = ctx.request.query.name;
+      const debug = ctx.request.query.debug;
       if (!ctx.session || !ctx.session.id) {
-        return ctx.redirect(`/public/oauth?name=${name}`);
+        return ctx.redirect(`/public/oauth?name=${name}&debug=${debug}`);
       }
 
       return await ctx.render('authorize.html');
@@ -32,7 +33,7 @@ module.exports = {
       }
       const name = ctx.request.query.name;
       const oc = await models.oauth.findOne({
-        attribute: ['id', 'callback'],
+        attribute: ['id', 'callback', 'callback_debug'],
         where: {
           is_delete: false,
           name: name,
@@ -52,7 +53,7 @@ module.exports = {
       if (!rv) {
         throw new utils.error.ServerError('save code error');
       }
-      const callback = `${oc.callback}?code=${code}`;
+      const callback = `${oc.callback ? oc.callback_debug : oc.callback}?code=${code}`;
       ctx.return.data.value = callback;
       ctx.body = ctx.return;
     },
