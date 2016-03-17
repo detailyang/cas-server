@@ -3,7 +3,7 @@
 * @Date:   2016-03-16T22:03:58+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T12:30:30+08:00
+* @Last modified time: 2016-03-17T12:35:20+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -15,7 +15,6 @@ if (process.env.NODE_ENV === 'dev') {
     database: 'cas',
     host: '127.0.0.1',
     port: '3306',
-    dialect: 'mysql',
     logging: true,
   };
 } else if (process.env.NODE_ENV === 'test') {
@@ -25,7 +24,6 @@ if (process.env.NODE_ENV === 'dev') {
     database: 'cas',
     host: '127.0.0.1',
     port: '3306',
-    dialect: 'mysql',
     logging: false,
   };
 } else {
@@ -35,7 +33,6 @@ if (process.env.NODE_ENV === 'dev') {
     database: process.env.CAS_MYSQL_DATABASE,
     host: process.env.CAS_MYSQL_HOST,
     port: process.env.CAS_MYSQL_PORT,
-    dialect: 'mysql',
     logging: false,
   };
 }

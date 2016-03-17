@@ -3,7 +3,7 @@
 * @Date:   2016-02-18T14:02:21+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T00:16:41+08:00
+* @Last modified time: 2016-03-17T12:34:57+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -16,7 +16,11 @@ const basename = path.basename(module.filename);
 const config = require('../config');
 const db = {};
 const sequelize = new Sequelize(config.mysql.database, config.mysql.username,
-  config.mysql.password, { logging: false });
+  config.mysql.password, {
+    host: config.mysql.host,
+    port: config.mysql.port,
+    logging: config.mysql.logging,
+  });
 
 const queue = Queue(
   config.queue.name,
