@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T12:24:35+08:00
+* @Last modified time: 2016-03-17T13:03:16+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -70,6 +70,7 @@ module.exports = {
 
     async getUser(ctx) {
       const code = ctx.request.query.code;
+      const name = ctx.oauth.name;
       const rv = await ctx.redis.get(`${name}:${code}`);
       if (!rv) {
         throw new utils.error.NotFoundError('dont find users');
