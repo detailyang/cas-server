@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T22:01:02+08:00
+* @Last modified time: 2016-03-17T13:56:16+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
@@ -148,7 +148,7 @@ module.exports = {
           throw new utils.error.ParamsError('lack reset param');
         }
 
-        const salt = utils.password.genSalt(config.password.bcryptlength);
+        const salt = utils.password.genSalt(+config.password.bcryptlength);
         ctx.request.body.password = utils.password.encrypt(config.password.default, salt);
         const user = await models.user.update({ password: ctx.request.body.password }, {
           where: {
