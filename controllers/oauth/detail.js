@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T12:02:55+08:00
+* @Last modified time: 2016-03-18T16:46:06+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -60,9 +60,15 @@ module.exports = {
       if (!rv) {
         throw new utils.error.ServerError('save code error');
       }
-      let callback = `${oc.callback}?code=${code}`;
+      let callback = `${oc.callback}`;
       if (debug) {
-        callback = `${oc.callback_debug}?code=${code}`;
+        callback = `${oc.callback_debug}`;
+      }
+
+      if (callback.includes('?')) {
+        callback += `&code=${code}`;
+      } else {
+        callback += `?code=${code}`;
       }
       ctx.return.data.value = callback;
       ctx.body = ctx.return;
