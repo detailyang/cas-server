@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T17:31:53+08:00
+* @Last modified time: 2016-03-18T12:02:55+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -52,6 +52,9 @@ module.exports = {
         JSON.stringify({
           id: ctx.session.id,
           username: ctx.session.username,
+          aliasname: ctx.session.aliasname,
+          realname: ctx.session.realname,
+          gender: ctx.session.gender,
         })
       );
       if (!rv) {

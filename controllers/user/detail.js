@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T16:48:02+08:00
+* @Last modified time: 2016-03-18T13:32:45+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -35,7 +35,7 @@ module.exports = {
     }
 
     const user = await models.user.findOne({
-      attributes: ['id', 'password', 'is_admin'],
+      attributes: ['id', 'password', 'is_admin', 'aliasname', 'username', 'realname'],
       where: where,
     });
     if (!user) {
@@ -59,16 +59,18 @@ module.exports = {
         if (utils.password.check(_static, user.dataValues.password)) {
           const value = {
             'id': user.id,
-            'username': ctx.request.body.username,
-            'is_admin': user.is_admin,
+            'username': user.username,
+            'aliasname': user.aliasname,
+            'realname': user.realname,
             'gender': user.gender,
+            'is_admin': user.is_admin,
           };
           ctx.return.data.value = ctx.session = value;
           ctx.body = ctx.return;
           return;
         }
       } else {
-        const rv = utils.password.otpcheck(ctx.request.password, utils.password.encrypt(
+        const rv = utils.password.otpcheck(password, utils.password.encrypt(
           user.username + user.password, config.notp.salt));
         if (!rv) {
           throw new utils.error.ParamsError('optcode not right');
@@ -77,9 +79,11 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
+        ctx.body = ctx.return;
+        return;
       }
     } else {
-      if (utils.password.check(ctx.request.body.password, user.dataValues.password)) {
+      if (utils.password.check(password, user.dataValues.password)) {
         const value = {
           'id': user.id,
           'username': ctx.request.body.username,
@@ -173,6 +177,25 @@ module.exports = {
       throw new utils.error.ServerError('update user error');
     }
     ctx.body = ctx.return;
+  },
+
+  key: {
+    async getByUsername(ctx) {
+      const username = ctx.params.username;
+      const user = await models.user.findOne({
+        attributes: ['key'],
+        where: {
+          is_delete: false,
+          username: username,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+
+      ctx.return.data.value = user.key;
+      ctx.body = ctx.return;
+    },
   },
 
   avatar: {

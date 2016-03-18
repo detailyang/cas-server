@@ -1,8 +1,8 @@
 /*
  * @Author: detailyang
  * @Date:   2016-02-26 13:53:51
- * @Last Modified by:   detailyang
- * @Last Modified time: 2016-03-10 14:17:28
+* @Last modified by:   detailyang
+* @Last modified time: 2016-03-18T13:12:20+08:00
  */
 
 import bcrypt from 'bcrypt';
