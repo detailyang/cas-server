@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T13:53:24+08:00
+* @Last modified time: 2016-03-18T17:45:43+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -79,6 +79,15 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
+        const value = {
+          'id': user.id,
+          'username': user.username,
+          'aliasname': user.aliasname,
+          'realname': user.realname,
+          'gender': user.gender,
+          'is_admin': user.is_admin,
+        };
+        ctx.return.data.value = ctx.session = value;
         ctx.body = ctx.return;
         return;
       }
@@ -86,9 +95,11 @@ module.exports = {
       if (utils.password.check(password, user.dataValues.password)) {
         const value = {
           'id': user.id,
-          'username': ctx.request.body.username,
-          'is_admin': user.is_admin,
+          'username': user.username,
+          'aliasname': user.aliasname,
+          'realname': user.realname,
           'gender': user.gender,
+          'is_admin': user.is_admin,
         };
         ctx.return.data.value = ctx.session = value;
         ctx.body = ctx.return;
