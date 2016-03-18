@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T13:32:45+08:00
+* @Last modified time: 2016-03-18T13:53:24+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -18,7 +18,7 @@ module.exports = {
     const username = ctx.request.body.username;
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
-    const staticdynamic = ctx.request.body.staticdynamic || '';
+    const staticdynamic = ctx.request.body.staticdynamic;
 
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
@@ -44,8 +44,8 @@ module.exports = {
 
     if (dynamic) {
       if (staticdynamic) {
-        const _dynamic = staticdynamic.slice(-6);
-        const _static = staticdynamic.slice(0, -6);
+        const _dynamic = password.slice(-6);
+        const _static = password.slice(0, -6);
         const rv = utils.password.otpcheck(_dynamic, utils.password.encrypt(
           user.username + user.password, config.notp.salt));
         if (!rv) {
