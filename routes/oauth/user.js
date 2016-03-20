@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:07:46+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T17:58:24+08:00
+* @Last modified time: 2016-03-20T16:15:10+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -27,6 +27,7 @@ const onlyAdmin = async (ctx, next) => {
 };
 
 router.get('/', onlyAdmin, controllers.user.detail.filter);
+router.get('/:username(.+)', onlyAdmin, controllers.user.detail.getByUsername);
 router.post('/', onlyAdmin, controllers.user.list.post);
 router.get('/one', onlyAdmin, controllers.user.detail.getOne);
 router.get('/self', controllers.oauth.detail.oauth.getUser);
