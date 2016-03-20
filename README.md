@@ -28,6 +28,7 @@ CAS requires the following to run:
 
 Development
 -----------
+
 looking at config.js, setting the redis and mysql option
 ```sh
 npm install # to install nodejs dependencies
@@ -49,7 +50,7 @@ NODE_ENV=production node scripts/init_table.js # init mysql table
 NODE_ENV=production node scripts/create_user.js --username admin --admin # create first user
 ````
 
-For deploy node.js application, any process management like PM2、Forever、Supervisor is ok. Anyway, before startup CAS, you must should set environment as follow:
+For deploy node.js application, any process management like PM2、Forever、Supervisor is ok. Anyway, before startup CAS, you must should set environment variable as follow:
 ```sh
 export CAS_MYSQL_USERNAME=cas
 export CAS_MYSQL_PASSWORD=11111
@@ -86,7 +87,7 @@ export CAS_EMAIL_FROM=cas@example.com
 Contributing
 ------------
 
-To contribute to Cas, clone this repo locally and commit your code on a separate branch. 
+To contribute to CAS, clone this repo locally and commit your code on a separate branch. 
 
 
 License
