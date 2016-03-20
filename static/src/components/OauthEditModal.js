@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:10:52+08:00
+* @Last modified time: 2016-03-20T16:34:49+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -11,9 +11,9 @@
 import React from 'react';
 import Antd, {
   Modal,
-  Switch,
   Form,
   Input,
+  Checkbox,
   Row,
   Col,
 } from 'antd';
@@ -127,7 +127,7 @@ export default React.createClass({
                   />
                 </Form.Item>
               </Col>
-              <Col span="11" offset="2">
+              <Col span="12" offset="1">
                 <Form.Item
                   label="callback_debug: "
                   validateStatus={errorStatus('callback_debug')}
@@ -146,21 +146,28 @@ export default React.createClass({
               onChange={this.setValue.bind(this, 'desc')}
             />
           </Form.Item>
-          <Form.Item
-            validateStatus={errorStatus('is_admin')} help={help('is_admin')}
-          >
-              <label>
-                是否具有admin权限:
-                <Switch
-                  style={switchStyle}
-                  size="small"
-                  checked={+formData.is_admin}
-                  checkedChildren="是"
-                  unCheckedChildren="否"
-                  onChange={this.setValue.bind(this, 'is_admin')}
-                />
-              </label>
-          </Form.Item>
+          <Row>
+            <Col span="11">
+              <Form.Item
+                validateStatus={errorStatus('is_admin')} help={help('is_admin')}
+              >
+                    <Checkbox
+                      checked={+formData.is_admin}
+                      onChange={this.setValue.bind(this, 'is_admin')}
+                    /> assign admin permission
+              </Form.Item>
+            </Col>
+            <Col span="12" offset="1">
+              <Form.Item
+                validateStatus={errorStatus('is_received')} help={help('is_received')}
+              >
+                    <Checkbox
+                      checked={+formData.is_received}
+                      onChange={this.setValue.bind(this, 'is_received')}
+                    /> receive event
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     );
