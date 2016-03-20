@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T17:45:43+08:00
+* @Last modified time: 2016-03-20T16:03:30+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -60,9 +60,6 @@ module.exports = {
           const value = {
             'id': user.id,
             'username': user.username,
-            'aliasname': user.aliasname,
-            'realname': user.realname,
-            'gender': user.gender,
             'is_admin': user.is_admin,
           };
           ctx.return.data.value = ctx.session = value;
