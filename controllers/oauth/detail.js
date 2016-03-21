@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T16:46:06+08:00
+* @Last modified time: 2016-03-20T16:07:30+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -47,14 +47,29 @@ module.exports = {
       if (!oc) {
         throw new utils.error.NotFoundError('dont find oauth');
       }
+
+      const user = await models.user.findOne({
+        attribute: ['id', 'username', 'gender', 'realname', 'aliasname', 'mobile',
+                    'email'],
+        where: {
+          is_delete: false,
+          id: ctx.session.id,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+
       const code = uuid.v4();
       const rv = await ctx.redis.setex(`${name}:${code}`, config.oauth.ttl,
         JSON.stringify({
           id: ctx.session.id,
           username: ctx.session.username,
-          aliasname: ctx.session.aliasname,
-          realname: ctx.session.realname,
-          gender: ctx.session.gender,
+          gender: user.gender,
+          realname: user.realname,
+          aliasname: user.aliasname,
+          mobile: user.mobile,
+          email: user.email,
         })
       );
       if (!rv) {

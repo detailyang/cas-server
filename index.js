@@ -2,8 +2,9 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T22:01:23+08:00
+* @Last modified time: 2016-03-19T00:43:16+08:00
  */
+
 
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
@@ -11,8 +12,6 @@ import config from './config';
 
 import middlewares from './middlewares';
 import routes from './routes';
-
-import models from './models';
 
 
 const app = new Koa();

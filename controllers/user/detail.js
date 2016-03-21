@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-18T13:53:24+08:00
+* @Last modified time: 2016-03-20T16:14:32+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -60,9 +60,6 @@ module.exports = {
           const value = {
             'id': user.id,
             'username': user.username,
-            'aliasname': user.aliasname,
-            'realname': user.realname,
-            'gender': user.gender,
             'is_admin': user.is_admin,
           };
           ctx.return.data.value = ctx.session = value;
@@ -79,6 +76,15 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
+        const value = {
+          'id': user.id,
+          'username': user.username,
+          'aliasname': user.aliasname,
+          'realname': user.realname,
+          'gender': user.gender,
+          'is_admin': user.is_admin,
+        };
+        ctx.return.data.value = ctx.session = value;
         ctx.body = ctx.return;
         return;
       }
@@ -86,9 +92,11 @@ module.exports = {
       if (utils.password.check(password, user.dataValues.password)) {
         const value = {
           'id': user.id,
-          'username': ctx.request.body.username,
-          'is_admin': user.is_admin,
+          'username': user.username,
+          'aliasname': user.aliasname,
+          'realname': user.realname,
           'gender': user.gender,
+          'is_admin': user.is_admin,
         };
         ctx.return.data.value = ctx.session = value;
         ctx.body = ctx.return;
@@ -155,6 +163,22 @@ module.exports = {
       attributes: ['id', 'username', 'gender',
                    'realname', 'aliasname', 'mobile', 'email', 'key'],
       where: where,
+    });
+    if (!user) {
+      throw new utils.error.NotFoundError('dont find user');
+    }
+
+    ctx.return.data.value = user;
+    ctx.body = ctx.return;
+  },
+
+  async getByUsername(ctx) {
+    const user = await models.user.findOne({
+      attributes: ['id', 'username', 'gender', 'realname', 'is_delete',
+                   'aliasname', 'mobile', 'email', 'key'],
+      where: {
+        username: ctx.params.username,
+      },
     });
     if (!user) {
       throw new utils.error.NotFoundError('dont find user');

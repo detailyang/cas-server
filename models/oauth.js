@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:07:12+08:00
+* @Last modified time: 2016-03-20T16:21:53+08:00
  */
 
 module.exports = (sequelize, DataTypes) => {
@@ -72,6 +72,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '',
     },
     is_admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    is_received: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
