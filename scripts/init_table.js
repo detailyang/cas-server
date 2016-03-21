@@ -16,7 +16,7 @@ require('babel-polyfill');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const config = require('../config').database;
+const config = require('../config').mysql;
 const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 const modeldir = `${__dirname}/../models`;
