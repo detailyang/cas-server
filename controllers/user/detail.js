@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-20T16:14:32+08:00
+* @Last modified time: 2016-03-21T17:18:21+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -195,6 +195,21 @@ module.exports = {
     const user = await models.user.update(ctx.request.body, {
       where: {
         id: ctx.session.id,
+      },
+    });
+    if (!user) {
+      throw new utils.error.ServerError('update user error');
+    }
+    ctx.body = ctx.return;
+  },
+
+  async updateByUsername(ctx) {
+    delete ctx.request.body.username;
+    delete ctx.request.body.password;
+    delete ctx.request.body.id;
+    const user = await models.user.update(ctx.request.body, {
+      where: {
+        username: ctx.params.username,
       },
     });
     if (!user) {
