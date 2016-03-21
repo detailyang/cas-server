@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:56:16+08:00
+* @Last modified time: 2016-03-21T20:26:30+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
@@ -73,6 +73,7 @@ module.exports = {
   },
 
   async post(ctx) {
+    delete ctx.request.body.id;
     const salt = utils.password.genSalt(config.password.bcryptlength);
 
     if (!ctx.request.body.password) {
@@ -91,6 +92,9 @@ module.exports = {
     if (!user) {
       throw new utils.error.ServerError('create user error');
     }
+    ctx.return.data.value = {
+      id: user.id,
+    };
     ctx.body = ctx.return;
   },
 
