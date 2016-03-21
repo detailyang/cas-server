@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-21T18:11:53+08:00
+* @Last modified time: 2016-03-21T21:00:37+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -241,9 +241,7 @@ module.exports = {
       }
       for (const pubkey of user.key.split(/\r?\n/)) {
         const key = sshpk.parseKey(pubkey, 'ssh');
-        const valid = key.createVerify(hash)
-          .update(clear)
-          .verify(new Buffer(signature, 'base64'));
+        const valid = key.createVerify(hash).update(clear).verify(new Buffer(signature, 'base64'));
         if (valid) {
           ctx.body = ctx.return;
           return;
