@@ -47,6 +47,7 @@
     "nodemailer-smtp-transport": "^2.4.1",
     "notp": "^2.0.3",
     "sequelize": "^3.19.2",
+    "sshpk": "^1.7.4",
     "superagent": "^1.8.0",
     "thirty-two": "^1.0.1",
     "uuid": "^2.0.1",

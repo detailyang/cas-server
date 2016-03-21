@@ -2,10 +2,11 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-21T17:18:21+08:00
+* @Last modified time: 2016-03-21T18:11:53+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
+import sshpk from 'sshpk';
 
 import models from '../../models';
 import utils from '../../utils';
@@ -218,6 +219,40 @@ module.exports = {
     ctx.body = ctx.return;
   },
 
+  ssh: {
+    async login(ctx) {
+      const username = ctx.request.body.username;
+      const hash = ctx.request.body.hash || 'sha1';
+      const signature = ctx.request.body.signature || '';
+      const clear = ctx.request.body.clear || '';
+
+      if (!['sha1', 'sha128', 'sha256'].includes(hash)) {
+        throw new utils.error.ParamsError('only support sha1 sha256 hash algo');
+      }
+      const user = await models.user.findOne({
+        attributes: ['id', 'key'],
+        where: {
+          is_delete: false,
+          username: username,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+      for (const pubkey of user.key.split(/\r?\n/)) {
+        const key = sshpk.parseKey(pubkey, 'ssh');
+        const valid = key.createVerify(hash)
+          .update(clear)
+          .verify(new Buffer(signature, 'base64'));
+        if (valid) {
+          ctx.body = ctx.return;
+          return;
+        }
+      }
+      throw new utils.error.PermissionError('check signature error');
+    },
+  },
+
   key: {
     async getByUsername(ctx) {
       const username = ctx.params.username;
@@ -329,6 +364,7 @@ module.exports = {
       ctx.body = ctx.return;
     },
   },
+
   staticpassword: {
     async put(ctx) {
       const oldpassword = ctx.request.body.oldpassword;
