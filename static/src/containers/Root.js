@@ -7,16 +7,22 @@
 * @License: The MIT License (MIT)
 */
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
+import { push } from 'react-router-redux';
 
-import { authModelInstance } from '../models/Auth';
 import { App, Loading, Login, Personal, Dashboard, DevTools } from '../containers';
 
-export default class Root extends Component {
+import { checkAuth } from '../actions';
+
+class Root extends Component {
 
   constructor (props) {
     super(props);
+    this.requireLogin = this.requireLogin.bind(this);
+    this.loggedIn = this.loggedIn.bind(this);
+    
+    this.props.checkAuth();
   }
 
   render () {
@@ -29,7 +35,7 @@ export default class Root extends Component {
               <Route path="/" component={App}>
                 <IndexRedirect to="/dashboard"/>
                 <Route path="/login" component={Login}/>
-                <Route path="/dashboard" component={Dashboard}>
+                <Route path="/dashboard" component={Dashboard} onEnter={this.requireLogin}>
                   <IndexRoute component={Personal}/>
                 </Route>
               </Route>
@@ -39,37 +45,21 @@ export default class Root extends Component {
       </Provider>
     )
   }
+
+  requireLogin (nextState, replace, loadRouteAsync) {
+    const { store } = this.props;
+    console.log(store.auth);
+    //if (!this.loggedIn(store.getState())) replace('/login');
+    //loadRouteAsync();
+  }
+
+  loggedIn (state) {
+    return state.login.isLogged;
+  }
+
 }
 
-function requireAuth (nextState, replace, callback) {
-  setTimeout(function () {
-  authModelInstance.self()
-    .then(() => {
-      store.dispatch(push('/'));
-      callback();
-    })
-    .fail(() => {
-      store.dispatch(push('/login'));
-      callback();
-    });
-  }, 3000)
-}
-
-
-// function initApplication(data) {
-//   new Router({ isAdmin: (data && data.value && data.value.is_admin)
-//     || authModelInstance.get('is_admin') });
-//   Backbone.history.start();
-// }
-
-// function show(component, node) {
-//   ReactDOM.render(React.createElement(component), node);
-// }
-
-// show(CheckLogin, document.getElementById('app'));
-
-// authModelInstance.self().done(initApplication).fail(() => {
-//   authModelInstance.on('login-success', initApplication);
-//   show(Login, document.getElementById('app'));
-// });
-  
+export default connect(
+  null,
+  { checkAuth }
+)(Root);

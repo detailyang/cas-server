@@ -1,1 +1,1 @@
-export login from './login';
+export auth from './auth';
