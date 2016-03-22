@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "node test.js",
-    "build": "webpack && ls static/build/*.js | xargs -I {} uglifyjs --compress --mangle --output {} {}"
+    "build": "webpack && ls static/build/*.js | xargs -I {} uglifyjs --compress --mangle --output {} {}",
+    "dev": "npm run dev_server | npm run webpack",
+    "webpack": "NODE_ENV=dev node webpack-dev-server.js",
+    "dev_server": "NODE_ENV=dev node babel.index.js"
   },
   "repository": {
     "type": "git",
