@@ -84,17 +84,10 @@ export CAS_EMAIL_PASS=123123123
 export CAS_EMAIL_FROM=cas@example.com
 ```
 
-
 Contributing
 ------------
 
 To contribute to CAS, clone this repo locally and commit your code on a separate branch. 
-
-
-License
--------
-
-CAS is licensed under the [MIT] license.  
 
 
 Author
@@ -103,6 +96,13 @@ Author
 > GitHub [@detailyang](https://github.com/detailyang)     
 > GitHub [@Raistlin916](https://github.com/Raistlin916)    
 > GitHub [@NinoFocus](https://github.com/NinoFocus)    
+
+
+License
+-------
+
+CAS is licensed under the [MIT] license.  
+
 
 [node]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
