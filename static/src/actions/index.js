@@ -35,7 +35,9 @@ export const checkAuth = () =>
     dispatch(startCheckAuth());
     fetch('/api/users/self').then(({ username, is_admin: isAdmin }) => 
       dispatch(loginSuccess(username, isAdmin))
-    ).catch( msg => 
-      dispatch(loginFailure(msg))
+    ).catch( msg => {
+        dispatch(push('/login'))
+        dispatch(loginFailure(msg))
+      }
     );
   } 
