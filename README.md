@@ -13,6 +13,7 @@ Table of Contents
   * [Production](#production)
   * [Contributing](#contributing)
   * [License](#license)
+  * [Author](#Author)
 
 
 Requirements
@@ -95,6 +96,13 @@ License
 
 CAS is licensed under the [MIT] license.  
 
+
+Author
+------
+
+> GitHub [@detailyang](https://github.com/detailyang)     
+> GitHub [@Raistlin916](https://github.com/Raistlin916)    
+> GitHub [@NinoFocus](https://github.com/NinoFocus)    
 
 [node]: https://nodejs.org/
 [npm]: https://www.npmjs.com/
