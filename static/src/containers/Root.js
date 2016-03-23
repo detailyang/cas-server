@@ -7,7 +7,7 @@
 * @License: The MIT License (MIT)
 */
 import React, { Component } from 'react';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
 import { push } from 'react-router-redux';
 
@@ -19,38 +19,32 @@ class Root extends Component {
 
   constructor (props) {
     super(props);
-    this.requireLogin = this.requireLogin.bind(this);
     this.loggedIn = this.loggedIn.bind(this);
     
     this.props.checkAuth();
   }
 
   render () {
-    const { store, history } = this.props;
+    const { history, auth } = this.props;
+    
+    const router = (
+      <Router history={history}>
+        <Route path="/" component={App}>
+          <IndexRedirect to="/dashboard"/>
+          <Route path="/login" component={Login}/>
+          <Route path="/dashboard" component={Dashboard}>
+            <IndexRoute component={Personal}/>
+          </Route>
+        </Route>
+      </Router>
+    )
 
     return (
-      <Provider store={store}>
         <div>
-            <Router history={history}>
-              <Route path="/" component={App}>
-                <IndexRedirect to="/dashboard"/>
-                <Route path="/login" component={Login}/>
-                <Route path="/dashboard" component={Dashboard} onEnter={this.requireLogin}>
-                  <IndexRoute component={Personal}/>
-                </Route>
-              </Route>
-            </Router>
-            <DevTools />
+          { auth.hasChecked ? router : <Loading/> }
+          <DevTools />
         </div>
-      </Provider>
     )
-  }
-
-  requireLogin (nextState, replace, loadRouteAsync) {
-    const { store } = this.props;
-    console.log(store.auth);
-    //if (!this.loggedIn(store.getState())) replace('/login');
-    //loadRouteAsync();
   }
 
   loggedIn (state) {
@@ -60,6 +54,6 @@ class Root extends Component {
 }
 
 export default connect(
-  null,
+  (({auth})=>({auth})),
   { checkAuth }
 )(Root);

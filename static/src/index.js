@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Root } from './containers';
 import configureStore from './store/configureStore';
 import { hashHistory } from 'react-router';
+import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 import 'antd/lib/index.css';
@@ -12,6 +13,8 @@ const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 
 ReactDOM.render(
-  <Root store={store} history={history} />,
+  <Provider store={store}>
+    <Root history={history} />
+  </Provider>,
   document.getElementById('app')
 )
