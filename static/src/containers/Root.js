@@ -40,10 +40,10 @@ class Root extends Component {
     )
 
     return (
-        <div>
-          { auth.hasChecked ? router : <Loading/> }
-          <DevTools />
-        </div>
+      <div>
+        { auth.hasChecked ? router : <Loading/> }
+        <DevTools />
+      </div>
     )
   }
 

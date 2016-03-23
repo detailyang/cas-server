@@ -1,4 +1,5 @@
 import { CHECK_AUTH, LOGIN_SUCCESS, LOGIN_FAILURE } from '../constants';
+import createReducer from '../utils/createReducer';
 
 const initialState = {
   isLogin: false,
@@ -8,23 +9,24 @@ const initialState = {
   failMsg: null
 }
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case LOGIN_SUCCESS:
-      const { isAdmin, username } = action.payload;
-      return {
-        ...state, ...{
-          isLogin: true, isAdmin, username, failMsg: null, hasChecked: true
-        }
-      };
-    case LOGIN_FAILURE:
-      const { msg } = action.payload;
-      return {
-        ...state, ...{
-          isLogin: false, username: '', isAdmin: false, failMsg: msg, hasChecked: true
-        }
-      };
-    default:
-      return state;
+export default createReducer(initialState, {
+
+  [LOGIN_SUCCESS](state, action) {
+    const { isAdmin, username } = action.payload;
+    return {
+      ...state, ...{
+        isLogin: true, isAdmin, username, failMsg: null, hasChecked: true
+      }
+    };
+  },
+
+  [LOGIN_FAILURE](state, action) {
+    const { msg } = action.payload;
+    return {
+      ...state, ...{
+        isLogin: false, username: '', isAdmin: false, failMsg: msg, hasChecked: true
+      }
+    };
   }
-}
+  
+})
