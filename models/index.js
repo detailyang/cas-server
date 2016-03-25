@@ -3,7 +3,7 @@
 * @Date:   2016-02-18T14:02:21+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T14:13:44+08:00
+* @Last modified time: 2016-03-25T23:31:30+07:00
 * @License: The MIT License (MIT)
 */
 
@@ -22,8 +22,8 @@ const sequelize = new Sequelize(config.mysql.database, config.mysql.username,
     logging: config.mysql.logging,
   });
 
-const queue = Queue(
-  config.queue.name,
+const masterQueue = Queue(
+  `${config.queue.name}:master`,
   {
     redis: {
       port: config.queue.port,
@@ -47,7 +47,7 @@ fs.readdirSync(__dirname)
           if (object.where.username) {
             object.attributes.username = object.where.username;
           }
-          queue.add({ type: 'user.update', value: object.attributes });
+          masterQueue.add({ type: 'user.update', value: object.attributes });
           fn();
         });
         break;

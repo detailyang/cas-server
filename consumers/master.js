@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T15:45:26+08:00
+* @Last modified time: 2016-03-25T23:30:02+07:00
 * @License: The MIT License (MIT)
 */
 
@@ -24,8 +24,19 @@ const models = require('../models');
 const email = require('../utils/email');
 
 
-const queue = Queue(
-  config.queue.name,
+const masterQueue = Queue(
+  `${config.queue.name}:master`,
+  {
+    redis: {
+      port: config.queue.port,
+      host: config.queue.hostname,
+      DB: config.queue.db,
+    },
+  }
+);
+
+const agentQueue = Queue(
+  `${config.queue.name}:agent`,
   {
     redis: {
       port: config.queue.port,
@@ -63,7 +74,7 @@ function* changePassword(user) {
   console.log(rv);
 }
 
-queue.process((msg, done) => {
+masterQueue.process((msg, done) => {
   co(function *() {
     const ocs = yield models.oauth.findAll({
       attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback'],
@@ -82,19 +93,22 @@ queue.process((msg, done) => {
           if (msg.data.value.avatar) {
             return true;
           }
-          if (!oc.callback && !oc.is_admin) {
+          if (!oc.is_received) {
             return true;
           }
-          request
-            .post(oc.callback)
-            .send(msg.data)
-            .set('authorization', `oauth ${oc.identify}`)
-            .end((err, res) => {
-              // maybe we should record the error:)
-              if (err) return;
-              if (!res) return;
-            });
-          return true;
+          const data = JSON.parse(JSON.stringify(msg.data));
+          data.callback_url = oc.callback_url;
+          return agentQueue.add(data);
+          // request
+          //   .post(oc.callback)
+          //   .send(msg.data)
+          //   .set('authorization', `oauth ${oc.identify}`)
+          //   .end((err, res) => {
+          //     // maybe we should record the error:)
+          //     if (err) return;
+          //     if (!res) return;
+          //   });
+          // return true;
         });
         break;
       default:
