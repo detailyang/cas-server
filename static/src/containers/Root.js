@@ -19,7 +19,6 @@ class Root extends Component {
 
   constructor (props) {
     super(props);
-    this.loggedIn = this.loggedIn.bind(this);
     
     this.props.checkAuth();
   }
@@ -45,10 +44,6 @@ class Root extends Component {
         <DevTools />
       </div>
     )
-  }
-
-  loggedIn (state) {
-    return state.login.isLogged;
   }
 
 }
