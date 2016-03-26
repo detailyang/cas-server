@@ -13,7 +13,7 @@ var config = require('./webpack.config.js');
 new WebpackDevServer(webpack(config), {
     publicPath: config.output.publicPath,
     hot: true,
-    noInfo: false,
+    noInfo: true,
     historyApiFallback: true,
     stats: {
         colors: true
