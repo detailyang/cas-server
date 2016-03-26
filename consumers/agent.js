@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-25T23:32:36+07:00
+* @Last modified time: 2016-03-26T21:41:36+07:00
 * @License: The MIT License (MIT)
 */
 
@@ -17,11 +17,8 @@ require('babel-polyfill');
 const Queue = require('bull');
 const request = require('superagent');
 const co = require('co');
-const utils = require('../utils');
 
 const config = require('../config');
-const models = require('../models');
-const email = require('../utils/email');
 
 
 const agentQueue = Queue(
@@ -36,6 +33,29 @@ const agentQueue = Queue(
 );
 
 agentQueue.process((msg, done) => {
-  console.log(msg);
-  done();
+  co(function *() {
+    switch (msg.data.type) {
+      case 'user.update':
+        request
+          .post(msg.data.callback)
+          .send(msg.data)
+          .set('authorization', `oauth ${msg.data.identify}`)
+          .end((err, res) => {
+            if (err) {
+              console.log(err);
+              done(err);
+            }
+            if (!res) {
+              done(err);
+            }
+          });
+        break;
+      default:
+        break;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    done(err);
+  });
 });

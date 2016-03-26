@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-25T23:30:02+07:00
+* @Last modified time: 2016-03-26T21:41:17+07:00
 * @License: The MIT License (MIT)
 */
 
@@ -97,18 +97,9 @@ masterQueue.process((msg, done) => {
             return true;
           }
           const data = JSON.parse(JSON.stringify(msg.data));
-          data.callback_url = oc.callback_url;
+          data.callback = oc.callback;
+          data.identify = oc.identify;
           return agentQueue.add(data);
-          // request
-          //   .post(oc.callback)
-          //   .send(msg.data)
-          //   .set('authorization', `oauth ${oc.identify}`)
-          //   .end((err, res) => {
-          //     // maybe we should record the error:)
-          //     if (err) return;
-          //     if (!res) return;
-          //   });
-          // return true;
         });
         break;
       default:
@@ -118,6 +109,6 @@ masterQueue.process((msg, done) => {
   })
   .catch((err) => {
     console.log(err);
-    done();
+    done(err);
   });
 });
