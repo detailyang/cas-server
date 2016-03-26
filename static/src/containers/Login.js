@@ -16,9 +16,12 @@ import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import FormValidate from '../mixins/FormValidate';
 import { authModelInstance } from '../models/Auth';
 
+import { connect } from 'react-redux';
+import { login } from '../actions';
+
 const noop = () => {};
 
-export default React.createClass({
+const Login = React.createClass({
 
   propTypes: {
     onOk: React.PropTypes.func,
@@ -43,16 +46,19 @@ export default React.createClass({
     const password = this.state.formData.password;
 
     this.setState({ loading: true });
+    this.props.login(username, password);
 
-    authModelInstance.login(username, password).done(() => {
-      _this.props.onOk();
-    }).fail((msg, resp) => {
-      this.setState({ loading: false });
-      const info = resp.code
-        ? resp.data.value
-        : msg;
-      Antd.message.error(info, 3);
-    });
+    // authModelInstance.login(username, password).done(() => {
+    //   _this.props.onOk();
+    // }).fail((msg, resp) => {
+    //   this.setState({ loading: false });
+    //   const info = resp.code
+    //     ? resp.data.value
+    //     : msg;
+    //   Antd.message.error(info, 3);
+    // });
+
+
   },
 
   render() {
@@ -102,3 +108,8 @@ export default React.createClass({
   },
 
 });
+
+export default connect(
+  (({auth})=>({auth})),
+  { login }
+)(Login);

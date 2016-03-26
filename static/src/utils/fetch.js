@@ -1,7 +1,18 @@
 import fetch from 'isomorphic-fetch';
 
-export default (...args) => {
-  return fetch(...args)
+export default (url, option) => {
+  option = Object.assign({
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include'
+  }, option);
+  const body = option.body;
+  if (body) {
+    option.body = JSON.stringify(option.body);
+  }
+  return fetch(url, option)
     .then(res => res.json())
     .then(res => {
       if (+res.code === 0) {

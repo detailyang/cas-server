@@ -15,26 +15,32 @@ import { App, Loading, Login, Personal, Dashboard, DevTools } from '../container
 
 import { checkAuth } from '../actions';
 
+
+
 class Root extends Component {
 
   constructor (props) {
     super(props);
     
     this.props.checkAuth();
+
+    // routes 不能重复定义，所以不能放在 render 里
+    this.routes = 
+      <Route path="/" component={App}>
+        <IndexRedirect to="/dashboard"/>
+        <Route path="/login" component={Login}/>
+        <Route path="/dashboard" component={Dashboard}>
+          <IndexRoute component={Personal}/>
+        </Route>
+      </Route>
   }
 
   render () {
     const { history, auth } = this.props;
-    
+
     const router = (
       <Router history={history}>
-        <Route path="/" component={App}>
-          <IndexRedirect to="/dashboard"/>
-          <Route path="/login" component={Login}/>
-          <Route path="/dashboard" component={Dashboard}>
-            <IndexRoute component={Personal}/>
-          </Route>
-        </Route>
+        {this.routes}
       </Router>
     )
 
