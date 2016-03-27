@@ -1,7 +1,15 @@
-import React from 'react';
+import React from 'react'
+import Nav from '../components/Nav'
+import { connect } from 'react-redux'
 
-export default function Dashboard ({children}) {
+function Dashboard ({ children, auth, location }) {
   return (
-    <div>{children}</div>
+    <div>
+        <Nav isAdmin={ auth.isAdmin } currentPath={ location.pathname } />
+        <div>{children}</div>
+    </div>
   )
 }
+
+
+export default connect(({auth})=>({auth}))(Dashboard)
