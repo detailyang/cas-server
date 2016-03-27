@@ -16,7 +16,7 @@ export default (url, option) => {
     .then(res => res.json())
     .then(res => {
       if (+res.code === 0) {
-        return Promise.resolve(res.data);
+        return Promise.resolve(res.data.value);
       }
       return Promise.reject({
         message: res.code ? res.data.value : res.msg

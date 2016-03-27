@@ -12,10 +12,10 @@ const initialState = {
 export default createReducer(initialState, {
 
   [CHECKAUTH_SUCCESS](state, action) {
-    const { isAdmin, username } = action.payload;
+    const {is_admin, username } = action.payload;
     return {
       ...state, ...{
-        isLogin: true, isAdmin, username, failMsg: null, hasChecked: true
+        isLogin: true, isAdmin: is_admin, username, failMsg: null, hasChecked: true
       }
     };
   },

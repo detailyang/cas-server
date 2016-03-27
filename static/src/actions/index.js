@@ -24,6 +24,7 @@ export const login = (username, password) =>
         method: 'POST',
         body: { username, password },
         onSuccess: () => {
+          checkAuth(dispatch);
           dispatch(push('/dashboard'))
         },
         onFail: (error) => {
