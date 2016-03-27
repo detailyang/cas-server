@@ -53,38 +53,35 @@ const Login = React.createClass({
 
 });
 
-class LoginForm extends Component {
-  render () {
-    const { fields: {username, password}, loginRequesting, handleSubmit } = this.props;
 
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col>
-            <Form.Item label="用户名：">
-              <Input placeholder="填写字母、下划线、数字" {...username} />
-            </Form.Item>
-            <Form.Item label="密码：">
-              <Input type="password" placeholder="输入密码" {...password} />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              style={{ width: '100%' }}
-              loading={loginRequesting}
-            >
-              登录
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    )
-  }
+let LoginForm = ({ fields: {username, password}, loginRequesting, handleSubmit }) => {
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col>
+          <Form.Item label="用户名：">
+            <Input placeholder="填写字母、下划线、数字" {...username} />
+          </Form.Item>
+          <Form.Item label="密码：">
+            <Input type="password" placeholder="输入密码" {...password} />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            style={{ width: '100%' }}
+            loading={loginRequesting}
+          >
+            登录
+          </Button>
+        </Col>
+      </Row>
+    </Form>
+  )
 }
 
 LoginForm = reduxForm({
