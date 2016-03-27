@@ -20,7 +20,7 @@ export const login = (username, password) =>
     dispatch({
       [CALL_API]: {
         types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
-        endpoint: '/api/users/login',
+        endpoint: '/public/users/login',
         method: 'POST',
         body: { username, password },
         onSuccess: () => {

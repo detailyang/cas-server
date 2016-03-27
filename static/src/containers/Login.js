@@ -36,7 +36,7 @@ const Login = React.createClass({
   },
 
   getInitialState() {
-    return { formData: authModelInstance.toJSON(), loading: false };
+    return { formData: authModelInstance.toJSON() };
   },
 
   handleLoginClick(e) {
@@ -45,20 +45,7 @@ const Login = React.createClass({
     const username = this.state.formData.username;
     const password = this.state.formData.password;
 
-    this.setState({ loading: true });
     this.props.login(username, password);
-
-    // authModelInstance.login(username, password).done(() => {
-    //   _this.props.onOk();
-    // }).fail((msg, resp) => {
-    //   this.setState({ loading: false });
-    //   const info = resp.code
-    //     ? resp.data.value
-    //     : msg;
-    //   Antd.message.error(info, 3);
-    // });
-
-
   },
 
   render() {
@@ -94,7 +81,7 @@ const Login = React.createClass({
                   htmlType="submit"
                   size="large"
                   style={{ width: '100%' }}
-                  loading={this.state.loading}
+                  loading={this.props.auth.loginRequesting}
                   onClick={this.handleLoginClick}
                 >
                   登录
