@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-21T21:00:37+08:00
+* @Last modified time: 2016-03-27T21:55:02+07:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -137,12 +137,16 @@ module.exports = {
     const field = ctx.request.query.field;
     const value = ctx.request.query.value;
     const where = { is_delete: false };
+    const attributes = ['id', 'username', 'gender', 'realname', 'aliasname',
+                        'mobile', 'email', 'key'];
+    if (field && ! attributes.includes(field)) {
+      throw new utils.error.NotFoundError(`dont support field ${field}:${value}`);
+    }
     if (field && value) {
       where[field] = value;
     }
     const user = await models.user.findAll({
-      attributes: ['id', 'username', 'gender',
-                   'realname', 'aliasname', 'mobile', 'email', 'key'],
+      attributes: attributes,
       where: where,
     });
     if (!user) {
