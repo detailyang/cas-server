@@ -18,10 +18,8 @@ export default (url, option) => {
       if (+res.code === 0) {
         return Promise.resolve(res.data);
       }
-      if (+res.code === 40003) {
-      return Promise.reject('你没有权限');
-      } else {
-      return Promise.reject(res.mgs);
-      }
+      return Promise.reject({
+        message: res.code ? res.data.value : res.msg
+      });
     });
 }

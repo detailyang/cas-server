@@ -1,64 +1,33 @@
-import { START_CHECK_AUTH, LOGIN_SUCCESS, LOGIN_FAILURE, START_LOGIN } from '../constants';
+import { CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../constants';
 import { push } from 'react-router-redux';
-import { authModelInstance } from '../models/Auth';
+import Antd from 'antd';
 
-import fetch from '../utils/fetch';
+import { CALL_API } from '../middleware/api';
 
-
-function loginSuccess (username, isAdmin) {
-  return {
-    type: LOGIN_SUCCESS,
-    payload: {
-      username,
-      isAdmin
-    }
-  }
-}
-
-function loginFailure (msg) {
-  return {
-    type: LOGIN_FAILURE,
-    payload: {
-      msg
-    }
-  }
-}
-
-function startCheckAuth () {
-  return {
-    type: START_CHECK_AUTH
-  }
-}
-
-function startLogin () {
-  return {
-    type: START_LOGIN
-  }
-}
 
 export const checkAuth = () => 
-  (dispatch, getState) => {
-    dispatch(startCheckAuth())
-    fetch('/api/users/self')
-      .then(({ username, is_admin: isAdmin }) => {
-        dispatch(loginSuccess(username, isAdmin))
-      }).catch( msg => {
-        dispatch(loginFailure(msg))
-        dispatch(push('/login'))
-      });
-  } 
+  (dispatch, getState) => 
+    dispatch({
+      [CALL_API]: {
+        types: [CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE],
+        endpoint: '/api/users/self',
+        onFail: () => dispatch(push('/login'))
+      }
+    })
 
 export const login = (username, password) =>
-  (dispatch, getState) => {
-    dispatch(startLogin())
-    fetch('/public/users/login', 
-      { method: 'POST', body: { username, password }})
-      .then(({ username, is_admin: isAdmin }) => {
-        dispatch(loginSuccess(username, isAdmin))
-        dispatch(push('/dashboard'))
-      }).catch( msg => {
-        console.log(msg);
-        dispatch(loginFailure(msg))
-        dispatch(push('/login'))
-      });
-  }
+  (dispatch, getState) => 
+    dispatch({
+      [CALL_API]: {
+        types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+        endpoint: '/api/users/login',
+        method: 'POST',
+        body: { username, password },
+        onSuccess: () => {
+          dispatch(push('/dashboard'))
+        },
+        onFail: (error) => {
+          Antd.message.error(error.message, 3)
+        }
+      }
+    })

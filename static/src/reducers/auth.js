@@ -1,4 +1,4 @@
-import { CHECK_AUTH, LOGIN_SUCCESS, LOGIN_FAILURE } from '../constants';
+import { CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE } from '../constants';
 import createReducer from '../utils/createReducer';
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 export default createReducer(initialState, {
 
-  [LOGIN_SUCCESS](state, action) {
+  [CHECKAUTH_SUCCESS](state, action) {
     const { isAdmin, username } = action.payload;
     return {
       ...state, ...{
@@ -20,11 +20,11 @@ export default createReducer(initialState, {
     };
   },
 
-  [LOGIN_FAILURE](state, action) {
-    const { msg } = action.payload;
+  [CHECKAUTH_FAILURE](state, action) {
+    const { message } = action;
     return {
       ...state, ...{
-        isLogin: false, username: '', isAdmin: false, failMsg: msg, hasChecked: true
+        isLogin: false, username: '', isAdmin: false, failMsg: message, hasChecked: true
       }
     };
   }

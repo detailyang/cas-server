@@ -7,6 +7,8 @@ import { routerMiddleware, routerReducer } from 'react-router-redux';
 import * as reducers from '../reducers';
 import { DevTools } from '../containers';
 
+import apiMiddleware from '../middleware/api';
+
 const reducer = combineReducers({
   ...reducers,
   routing: routerReducer
@@ -18,7 +20,7 @@ export default function configureStore(initialState) {
   const store = createStore(
     reducer,
     DevTools.instrument(),
-    applyMiddleware(thunk, historyMiddleware)
+    applyMiddleware(thunk, apiMiddleware, historyMiddleware)
   );
 
   return store;
