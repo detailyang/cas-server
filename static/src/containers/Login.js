@@ -10,8 +10,10 @@
 
 import './login.scss';
 
-import React from 'react';
+import React, { Component } from 'react';
 import Antd, { Form, Input, Row, Col, Button } from 'antd';
+
+import { reduxForm } from 'redux-form';
 
 import FormValidate from '../mixins/FormValidate';
 import { authModelInstance } from '../models/Auth';
@@ -27,74 +29,70 @@ const Login = React.createClass({
     onOk: React.PropTypes.func,
   },
 
-  mixins: [FormValidate],
-
   getDefaultProps() {
     return {
       onOk: noop,
     };
   },
 
-  getInitialState() {
-    return { formData: authModelInstance.toJSON() };
-  },
-
-  handleLoginClick(e) {
-    const _this = this;
-    e.preventDefault();
-    const username = this.state.formData.username;
-    const password = this.state.formData.password;
-
+  handleLogin({username, password}) {
     this.props.login(username, password);
   },
 
   render() {
-    const formData = this.state.formData;
-
+    const { auth } = this.props;
     return (
       <div>
         <div className="login-backdrop"></div>
         <div className="login-modal">
-          <Form onSubmit={this.handleSubmit}>
-            <Row>
-              <Col>
-                <Form.Item label="用户名：">
-                  <Input
-                    value={formData.username}
-                    placeholder="填写字母、下划线、数字"
-                    onChange={this.setValue.bind(this, 'username')}
-                  />
-                </Form.Item>
-                <Form.Item label="密码：">
-                  <Input
-                    type="password"
-                    value={formData.password || ''}
-                    onChange={this.setValue.bind(this, 'password')}
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="large"
-                  style={{ width: '100%' }}
-                  loading={this.props.auth.loginRequesting}
-                  onClick={this.handleLoginClick}
-                >
-                  登录
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+          <LoginForm loginRequesting={auth.loginRequesting} onSubmit={this.handleLogin}/>
         </div>
       </div>
     );
   },
 
 });
+
+class LoginForm extends Component {
+  render () {
+    const { fields: {username, password}, loginRequesting, handleSubmit } = this.props;
+
+    return (
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col>
+            <Form.Item label="用户名：">
+              <Input placeholder="填写字母、下划线、数字" {...username} />
+            </Form.Item>
+            <Form.Item label="密码：">
+              <Input type="password" placeholder="输入密码" {...password} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              style={{ width: '100%' }}
+              loading={loginRequesting}
+            >
+              登录
+            </Button>
+          </Col>
+        </Row>
+      </Form>
+    )
+  }
+}
+
+LoginForm = reduxForm({
+  form: 'login',
+  fields: ['username', 'password']
+})(LoginForm)
+
+
 
 export default connect(
   (({auth})=>({auth})),

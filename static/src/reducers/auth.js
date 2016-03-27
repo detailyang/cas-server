@@ -10,48 +10,36 @@ const initialState = {
   loginRequesting: false
 }
 
-export default createReducer(initialState, {
-
-  [LOGIN_REQUEST](state, action) {
-    return {
-      ...state, ... {
-        loginRequesting: true
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return {
+        ...state, ... {
+          loginRequesting: true
+        }
       }
-    }
-  },
-
-  [LOGIN_SUCCESS](state, action) {
-    return {
-      ...state, ... {
-        loginRequesting: false
+    case LOGIN_SUCCESS:
+    case LOGIN_FAILURE:
+      return {
+        ...state, ... {
+          loginRequesting: false
+        }
       }
-    }
-  },
-
-  [LOGIN_FAILURE](state, action) {
-    return {
-      ...state, ... {
-        loginRequesting: false
-      }
-    }
-  },
-
-  [CHECKAUTH_SUCCESS](state, action) {
-    const {is_admin, username } = action.payload;
-    return {
-      ...state, ...{
-        isLogin: true, isAdmin: is_admin, username, failMsg: null, hasChecked: true
-      }
-    };
-  },
-
-  [CHECKAUTH_FAILURE](state, action) {
-    const { message } = action;
-    return {
-      ...state, ...{
-        isLogin: false, username: '', isAdmin: false, failMsg: message, hasChecked: true
-      }
-    };
+    case CHECKAUTH_SUCCESS:
+      const {is_admin, username } = action.payload;
+      return {
+        ...state, ...{
+          isLogin: true, isAdmin: is_admin, username, failMsg: null, hasChecked: true
+        }
+      };
+    case CHECKAUTH_FAILURE:
+      const { message } = action;
+      return {
+        ...state, ...{
+          isLogin: false, username: '', isAdmin: false, failMsg: message, hasChecked: true
+        }
+      };
+    default:
+      return state
   }
-  
-})
+}

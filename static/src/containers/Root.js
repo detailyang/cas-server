@@ -46,7 +46,7 @@ class Root extends Component {
 
     return (
       <div>
-        { auth.hasChecked ? router : <Loading/> }
+        { router }
         <DevTools />
       </div>
     )

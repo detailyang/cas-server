@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { hashHistory } from 'react-router';
 import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { reducer as formReducer } from 'redux-form';
 
 import * as reducers from '../reducers';
 import { DevTools } from '../containers';
@@ -11,6 +12,7 @@ import apiMiddleware from '../middleware/api';
 
 const reducer = combineReducers({
   ...reducers,
+  form: formReducer,
   routing: routerReducer
 });
 
