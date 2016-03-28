@@ -20,14 +20,11 @@ class Root extends Component {
 
   constructor (props) {
     super(props);
+
+    const { history } = this.props;
     
     this.props.checkAuth();
-  }
-
-  render () {
-    const { history, auth } = this.props;
-
-    const router = auth.hasChecked ? (
+    this.router = (
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRedirect to="/dashboard"/>
@@ -37,7 +34,13 @@ class Root extends Component {
           </Route>
         </Route>
       </Router>
-    ) : <Loading/>;
+    )
+  }
+
+  render () {
+    const { auth } = this.props;
+
+    const router = auth.hasChecked ? this.router : <Loading/>;
 
     return (
       <div>
