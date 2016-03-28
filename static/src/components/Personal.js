@@ -24,12 +24,15 @@ import EditModal from '../mixins/EditModal';
 import ChangePassword from '../components/ChangePassword';
 import DynamicPassword from '../components/DynamicPassword';
 
+import { reduxForm } from 'redux-form';
+import { fields } from '../reducers/personal';
+
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const noop = () => {};
 
-export default React.createClass({
+let PersonalForm = React.createClass({
   propTypes: {
     onOk: React.PropTypes.func,
     onUpload: React.PropTypes.func,
@@ -101,6 +104,9 @@ export default React.createClass({
   },
 
   render() {
+    const { id, username, realname, aliasname, mobile, email, is_delete, 
+          gender, key, notp, upload_url } = this.props.fields;
+
     const formData = this.state.formData;
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
@@ -133,7 +139,7 @@ export default React.createClass({
                     validateStatus={errorStatus('username')}
                     help={help('username')}
                   >
-                    <Input disabled value={formData.username} />
+                    <Input disabled { ...username } />
                   </Form.Item>
                 </Col>
                 <Col span="11" offset="2">
@@ -159,10 +165,7 @@ export default React.createClass({
                     validateStatus={errorStatus('realname')}
                     help={help('realname')}
                   >
-                    <Input
-                      value={formData.realname}
-                      onChange={this.setValue.bind(this, 'realname')}
-                    />
+                    <Input { ...realname }/>
                   </Form.Item>
                 </Col>
                 <Col span="11" offset="2">
@@ -228,3 +231,10 @@ export default React.createClass({
     );
   },
 });
+
+PersonalForm = reduxForm({
+  form: 'personal',
+  fields: fields
+})(PersonalForm)
+
+export default PersonalForm

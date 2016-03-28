@@ -1,7 +1,8 @@
 import React from 'react';
+import { Personal } from '../components';
 
-export default function Personal () {
+export default function () {
   return (
-    <p>hello world!</p>
+    <Personal/>
   )
 }
