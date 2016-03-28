@@ -9,7 +9,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
-import { push } from 'react-router-redux';
 
 import { App, Loading, Login, Personal, Dashboard, DevTools } from '../containers';
 
@@ -23,26 +22,22 @@ class Root extends Component {
     super(props);
     
     this.props.checkAuth();
-
-    // routes 不能重复定义，所以不能放在 render 里
-    this.routes = 
-      <Route path="/" component={App}>
-        <IndexRedirect to="/dashboard"/>
-        <Route path="/login" component={Login}/>
-        <Route path="/dashboard" component={Dashboard}>
-          <IndexRoute component={Personal}/>
-        </Route>
-      </Route>
   }
 
   render () {
     const { history, auth } = this.props;
 
-    const router = (
+    const router = auth.hasChecked ? (
       <Router history={history}>
-        {this.routes}
+        <Route path="/" component={App}>
+          <IndexRedirect to="/dashboard"/>
+          <Route path="/login" component={Login}/>
+          <Route path="/dashboard" component={Dashboard}>
+            <IndexRoute component={Personal}/>
+          </Route>
+        </Route>
       </Router>
-    )
+    ) : <Loading/>;
 
     return (
       <div>
