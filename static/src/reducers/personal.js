@@ -1,4 +1,4 @@
-import { PERSONAL_SAVE_REQUEST, PERSONAL_SAVE_SUCCESS, PERSONAL_SAVE_FAILURE, RESET_PERSONAL } from '../constants'
+import { RESET_PERSONAL } from '../constants'
 import { pick } from '../utils'
 
 const initialState = {
@@ -25,15 +25,6 @@ export default (state = initialState, action) => {
       return {
         ...state, ...pick(action.payload, ...Object.keys(initialState))
       };
-    case PERSONAL_SAVE_REQUEST:
-      return {
-        ...state, ...{ requesting: true }
-      }
-    case PERSONAL_SAVE_SUCCESS:
-    case PERSONAL_SAVE_FAILURE:
-      return {
-        ...state, ...{ requesting: false }
-      }
     default:
       return state
   }

@@ -24,9 +24,7 @@ import { reduxForm } from 'redux-form';
 import ChangePassword from '../components/ChangePassword';
 import DynamicPassword from '../components/DynamicPassword';
 import { fields } from '../reducers/personal';
-import { savePersonal } from '../actions';
-
-
+import { submitPersonal } from '../actions';
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -71,28 +69,28 @@ let PersonalForm = React.createClass({
     });
   },
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.savePersonal();
-    return;
-    this.model.set(this.state.formData).save().always(() => {
-      this.setState({ confirmLoading: false });
-    }).done(() => {
-      const msg = this.model.get('id') ? '编辑成功' : '创建成功';
-      Antd.message.success(msg);
-      this.props.onOk();
-    }).fail((msg, resp) => {
-      if (resp.data && resp.data.errors) {
-        this.setState({ formErrors: resp.data.errors });
-      }
-      Antd.message.error(msg, 3);
-    });
+  submit(...args) {
+    return submitPersonal(...args)
+      .then(values => {
+        const msg = values.id ? '编辑成功' : '创建成功';
+        Antd.message.success(msg);
+        this.props.onOk();
+      })
+      .catch(error => {
+        this.setState({
+          formErrors: error.data.errors
+        })
+        Antd.message.error(error.message, 3)
+      })
   },
 
   render() {
-    const { id, username, realname, aliasname, mobile, email, is_delete, 
-          gender, key, notp, upload_url } = this.props.fields;
-    const { requesting } = this.props.personal;
+    const {
+      fields: { id, username, realname, aliasname, mobile, email, is_delete, 
+        gender, key, notp, upload_url },
+      handleSubmit,
+      submitting
+    } = this.props;
 
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
@@ -104,7 +102,7 @@ let PersonalForm = React.createClass({
       <div>
         <div className="row-flex row-flex-center">
           <div className="col-12 box">
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={handleSubmit(this.submit)}>
               <FormItem className="row-flex row-flex-center">
                 <Upload
                   showUploadList={false}
@@ -197,7 +195,7 @@ let PersonalForm = React.createClass({
                   onSubmit={this.changeDynamicPassword}
                   value={notp.value}
                 />
-                <Button style={style} type="primary" htmlType="submit" loading={requesting}>更新</Button>
+                <Button style={style} type="primary" htmlType="submit" loading={submitting}>更新</Button>
               </Row>
             </Form>
           </div>
@@ -207,12 +205,8 @@ let PersonalForm = React.createClass({
   },
 });
 
-PersonalForm = reduxForm({
+export default reduxForm({
   form: 'personal',
-  fields: fields
+  fields
 })(PersonalForm)
 
-export default connect(
-  ({personal}) => ({personal}),
-  { savePersonal }
-)(PersonalForm)

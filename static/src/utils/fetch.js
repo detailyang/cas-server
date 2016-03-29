@@ -19,7 +19,8 @@ export default (url, option) => {
         return Promise.resolve(res.data.value);
       }
       return Promise.reject({
-        message: res.code ? res.data.value : res.msg
+        message: res.msg,
+        data: res.data
       });
     });
 }
