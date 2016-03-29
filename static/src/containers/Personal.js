@@ -47,7 +47,6 @@ let PersonalForm = React.createClass({
 
   getInitialState() {
     return {
-      formErrors: {},
       onOk: noop,
     };
   },
@@ -77,9 +76,6 @@ let PersonalForm = React.createClass({
         this.props.onOk();
       })
       .catch(error => {
-        this.setState({
-          formErrors: error.data.errors
-        })
         Antd.message.error(error.message, 3)
       })
   },
@@ -89,10 +85,10 @@ let PersonalForm = React.createClass({
       fields: { id, username, realname, aliasname, mobile, email, is_delete, 
         gender, key, notp, upload_url },
       handleSubmit,
-      submitting
+      submitting,
+      personal: { formErrors }
     } = this.props;
 
-    const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
     const help = (field) => formErrors[field];
     const style = {
@@ -207,6 +203,7 @@ let PersonalForm = React.createClass({
 
 export default reduxForm({
   form: 'personal',
-  fields
-})(PersonalForm)
+  fields,
+}, ({personal}) => ({personal})
+)(PersonalForm)
 

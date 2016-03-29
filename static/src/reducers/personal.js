@@ -1,4 +1,4 @@
-import { RESET_PERSONAL } from '../constants'
+import { RESET_PERSONAL, SAVE_PERSNOAL_FAILURE} from '../constants'
 import { pick } from '../utils'
 
 const initialState = {
@@ -12,7 +12,8 @@ const initialState = {
   gender: false,
   key: '',
   notp: '',
-  upload_url: ''
+  upload_url: '',
+  formErrors: {}
 }
 
 
@@ -22,8 +23,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case RESET_PERSONAL:
       return {
-        ...state, ...pick(action.payload, ...Object.keys(initialState))
-      };
+        ...state, ...pick(action.payload, ...Object.keys(initialState)), ...{formErrors: {}}
+      }
+    case SAVE_PERSNOAL_FAILURE:
+      return {
+        ...state, ...{formErrors: action.payload.errors}
+      }
     default:
       return state
   }
