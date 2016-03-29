@@ -68,7 +68,7 @@ let PersonalForm = React.createClass({
     });
   },
 
-  submit(...args) {
+  submitPersonal(...args) {
     return submitPersonal(...args)
       .then(values => {
         const msg = values.id ? '编辑成功' : '创建成功';
@@ -98,7 +98,7 @@ let PersonalForm = React.createClass({
       <div>
         <div className="row-flex row-flex-center">
           <div className="col-12 box">
-            <Form onSubmit={handleSubmit(this.submit)}>
+            <Form onSubmit={handleSubmit(this.submitPersonal)}>
               <FormItem className="row-flex row-flex-center">
                 <Upload
                   showUploadList={false}
