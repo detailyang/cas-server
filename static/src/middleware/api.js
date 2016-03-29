@@ -45,10 +45,14 @@ export default store => next => action => {
   next(actionWith({ type: requestType }));
 
   return fetch(endpoint, option).then(
-    data => next(actionWith({
-      payload: data,
-      type: successType
-    })),
+    data => {
+      next(actionWith({
+        payload: data,
+        type: successType
+      }))
+
+      return data;
+    },
     error => {
       next(actionWith({
         type: failureType,

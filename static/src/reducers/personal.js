@@ -1,4 +1,4 @@
-import { CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE } from '../constants'
+import { PERSONAL_SAVE_REQUEST, PERSONAL_SAVE_SUCCESS, PERSONAL_SAVE_FAILURE, RESET_PERSONAL } from '../constants'
 import { pick } from '../utils'
 
 const initialState = {
@@ -13,6 +13,7 @@ const initialState = {
   key: '',
   notp: '',
   upload_url: '',
+  requesting: false
 }
 
 
@@ -20,10 +21,19 @@ export const fields = Object.keys(initialState)
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case CHECKAUTH_SUCCESS:
+    case RESET_PERSONAL:
       return {
         ...state, ...pick(action.payload, ...Object.keys(initialState))
       };
+    case PERSONAL_SAVE_REQUEST:
+      return {
+        ...state, ...{ requesting: true }
+      }
+    case PERSONAL_SAVE_SUCCESS:
+    case PERSONAL_SAVE_FAILURE:
+      return {
+        ...state, ...{ requesting: false }
+      }
     default:
       return state
   }

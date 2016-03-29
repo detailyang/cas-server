@@ -50,7 +50,6 @@ let PersonalForm = React.createClass({
   getInitialState() {
     return {
       formErrors: {},
-      confirmLoading: false,
       onOk: noop,
     };
   },
@@ -93,6 +92,7 @@ let PersonalForm = React.createClass({
   render() {
     const { id, username, realname, aliasname, mobile, email, is_delete, 
           gender, key, notp, upload_url } = this.props.fields;
+    const { requesting } = this.props.personal;
 
     const formErrors = this.state.formErrors;
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
@@ -197,7 +197,7 @@ let PersonalForm = React.createClass({
                   onSubmit={this.changeDynamicPassword}
                   value={notp.value}
                 />
-                <Button style={style} type="primary" htmlType="submit">更新</Button>
+                <Button style={style} type="primary" htmlType="submit" loading={requesting}>更新</Button>
               </Row>
             </Form>
           </div>
@@ -213,6 +213,6 @@ PersonalForm = reduxForm({
 })(PersonalForm)
 
 export default connect(
-  ({}) => ({}),
+  ({personal}) => ({personal}),
   { savePersonal }
 )(PersonalForm)
