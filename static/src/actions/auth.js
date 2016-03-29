@@ -30,8 +30,6 @@ export const login = (username, password) =>
           checkAuth(dispatch);
           dispatch(push('/dashboard'))
         },
-        onFail: (error) => {
-          Antd.message.error(error.message, 3)
-        }
+        onFail: error => Antd.message.error(error.message, 3)
       }
     })
