@@ -31,17 +31,12 @@ const Login = React.createClass({
     };
   },
 
-  handleLogin({username, password}) {
-    this.props.login(username, password);
-  },
-
   render() {
-    const { auth } = this.props;
     return (
       <div>
         <div className="login-backdrop"></div>
         <div className="login-modal">
-          <LoginForm loginRequesting={auth.loginRequesting} onSubmit={this.handleLogin}/>
+          <LoginForm/>
         </div>
       </div>
     );
@@ -50,9 +45,13 @@ const Login = React.createClass({
 });
 
 
-let LoginForm = ({ fields: {username, password}, loginRequesting, handleSubmit }) => {
+let LoginForm = ({ fields: {username, password}, submitting, handleSubmit }) => {
+  let loginWrapped = (...args) =>
+    login(...args).catch(error =>
+      Antd.message.error(error.message, 3))
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit(loginWrapped)}>
       <Row>
         <Col>
           <Form.Item label="用户名：">
@@ -70,7 +69,7 @@ let LoginForm = ({ fields: {username, password}, loginRequesting, handleSubmit }
             htmlType="submit"
             size="large"
             style={{ width: '100%' }}
-            loading={loginRequesting}
+            loading={submitting}
           >
             登录
           </Button>
@@ -87,7 +86,4 @@ LoginForm = reduxForm({
 
 
 
-export default connect(
-  (({auth})=>({auth})),
-  { login }
-)(Login);
+export default Login;

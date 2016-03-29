@@ -12,8 +12,7 @@ const initialState = {
   gender: false,
   key: '',
   notp: '',
-  upload_url: '',
-  requesting: false
+  upload_url: ''
 }
 
 
