@@ -15,10 +15,9 @@ export const checkAuth = () =>
         types: [CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE],
         endpoint: '/api/users/self'
       }
-    }).then(data => {
-      dispatch(resetPersonal(data))
-      dispatch(initializeForm('personal', getState().personal, personalFields))
-    }).catch(() => dispatch(push('/login')))
+    })
+    .then(data => dispatch(resetPersonal(data)))
+    .catch(() => dispatch(push('/login')))
 
 export const login = (values, dispatch) => 
   fetch('/public/users/login', {

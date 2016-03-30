@@ -51,6 +51,10 @@ let PersonalForm = React.createClass({
     };
   },
 
+  // componentWillMount() {
+  //   this.props.initializeForm(this.props.personal);
+  // },
+
   handleChangePassword(...args) {
     return this.props.changePassword(...args)
       .then(() => Antd.message.success('修改密码成功'))
@@ -200,7 +204,11 @@ export default reduxForm({
     form: 'personal',
     fields,
   },
-  ({ personal }) => ({ personal }),
+  ({ personal }) => 
+    ({ 
+      personal,
+      initialValues: personal
+    }),
   { changePassword, checkDynamicPassword }
 )(PersonalForm)
 

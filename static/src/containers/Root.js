@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
 
-import { App, Loading, Login, Personal, Dashboard, DevTools } from '../containers';
+import { App, Loading, Login, Personal, Dashboard, DevTools, OAuth } from '../containers';
 
 import { checkAuth } from '../actions';
 
@@ -27,10 +27,11 @@ class Root extends Component {
     this.router = (
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRedirect to="/dashboard"/>
-          <Route path="/login" component={Login}/>
-          <Route path="/dashboard" component={Dashboard}>
+          <IndexRedirect to="dashboard"/>
+          <Route path="login" component={Login}/>
+          <Route path="dashboard" component={Dashboard}>
             <IndexRoute component={Personal}/>
+            <Route path="oauth" component={OAuth}/>
           </Route>
         </Route>
       </Router>
@@ -39,7 +40,6 @@ class Root extends Component {
 
   render () {
     const { auth } = this.props;
-
     const router = auth.hasChecked ? this.router : <Loading/>;
 
     return (

@@ -8,9 +8,27 @@
 */
 
 
-import Backbone from 'backbone';
-import React, { Component } from 'react';
-import { Menu } from 'antd';
+import React from 'react'
+import { Link } from 'react-router'
+import { Menu } from 'antd'
+
+const navMap = [
+  {
+    router: '/dashboard/user',
+    text: '用户列表',
+    needAdmin: true
+  },
+  {
+    router: '/dashboard/oauth',
+    text: 'OAuth列表',
+    needAdmin: true
+  },
+  {
+    router: '/dashboard',
+    text: '个人信息',
+    needAdmin: false
+  }
+]
 
 export default ({ isAdmin, currentPath }) => {
   let style = isAdmin ? null : { display: 'none' }
@@ -19,10 +37,15 @@ export default ({ isAdmin, currentPath }) => {
       selectedKeys={[currentPath]}
       theme=""
       mode="horizontal"
+      style={{marginBottom: '20px'}}
     >
-      <Menu.Item key="user" style={style}>用户列表</Menu.Item>
-      <Menu.Item key="oauth" style={style}>OAuth列表</Menu.Item>
-      <Menu.Item key="/dashboard">个人信息</Menu.Item>
+      {
+        navMap.map((navItem, index) =>
+          <Menu.Item key={navItem.router} style={navItem.needAdmin || style}>
+            <Link to={navItem.router}>{navItem.text}</Link>
+          </Menu.Item>
+        )
+      }
     </Menu>
   )
 }
