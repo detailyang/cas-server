@@ -24,7 +24,7 @@ import { reduxForm } from 'redux-form';
 import ChangePassword from '../components/ChangePassword';
 import DynamicPassword from '../components/DynamicPassword';
 import { fields } from '../reducers/personal';
-import { submitPersonal } from '../actions';
+import { submitPersonal, changePassword, checkDynamicPassword } from '../actions';
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -51,21 +51,16 @@ let PersonalForm = React.createClass({
     };
   },
 
-  handleChangePassword(oldpassword, newpassword) {
-    this.model.resetPassword(oldpassword, newpassword).done(() => {
-      Antd.message.success('修改密码成功');
-    }).fail((msg, resp) => {
-      const info = resp.code !== 0 && resp.data.value ? resp.data.value : msg;
-      Antd.message.error(info);
-    });
+  handleChangePassword(...args) {
+    return this.props.changePassword(...args)
+      .then(() => Antd.message.success('修改密码成功'))
+      .catch(error => Antd.message.error(error.message))
   },
 
-  changeDynamicPassword(password) {
-    this.model.checkDynamicPassword(password).done(() => {
-      Antd.message.success('校验成功');
-    }).fail(() => {
-      Antd.message.error('校验失败');
-    });
+  changeDynamicPassword(...args) {
+    return this.props.checkDynamicPassword(...args)
+      .then(() => Antd.message.success('校验成功'))
+      .catch(error => Antd.message.error('校验失败'))
   },
 
   submitPersonal(...args) {
@@ -202,8 +197,10 @@ let PersonalForm = React.createClass({
 });
 
 export default reduxForm({
-  form: 'personal',
-  fields,
-}, ({personal}) => ({personal})
+    form: 'personal',
+    fields,
+  },
+  ({ personal }) => ({ personal }),
+  { changePassword, checkDynamicPassword }
 )(PersonalForm)
 

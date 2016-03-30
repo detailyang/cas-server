@@ -15,7 +15,6 @@ export default store => next => action => {
 
   let { endpoint } = callAPI;
   const { types } = callAPI;
-  const { onSuccess, onFail } = callAPI;
   const option = {
     method: callAPI.method || 'get',
     body: callAPI.body
@@ -42,7 +41,10 @@ export default store => next => action => {
   }
 
   const [requestType, successType, failureType] = types;
-  next(actionWith({ type: requestType }));
+  next(actionWith({ 
+    type: requestType,
+    payload: { endpoint, ...option }
+  }));
 
   return fetch(endpoint, option).then(
     data => {
@@ -61,5 +63,5 @@ export default store => next => action => {
 
       return Promise.reject(error);
     }
-  ).then(onSuccess, onFail)
+  )
 };

@@ -13,14 +13,12 @@ export const checkAuth = () =>
     dispatch({
       [CALL_API]: {
         types: [CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE],
-        endpoint: '/api/users/self',
-        onSuccess: (data) => {
-          dispatch(resetPersonal(data))
-          dispatch(initializeForm('personal', getState().personal, personalFields))
-        },
-        onFail: () => dispatch(push('/login'))
+        endpoint: '/api/users/self'
       }
-    })
+    }).then(data => {
+      dispatch(resetPersonal(data))
+      dispatch(initializeForm('personal', getState().personal, personalFields))
+    }).catch(() => dispatch(push('/login')))
 
 export const login = (values, dispatch) => 
   fetch('/public/users/login', {
