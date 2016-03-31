@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:07:46+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T00:02:23+08:00
+* @Last modified time: 2016-04-01T00:06:57+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -32,7 +32,7 @@ const adminOnly = async (ctx, next) => {
 
 router.post('/', adminOnly, controllers.user.list.post);
 router.post('/dynamicpassword', adminOnly, controllers.user.detail.dynamicpassword.post);
-router.post('/self/avatar', adminOnly, convert(koabody), controllers.user.detail.avatar.post);
+router.put('/self/avatar', adminOnly, convert(koabody), controllers.user.detail.avatar.post);
 
 router.get('/one', controllers.user.detail.getOne);
 router.get('/', controllers.user.list.get);
