@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-27T21:55:02+07:00
+* @Last modified time: 2016-04-01T00:06:28+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -312,6 +312,13 @@ module.exports = {
         throw new Error('please upload avatar');
       }
       const avatar = ctx.request.body.files.avatar;
+      const where = {};
+
+      if (ctx.oauth) {
+        where.id = ctx.request.body.id;
+      } else {
+        where.id = ctx.session.id;
+      }
 
       if (avatar.size >= config.avatar.maxsize) {
         throw new Error('avatar too large');
@@ -325,9 +332,7 @@ module.exports = {
       const user = await models.user.update({
         avatar: buffer,
       }, {
-        where: {
-          id: ctx.session.id,
-        },
+        where: where,
       });
       if (!user) {
         throw new utils.error.ServerError('update user error');
