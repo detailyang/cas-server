@@ -69,6 +69,7 @@
     "eslint-plugin-react": "^4.2.1",
     "express": "^4.13.4",
     "jquery": "^2.2.1",
+    "node-sass": "^3.4.2",
     "qrcode.react": "^0.6.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",

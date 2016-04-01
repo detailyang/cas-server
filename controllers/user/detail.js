@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T10:10:14+08:00
+* @Last modified time: 2016-04-01T11:28:17+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -313,15 +313,23 @@ module.exports = {
       }
       const avatar = ctx.request.body.files.avatar;
       const where = {};
-
-      if (ctx.oauth) {
-        where.id = ctx.request.body.id;
+      if (ctx.oauth.id) {
+        const body = ctx.request.body.fields;
+        if (body.id) {
+          where.id = body.id;
+        }
+        if (body.username) {
+          where.username = body.username;
+        }
       } else {
         where.id = ctx.session.id;
       }
 
       if (avatar.size >= config.avatar.maxsize) {
         throw new Error('avatar too large');
+      }
+      if (!(where.id || where.username)) {
+        throw new utils.error.ParamsError('lack username or id');
       }
       const buffer = await new Promise((resolve, reject) => {
         fs.readFile(avatar.path, (err, data) => {

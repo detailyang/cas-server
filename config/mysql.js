@@ -3,18 +3,18 @@
 * @Date:   2016-03-16T22:03:58+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:10:16+08:00
+* @Last modified time: 2016-04-01T10:29:01+08:00
 * @License: The MIT License (MIT)
 */
 
 
 if (process.env.NODE_ENV === 'dev') {
   module.exports = {
-    username: 'root',
-    password: '',
-    database: 'cas',
-    host: '127.0.0.1',
-    port: '3306',
+    username: process.env.CAS_MYSQL_USERNAME || 'root',
+    password: process.env.CAS_MYSQL_PASSWORD || '',
+    database: process.env.CAS_MYSQL_DATABASE || 'cas',
+    host: process.env.CAS_MYSQL_HOST || '127.0.0.1',
+    port: process.env.CAS_MYSQL_PORT || '3306',
     logging: console.log,
   };
 } else if (process.env.NODE_ENV === 'test') {

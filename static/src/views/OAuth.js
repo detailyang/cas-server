@@ -3,14 +3,15 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:56:43+08:00
+* @Last modified time: 2016-04-01T11:02:45+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import _ from 'underscore';
 import React from 'react';
-import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';
+import Antd, { Table, Row, Col, Button, Input, Icon, Popconfirm } from 'antd';
+import classNames from 'classnames';
 
 import OauthEditModal from '../components/OauthEditModal';
 import ModelMixin from '../mixins/model';
@@ -103,25 +104,37 @@ export default React.createClass({
   },
 
   renderFilter() {
+    const btnCls = classNames({
+      'ant-search-btn': true,
+      'ant-search-btn-noempty': true,
+    });
+    const searchCls = classNames({
+      'ant-search-input': true,
+    });
+
     return (
       <div style={{ marginBottom: '10px' }}>
-        <Button type="primary" onClick={this.handleCreateClick}>
-          <Icon type="plus" />新建
-        </Button>
-        <div style={{ float: 'right' }}>
-          <InputGroup className="ant-search-input" sytle={{ float: 'left' }} size="large">
-            <Input
-              defaultValue={this.state.keyword}
-              onChange={this.handleKeywordChange}
-              onKeyDown={this.handleKeywordKeyDown}
-            />
-            <div className="ant-input-group-wrap">
-              <Button className="ant-search-btn" onClick={this.handleSearchClick}>
-                <Icon type="search" />
-              </Button>
-            </div>
-          </InputGroup>
-        </div>
+        <Row>
+          <Col span="6">
+            <Button type="primary" onClick={this.handleCreateClick}>
+              <Icon type="plus" />新建
+            </Button>
+          </Col>
+          <Col span="6" offset="12">
+              <InputGroup className={searchCls} size="small">
+                <Input
+                  defaultValue={this.state.keyword}
+                  onChange={this.handleKeywordChange}
+                  onKeyDown={this.handleKeywordKeyDown}
+                />
+                <div className="ant-input-group-wrap">
+                  <Button className={btnCls} onClick={this.handleSearchClick}>
+                    <Icon type="search" />
+                  </Button>
+                </div>
+              </InputGroup>
+          </Col>
+        </Row>
       </div>
     );
   },
