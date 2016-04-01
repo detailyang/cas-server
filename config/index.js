@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 16:08:50
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T18:13:53+08:00
+* @Last modified time: 2016-04-01T10:19:13+08:00
  */
 
 
@@ -45,5 +45,7 @@ module.exports = {
   'oauth': {
     ttl: 1 * 60,
   },
-  'paginator': 30,
+  'paginator': {
+    'per_page': 30,
+  },
 };
