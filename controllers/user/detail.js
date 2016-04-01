@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T00:06:28+08:00
+* @Last modified time: 2016-04-01T10:10:14+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -259,7 +259,7 @@ module.exports = {
     async getByUsername(ctx) {
       const username = ctx.params.username;
       const user = await models.user.findOne({
-        attributes: ['key'],
+        attributes: ['id', 'key'],
         where: {
           is_delete: false,
           username: username,
@@ -269,7 +269,7 @@ module.exports = {
         throw new utils.error.NotFoundError('dont find user');
       }
 
-      ctx.return.data.value = user.key;
+      ctx.return.data.value = user;
       ctx.body = ctx.return;
     },
   },
