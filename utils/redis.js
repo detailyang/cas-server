@@ -1,9 +1,19 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-14T10:30:37+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-04-01T16:33:04+08:00
+* @License: The MIT License (MIT)
+*/
+
+
 import Redis from 'ioredis';
 import { Store } from 'koa-session2';
 
 
 export default class RedisStore extends Store {
-  constructor(host, port, db, key) {
+  constructor(host, port, db, key, ttl) {
     super();
     this.redis = new Redis({
       host: host,
@@ -14,6 +24,7 @@ export default class RedisStore extends Store {
     this.redis.on('error', (err) => {
       throw err;
     });
+    this.ttl = ttl;
   }
 
   async get(sid) {
@@ -25,7 +36,7 @@ export default class RedisStore extends Store {
     if (!opts.sid) {
       opts.sid = this.getID(24);
     }
-    await this.redis.set(`${this.key}:${opts.sid}`, JSON.stringify(session));
+    await this.redis.setex(`${this.key}:${opts.sid}`, this.ttl, JSON.stringify(session));
     return opts.sid;
   }
 
