@@ -20,7 +20,7 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
-    const always = ctx.request.body.always || true;
+    const persistence = ctx.request.body.persistence || true;
     let value = {};
 
     if (!password || !(username || id)) {
@@ -109,7 +109,7 @@ module.exports = {
     }
 
     ctx.return.data.value = value;
-    if (+always) {
+    if (+persistence) {
       ctx.session = value;
     }
     ctx.body = ctx.return;
