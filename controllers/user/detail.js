@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T11:28:17+08:00
+* @Last modified time: 2016-04-02T23:35:40+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -20,6 +20,8 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
+    const alaways = ctx.request.body.alaways || true;
+    let value = {};
 
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
@@ -58,14 +60,14 @@ module.exports = {
         }
 
         if (utils.password.check(_static, user.dataValues.password)) {
-          const value = {
+          value = {
             'id': user.id,
             'username': user.username,
+            'aliasname': user.aliasname,
+            'realname': user.realname,
+            'gender': user.gender,
             'is_admin': user.is_admin,
           };
-          ctx.return.data.value = ctx.session = value;
-          ctx.body = ctx.return;
-          return;
         }
       } else {
         const rv = utils.password.otpcheck(password, utils.password.encrypt(
@@ -77,7 +79,7 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
-        const value = {
+        value = {
           'id': user.id,
           'username': user.username,
           'aliasname': user.aliasname,
@@ -91,7 +93,7 @@ module.exports = {
       }
     } else {
       if (utils.password.check(password, user.dataValues.password)) {
-        const value = {
+        value = {
           'id': user.id,
           'username': user.username,
           'aliasname': user.aliasname,
@@ -105,6 +107,13 @@ module.exports = {
       }
       throw new utils.error.ParamsError('password not right');
     }
+
+    ctx.return.data.value = value;
+    if (+alaways) {
+      ctx.session = value;
+    }
+    ctx.body = ctx.return;
+    return;
   },
 
   async logout(ctx) {
