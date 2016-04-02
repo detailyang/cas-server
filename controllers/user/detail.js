@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-02T23:35:40+08:00
+* @Last modified time: 2016-04-02T23:39:02+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -20,7 +20,7 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
-    const alaways = ctx.request.body.alaways || true;
+    const always = ctx.request.body.always || true;
     let value = {};
 
     if (!password || !(username || id)) {
@@ -109,7 +109,7 @@ module.exports = {
     }
 
     ctx.return.data.value = value;
-    if (+alaways) {
+    if (+always) {
       ctx.session = value;
     }
     ctx.body = ctx.return;
