@@ -18,7 +18,6 @@ import Antd, {
     Row,
     Col,
 } from 'antd';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import ChangePassword from '../components/ChangePassword';

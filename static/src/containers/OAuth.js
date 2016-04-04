@@ -10,17 +10,21 @@
 
 import React from 'react';
 import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';
+import { connect } from 'react-redux';
 
 import OauthEditModal from '../components/OauthEditModal';
-import ModelMixin from '../mixins/model';
 import OauthModel from '../models/Oauth';
+
+import { requestOAuthList } from '../actions'
 
 
 const InputGroup = Input.Group;
 
-export default React.createClass({
+const OAuth = React.createClass({
 
-  mixins: [ModelMixin],
+  componentWillMount() {
+    this.props.requestOAuthList()
+  },
 
   getInitialState() {
     this.model = new OauthModel();
@@ -188,10 +192,12 @@ export default React.createClass({
         model.set('page', page).fetch();
       },
     };
+
+    const { OAuth:{ list, loading } } = this.props;
     return (
       <Table
-        dataSource={this.state.value}
-        loading={this.state.loading}
+        dataSource={list}
+        loading={loading}
         columns={columns}
         pagination={pagination}
         onChange={this.handleTableChange}
@@ -208,3 +214,8 @@ export default React.createClass({
     );
   },
 });
+
+export default connect(
+  ({OAuth}) => ({OAuth}),
+  { requestOAuthList }
+)(OAuth);
