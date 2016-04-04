@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-20T16:34:49+08:00
+* @Last modified time: 2016-04-04T23:37:06+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -14,6 +14,7 @@ import Antd, {
   Form,
   Input,
   Checkbox,
+  Radio,
   Row,
   Col,
 } from 'antd';
@@ -22,6 +23,9 @@ import FormValidate from '../mixins/FormValidate';
 import EditModal from '../mixins/EditModal';
 
 const noop = () => {};
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
+
 
 export default React.createClass({
   propTypes: {
@@ -145,6 +149,19 @@ export default React.createClass({
               value={formData.desc}
               onChange={this.setValue.bind(this, 'desc')}
             />
+          </Form.Item>
+          <Form.Item label="type: " validateStatus={errorStatus('type')} help={help('type')}>
+            <RadioGroup
+              onChange={this.setValue.bind(this, 'type')}
+              value={`${formData.type}`}
+              defaultValue={`${formData.type}`}
+              size="small"
+            >
+              <Radio value="0">默认</Radio>
+              <Radio value="1">静态</Radio>
+              <Radio value="2">动态</Radio>
+              <Radio value="3">静动</Radio>
+            </RadioGroup>
           </Form.Item>
           <Row>
             <Col span="11">
