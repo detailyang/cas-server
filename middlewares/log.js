@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-08 11:59:09
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T23:57:37+08:00
+* @Last modified time: 2016-04-05T14:34:32+08:00
  */
 
 
@@ -31,4 +31,6 @@ module.exports = async(ctx, next) => {
   body.code = (ctx.response.body && ctx.response.body.code) || 0;
   body.rt = ms;
   log.info(body);
+  // output to stdout
+  console.log(body);
 };
