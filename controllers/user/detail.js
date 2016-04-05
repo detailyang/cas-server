@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T00:54:46+08:00
+* @Last modified time: 2016-04-05T10:42:28+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -21,7 +21,6 @@ module.exports = {
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
     const persistence = ctx.request.body.persistence || true;
-    let value = {};
 
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
@@ -59,15 +58,8 @@ module.exports = {
           }
         }
 
-        if (utils.password.check(_static, user.dataValues.password)) {
-          value = {
-            'id': user.id,
-            'username': user.username,
-            'aliasname': user.aliasname,
-            'realname': user.realname,
-            'gender': user.gender,
-            'is_admin': user.is_admin,
-          };
+        if (!utils.password.check(_static, user.dataValues.password)) {
+          throw new utils.error.ParamsError('password not right');
         }
       } else {
         const rv = utils.password.otpcheck(password, utils.password.encrypt(
@@ -79,35 +71,21 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
-        value = {
-          'id': user.id,
-          'username': user.username,
-          'aliasname': user.aliasname,
-          'realname': user.realname,
-          'gender': user.gender,
-          'is_admin': user.is_admin,
-        };
-        ctx.return.data.value = ctx.session = value;
-        ctx.body = ctx.return;
-        return;
       }
     } else {
-      if (utils.password.check(password, user.dataValues.password)) {
-        value = {
-          'id': user.id,
-          'username': user.username,
-          'aliasname': user.aliasname,
-          'realname': user.realname,
-          'gender': user.gender,
-          'is_admin': user.is_admin,
-        };
-        ctx.return.data.value = ctx.session = value;
-        ctx.body = ctx.return;
-        return;
+      if (!utils.password.check(password, user.dataValues.password)) {
+        throw new utils.error.ParamsError('password not right');
       }
-      throw new utils.error.ParamsError('password not right');
     }
 
+    const value = {
+      'id': user.id,
+      'username': user.username,
+      'aliasname': user.aliasname,
+      'realname': user.realname,
+      'gender': user.gender,
+      'is_admin': user.is_admin,
+    };
     ctx.return.data.value = value;
     if (+persistence) {
       ctx.session = value;
