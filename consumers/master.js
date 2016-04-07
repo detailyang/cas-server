@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T20:11:55+08:00
+* @Last modified time: 2016-04-07T21:30:25+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -78,7 +78,7 @@ masterQueue.process((msg, done) => {
   console.log('master receive event', msg.data);
   co(function *() {
     const ocs = yield models.oauth.findAll({
-      attributes: ['id', 'name', 'secret', 'is_received', 'domain', 'desc', 'callback'],
+      attributes: ['id', 'name', 'secret', 'identify', 'is_received', 'domain', 'desc', 'callback'],
       where: {
         is_delete: false,
       },
