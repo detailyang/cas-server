@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T18:18:52+08:00
+* @Last modified time: 2016-04-07T19:43:28+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -100,7 +100,14 @@ masterQueue.process((msg, done) => {
           const data = JSON.parse(JSON.stringify(msg.data));
           data.callback = oc.callback;
           data.identify = oc.identify;
-          return agentQueue.add(data);
+          return agentQueue
+          .add(data)
+          .then((r) => {
+            console.log(r);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         });
         break;
       default:
