@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T18:09:21+08:00
+* @Last modified time: 2016-04-07T20:11:53+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -33,7 +33,7 @@ const agentQueue = Queue(
 );
 
 agentQueue.process((msg, done) => {
-  console.log('agent receive event', msg.data);
+  console.log('agent receive event ', msg.data);
   co(function *() {
     switch (msg.data.type) {
       case 'user.update':
@@ -41,14 +41,13 @@ agentQueue.process((msg, done) => {
           .post(msg.data.callback)
           .send(msg.data)
           .set('authorization', `oauth ${msg.data.identify}`)
-          .end((err, res) => {
+          .end((err) => {
             if (err) {
-              console.log(err);
+              console.log(`${msg.data.callback} return error`, err);
               done(err);
+              return;
             }
-            if (!res) {
-              done(err);
-            }
+            done(null);
           });
         break;
       default:
