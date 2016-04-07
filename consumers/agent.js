@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-26T21:41:36+07:00
+* @Last modified time: 2016-04-07T18:05:02+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -33,6 +33,7 @@ const agentQueue = Queue(
 );
 
 agentQueue.process((msg, done) => {
+  console.log(`agent receive event ${msg.data}`);
   co(function *() {
     switch (msg.data.type) {
       case 'user.update':
