@@ -15,7 +15,6 @@ module.exports = {
         }
     },
     isEmail: (value) => {
-        console.log(value);
         if (!validator.isEmail(value)) {
             throw new Error(`必须为邮箱格式.`);
         }
