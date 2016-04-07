@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-21T20:26:30+08:00
+* @Last modified time: 2016-04-07T15:10:58+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
@@ -46,8 +46,8 @@ module.exports = {
 
     // it's not necessary to await in parallel for performance
     const users = await models.user.findAll({
-      attributes: ['id', 'username', 'realname', 'aliasname', 'is_admin',
-                   'mobile', 'email', 'is_delete', 'gender'],
+      attributes: ['id', 'username', 'realname', 'aliasname',
+                   'mobile', 'email', 'is_delete', 'gender', 'key'],
       where: where,
       offset: (ctx.request.page - 1) * ctx.request.per_page,
       limit: ctx.request.per_page,

@@ -3,7 +3,7 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T11:02:45+08:00
+* @Last modified time: 2016-04-05T14:43:55+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -155,10 +155,6 @@ export default React.createClass({
         title: 'domain',
         dataIndex: 'domain',
         key: 'domain',
-      }, {
-        title: 'callback',
-        dataIndex: 'callback',
-        key: 'callback',
       }, {
         title: 'secret',
         dataIndex: 'secret',
