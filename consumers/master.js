@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T18:04:43+08:00
+* @Last modified time: 2016-04-07T18:09:30+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -75,7 +75,7 @@ function* changePassword(user) {
 }
 
 masterQueue.process((msg, done) => {
-  console.log(`master receive event ${msg.data}`);
+  console.log('master receive event', msg.data);
   co(function *() {
     const ocs = yield models.oauth.findAll({
       attributes: ['id', 'name', 'secret', 'domain', 'desc', 'callback'],
