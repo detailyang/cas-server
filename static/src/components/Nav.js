@@ -31,17 +31,16 @@ const navMap = [
 ]
 
 export default ({ isAdmin, currentPath }) => {
-  let style = isAdmin ? null : { display: 'none' }
+  let hiddenStyle = { display: 'none' }
   return (
     <Menu
       selectedKeys={[currentPath]}
       theme=""
       mode="horizontal"
-      style={{marginBottom: '20px'}}
     >
       {
         navMap.map((navItem, index) =>
-          <Menu.Item key={navItem.router} style={navItem.needAdmin || style}>
+          <Menu.Item key={navItem.router} style={ !isAdmin && navItem.needAdmin && hiddenStyle }>
             <Link to={navItem.router}>{navItem.text}</Link>
           </Menu.Item>
         )

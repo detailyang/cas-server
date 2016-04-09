@@ -1,4 +1,4 @@
-import { CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE } from '../constants'
+import { CHECKAUTH_REQUEST, CHECKAUTH_SUCCESS, CHECKAUTH_FAILURE, LOGOUT } from '../constants'
 import { push } from 'react-router-redux'
 
 import { CALL_API } from '../middleware/api'
@@ -26,3 +26,15 @@ export const login = (values, dispatch) =>
     dispatch(checkAuth());
     dispatch(push('/dashboard'))
   })
+
+export const logout =  () => 
+  (dispatch, getState) => 
+    fetch('/public/users/logout', {
+      method: 'POST',
+    })
+    .then(() => {
+      dispatch({
+        type: LOGOUT
+      })
+      dispatch(push('/login'))
+    })
