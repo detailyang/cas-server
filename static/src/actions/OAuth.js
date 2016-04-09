@@ -1,4 +1,4 @@
-import { OAUTH_LIST_REQUEST, OAUTH_LIST_SUCCESS, OAUTH_LIST_FAILURE, RESET_OAUTH_LIST } from '../constants'
+import { OAUTH_LIST_REQUEST, OAUTH_LIST_SUCCESS, OAUTH_LIST_FAILURE, RESET_OAUTH_LIST, SET_OAUTH_PAGE } from '../constants'
 import { CALL_API } from '../middleware/api'
 import { fetch, pick } from '../utils'
 
@@ -18,4 +18,13 @@ export const requestOAuthList = () =>
     })
     .then(data => dispatch(resetOAuthList(data)))
   }
-    
+
+export const setOAuthPage = (page) => 
+  (dispatch, getState) => {
+    dispatch({
+      type: SET_OAUTH_PAGE,
+      payload: { page }
+    })
+
+    requestOAuthList()(dispatch, getState)
+  }

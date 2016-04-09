@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import OauthEditModal from '../components/OauthEditModal';
 import OauthModel from '../models/Oauth';
 
-import { requestOAuthList } from '../actions'
+import { requestOAuthList, setOAuthPage } from '../actions'
 
 
 const InputGroup = Input.Group;
@@ -182,18 +182,24 @@ const OAuth = React.createClass({
         },
       },
     ];
+    
+
+    const {
+            OAuth:{ list, loading, total, page, per_page },
+            setOAuthPage
+          } = this.props;
+
     const pagination = {
-      total: model.get('total'),
-      current: model.get('page'),
-      pageSize: model.get('per_page'),
+      total,
+      current: page,
+      pageSize: per_page,
       showTotal: (total) => `共 ${total} 条`,
       onChange: (page) => {
-        this.setState({ loading: true });
-        model.set('page', page).fetch();
+        setOAuthPage(page)
+        //model.set('page', page).fetch();
       },
     };
 
-    const { OAuth:{ list, loading } } = this.props;
     return (
       <Table
         dataSource={list}
@@ -217,5 +223,5 @@ const OAuth = React.createClass({
 
 export default connect(
   ({OAuth}) => ({OAuth}),
-  { requestOAuthList }
+  { requestOAuthList, setOAuthPage }
 )(OAuth);

@@ -14,7 +14,7 @@ export const checkAuth = () =>
         endpoint: '/api/users/self'
       }
     })
-    .then(data => dispatch(resetPersonal(data)))
+    .then(data => dispatch(resetPersonal(data.value)))
     .catch(() => dispatch(push('/login')))
 
 export const login = (values, dispatch) => 
