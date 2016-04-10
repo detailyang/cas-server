@@ -19,7 +19,7 @@ import Antd, {
   Col,
 } from 'antd'
 import { reduxForm } from 'redux-form'
-import { saveOAuth } from '../actions'
+import { saveOAuth, getOAuth } from '../actions'
 
 
 const noop = () => {}
@@ -45,20 +45,18 @@ const OAuthEditModal = React.createClass({
   },
 
   getInitialState() {
-
     return {
       formErrors: {}
     }
   },
 
   componentWillMount() {
-    // if (this.props.id) {
-    //   this.model.fetch().done(() => {
-    //     this.setState({ formData: this.model.toJSON() })
-    //   }).fail((msg) => {
-    //     Antd.message.error(msg, 3)
-    //   })
-    // }
+    const { id, getOAuth, initializeForm } = this.props
+    if (id) {
+      getOAuth(id)
+        .then(data => initializeForm(data.value))
+        .catch(error => Antd.message.error(error.message, 3))
+    }
   },
 
   render() {
@@ -163,6 +161,9 @@ const OAuthEditModal = React.createClass({
       this.props.onOk();
     })
     .catch(error => {
+      this.setState({
+        formErrors: error.data.errors
+      })
       Antd.message.error(error.message, 3)
     })
   }
@@ -171,6 +172,9 @@ const OAuthEditModal = React.createClass({
 
 
 export default reduxForm({
-  form: 'OAuthEditModal',
-  fields: ['name', 'secret', 'identify', 'domain', 'callback', 'callback_debug', 'desc', 'type', 'is_admin', 'is_received']
-})(OAuthEditModal)
+    form: 'OAuthEditModal',
+    fields: ['id', 'name', 'secret', 'identify', 'domain', 'callback', 'callback_debug', 'desc', 'type', 'is_admin', 'is_received']
+  },
+  null,
+  { getOAuth }
+)(OAuthEditModal)

@@ -7,6 +7,11 @@ const resetOAuthList = (data) => ({
   payload: data
 })
 
+export const getOAuth = (OAuthId) =>
+  (dispatch, getState) => {
+    return fetch(`/admin/oauths/${OAuthId}`)
+  }
+
 export const fetchOAuthList = () => 
   (dispatch, getState) => {
     return dispatch({
@@ -38,7 +43,7 @@ export const deleteOAuth = (OAuthId) =>
   }
 
 export const saveOAuth = (values, dispatch) => 
-  fetch('/admin/oauths', {
+  fetch('/admin/oauths/' + (values.id ? values.id : ''), {
     method: values.id ? 'PUT': 'POST',
     body: values,
   })
