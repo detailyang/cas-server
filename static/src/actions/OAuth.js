@@ -36,3 +36,13 @@ export const deleteOAuth = (OAuthId) =>
   (dispatch, getState) => {
     return fetch(`/admin/oauths/${OAuthId}`, { method: 'DELETE' })
   }
+
+export const saveOAuth = (values, dispatch) => 
+  fetch('/admin/oauths', {
+    method: values.id ? 'PUT': 'POST',
+    body: values,
+  })
+  .catch(error => {
+    //dispatch(savePersonalFail(error.data.errors))
+    return Promise.reject(error)
+  })

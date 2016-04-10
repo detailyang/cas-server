@@ -15,7 +15,7 @@ const savePersonalFail = (errors) => ({
   payload: {errors}
 })
 
-export const submitPersonal = (values, dispatch) => 
+export const savePersonal = (values, dispatch) => 
   fetch('/api/users/self', {
     method: values.id ? 'PUT': 'POST',
     body: values,

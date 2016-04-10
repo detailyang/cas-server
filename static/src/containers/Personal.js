@@ -23,7 +23,7 @@ import { reduxForm } from 'redux-form';
 import ChangePassword from '../components/ChangePassword';
 import DynamicPassword from '../components/DynamicPassword';
 import { fields } from '../reducers/personal';
-import { submitPersonal, changePassword, checkDynamicPassword } from '../actions';
+import { savePersonal, changePassword, checkDynamicPassword } from '../actions';
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -62,11 +62,10 @@ let PersonalForm = React.createClass({
       .catch(error => Antd.message.error('校验失败'))
   },
 
-  submitPersonal(...args) {
-    return submitPersonal(...args)
-      .then(values => {
-        const msg = values.id ? '编辑成功' : '创建成功';
-        Antd.message.success(msg);
+  savePersonal(...args) {
+    return savePersonal(...args)
+      .then(() => {
+        Antd.message.success('编辑成功');
         this.props.onOk();
       })
       .catch(error => {
@@ -92,7 +91,7 @@ let PersonalForm = React.createClass({
       <div>
         <div className="row-flex row-flex-center">
           <div className="col-12 box">
-            <Form onSubmit={handleSubmit(this.submitPersonal)}>
+            <Form onSubmit={handleSubmit(this.savePersonal)}>
               <FormItem className="row-flex row-flex-center">
                 <Upload
                   showUploadList={false}

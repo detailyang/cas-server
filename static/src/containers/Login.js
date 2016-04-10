@@ -13,7 +13,6 @@ import './login.scss';
 import React, { Component } from 'react';
 import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import { reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
 
 import { login } from '../actions';
 

@@ -90,7 +90,7 @@ class OAuth extends Component {
     const { setOAuthKeyword } = this.props;
     return (
       <div style={{ marginBottom: '10px' }}>
-        <Button type="primary" onClick={this.handleCreateClick}>
+        <Button type="primary" onClick={::this.handleCreateClick}>
           <Icon type="plus" />新建
         </Button>
         <div style={{ float: 'right' }}>
