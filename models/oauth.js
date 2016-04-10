@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 14:07:19
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-20T16:21:53+08:00
+* @Last modified time: 2016-04-04T23:20:24+08:00
  */
 
 module.exports = (sequelize, DataTypes) => {
@@ -85,6 +85,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
+    },
+    // 0 default 1 static 2 dynamic 3 static+dynamic
+    type: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
   }, {
     associate: () => {

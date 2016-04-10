@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-02 15:21:55
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T16:52:04+08:00
+* @Last modified time: 2016-04-05T00:37:27+08:00
  */
 
 
@@ -17,6 +17,7 @@ var config = {
     index: './static/src/index.js',
     oauth: './static/src/oauth.js',
     authorize: './static/src/authorize.js',
+    onetime: './static/src/onetime.js',
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],

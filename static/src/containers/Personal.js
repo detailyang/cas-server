@@ -50,10 +50,6 @@ let PersonalForm = React.createClass({
     };
   },
 
-  // componentWillMount() {
-  //   this.props.initializeForm(this.props.personal);
-  // },
-
   handleChangePassword(...args) {
     return this.props.changePassword(...args)
       .then(() => Antd.message.success('修改密码成功'))

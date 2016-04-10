@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-18 16:08:50
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T18:13:53+08:00
+* @Last modified time: 2016-04-07T15:17:09+08:00
  */
 
 
@@ -35,7 +35,7 @@ module.exports = {
   'avatar': {
     width: 100,
     cache: 3 * 24 * 60 * 60,
-    maxsize: 512 * 1024 * 1024,
+    maxsize: 64 * 1024 * 1024, // set max size to 64kb, becasuse use of mysql blob type limit
   },
   'notp': {
     label: process.env.CAS_NOTP_LABEL || 'cas',
@@ -45,5 +45,7 @@ module.exports = {
   'oauth': {
     ttl: 1 * 60,
   },
-  'paginator': 30,
+  'paginator': {
+    'per_page': 30,
+  },
 };

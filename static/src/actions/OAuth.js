@@ -9,7 +9,7 @@ const resetOAuthList = (data) => ({
 
 export const fetchOAuthList = () => 
   (dispatch, getState) => {
-    dispatch({
+    return dispatch({
       [CALL_API]: {
         types: [OAUTH_LIST_REQUEST, OAUTH_LIST_SUCCESS, OAUTH_LIST_FAILURE],
         endpoint: '/admin/oauths',

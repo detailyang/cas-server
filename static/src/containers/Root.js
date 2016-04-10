@@ -6,24 +6,25 @@
 * @Last modified time: 2016-03-14T11:17:01+08:00
 * @License: The MIT License (MIT)
 */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Router, Route, IndexRoute, hashHistory, IndexRedirect } from 'react-router'
 
-import { App, Loading, Login, Personal, Dashboard, DevTools, OAuth, User } from '../containers';
+import { App, Login, Personal, Dashboard, DevTools, OAuth, User } from '../containers'
+import { Loading } from '../components'
 
-import { checkAuth } from '../actions';
+import { checkAuth } from '../actions'
 
 
 
 class Root extends Component {
 
   constructor (props) {
-    super(props);
+    super(props)
 
-    const { history } = this.props;
+    const { history } = this.props
     
-    this.props.checkAuth();
+    this.props.checkAuth()
     this.router = (
       <Router history={history}>
         <Route path="/" component={App}>
@@ -40,8 +41,8 @@ class Root extends Component {
   }
 
   render () {
-    const { auth } = this.props;
-    const router = auth.hasChecked ? this.router : <Loading/>;
+    const { auth } = this.props
+    const router = auth.hasChecked ? this.router : <Loading/>
 
     return (
       <div>
@@ -56,4 +57,4 @@ class Root extends Component {
 export default connect(
   (({auth})=>({auth})),
   { checkAuth }
-)(Root);
+)(Root)

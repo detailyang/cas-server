@@ -13,6 +13,7 @@ Table of Contents
   * [Production](#production)
   * [Contributing](#contributing)
   * [License](#license)
+  * [Author](#Author)
 
 
 Requirements
@@ -60,6 +61,7 @@ export CAS_MYSQL_PORT=3306
 export CAS_SESSION_HOST=2.2.2.2
 export CAS_SESSION_PORT=6379
 export CAS_SESSION_DB=0
+export CAS_SESSION_TTL=86400
 export CAS_SESSION_KEY=whosyourdady
 export CAS_PASSWORD_DEFAULT=youzan
 export CAS_PASSWORD_BCRYPTLENGTH=12
@@ -83,11 +85,18 @@ export CAS_EMAIL_PASS=123123123
 export CAS_EMAIL_FROM=cas@example.com
 ```
 
-
 Contributing
 ------------
 
 To contribute to CAS, clone this repo locally and commit your code on a separate branch. 
+
+
+Author
+------
+
+> GitHub [@detailyang](https://github.com/detailyang)     
+> GitHub [@Raistlin916](https://github.com/Raistlin916)    
+> GitHub [@NinoFocus](https://github.com/NinoFocus)    
 
 
 License

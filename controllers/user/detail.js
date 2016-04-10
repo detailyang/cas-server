@@ -2,10 +2,11 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-20T16:14:32+08:00
+* @Last modified time: 2016-04-05T10:42:28+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
+import sshpk from 'sshpk';
 
 import models from '../../models';
 import utils from '../../utils';
@@ -19,6 +20,7 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
+    const persistence = ctx.request.body.persistence || true;
 
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
@@ -56,15 +58,8 @@ module.exports = {
           }
         }
 
-        if (utils.password.check(_static, user.dataValues.password)) {
-          const value = {
-            'id': user.id,
-            'username': user.username,
-            'is_admin': user.is_admin,
-          };
-          ctx.return.data.value = ctx.session = value;
-          ctx.body = ctx.return;
-          return;
+        if (!utils.password.check(_static, user.dataValues.password)) {
+          throw new utils.error.ParamsError('password not right');
         }
       } else {
         const rv = utils.password.otpcheck(password, utils.password.encrypt(
@@ -76,34 +71,27 @@ module.exports = {
             throw new utils.error.ParamsError('optcode not right');
           }
         }
-        const value = {
-          'id': user.id,
-          'username': user.username,
-          'aliasname': user.aliasname,
-          'realname': user.realname,
-          'gender': user.gender,
-          'is_admin': user.is_admin,
-        };
-        ctx.return.data.value = ctx.session = value;
-        ctx.body = ctx.return;
-        return;
       }
     } else {
-      if (utils.password.check(password, user.dataValues.password)) {
-        const value = {
-          'id': user.id,
-          'username': user.username,
-          'aliasname': user.aliasname,
-          'realname': user.realname,
-          'gender': user.gender,
-          'is_admin': user.is_admin,
-        };
-        ctx.return.data.value = ctx.session = value;
-        ctx.body = ctx.return;
-        return;
+      if (!utils.password.check(password, user.dataValues.password)) {
+        throw new utils.error.ParamsError('password not right');
       }
-      throw new utils.error.ParamsError('password not right');
     }
+
+    const value = {
+      'id': user.id,
+      'username': user.username,
+      'aliasname': user.aliasname,
+      'realname': user.realname,
+      'gender': user.gender,
+      'is_admin': user.is_admin,
+    };
+    ctx.return.data.value = value;
+    if (+persistence) {
+      ctx.session = value;
+    }
+    ctx.body = ctx.return;
+    return;
   },
 
   async logout(ctx) {
@@ -136,12 +124,16 @@ module.exports = {
     const field = ctx.request.query.field;
     const value = ctx.request.query.value;
     const where = { is_delete: false };
+    const attributes = ['id', 'username', 'gender', 'realname', 'aliasname',
+                        'mobile', 'email', 'key'];
+    if (field && ! attributes.includes(field)) {
+      throw new utils.error.NotFoundError(`dont support field ${field}:${value}`);
+    }
     if (field && value) {
       where[field] = value;
     }
     const user = await models.user.findAll({
-      attributes: ['id', 'username', 'gender',
-                   'realname', 'aliasname', 'mobile', 'email', 'key'],
+      attributes: attributes,
       where: where,
     });
     if (!user) {
@@ -203,11 +195,58 @@ module.exports = {
     ctx.body = ctx.return;
   },
 
+  async updateByUsername(ctx) {
+    delete ctx.request.body.username;
+    delete ctx.request.body.password;
+    delete ctx.request.body.id;
+    const user = await models.user.update(ctx.request.body, {
+      where: {
+        username: ctx.params.username,
+      },
+    });
+    if (!user) {
+      throw new utils.error.ServerError('update user error');
+    }
+    ctx.body = ctx.return;
+  },
+
+  ssh: {
+    async login(ctx) {
+      const username = ctx.request.body.username;
+      const hash = ctx.request.body.hash || 'sha1';
+      const signature = ctx.request.body.signature || '';
+      const clear = ctx.request.body.clear || '';
+
+      if (!['sha1', 'sha128', 'sha256'].includes(hash)) {
+        throw new utils.error.ParamsError('only support sha1 sha256 hash algo');
+      }
+      const user = await models.user.findOne({
+        attributes: ['id', 'key'],
+        where: {
+          is_delete: false,
+          username: username,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+      for (const pubkey of user.key.split(/\r?\n/)) {
+        const key = sshpk.parseKey(pubkey, 'ssh');
+        const valid = key.createVerify(hash).update(clear).verify(new Buffer(signature, 'base64'));
+        if (valid) {
+          ctx.body = ctx.return;
+          return;
+        }
+      }
+      throw new utils.error.PermissionError('check signature error');
+    },
+  },
+
   key: {
     async getByUsername(ctx) {
       const username = ctx.params.username;
       const user = await models.user.findOne({
-        attributes: ['key'],
+        attributes: ['id', 'key'],
         where: {
           is_delete: false,
           username: username,
@@ -217,7 +256,7 @@ module.exports = {
         throw new utils.error.NotFoundError('dont find user');
       }
 
-      ctx.return.data.value = user.key;
+      ctx.return.data.value = user;
       ctx.body = ctx.return;
     },
   },
@@ -260,9 +299,24 @@ module.exports = {
         throw new Error('please upload avatar');
       }
       const avatar = ctx.request.body.files.avatar;
+      const where = {};
+      if (ctx.oauth.id) {
+        const body = ctx.request.body.fields;
+        if (body.id) {
+          where.id = body.id;
+        }
+        if (body.username) {
+          where.username = body.username;
+        }
+      } else {
+        where.id = ctx.session.id;
+      }
 
       if (avatar.size >= config.avatar.maxsize) {
         throw new Error('avatar too large');
+      }
+      if (!(where.id || where.username)) {
+        throw new utils.error.ParamsError('lack username or id');
       }
       const buffer = await new Promise((resolve, reject) => {
         fs.readFile(avatar.path, (err, data) => {
@@ -273,9 +327,7 @@ module.exports = {
       const user = await models.user.update({
         avatar: buffer,
       }, {
-        where: {
-          id: ctx.session.id,
-        },
+        where: where,
       });
       if (!user) {
         throw new utils.error.ServerError('update user error');
@@ -314,6 +366,7 @@ module.exports = {
       ctx.body = ctx.return;
     },
   },
+
   staticpassword: {
     async put(ctx) {
       const oldpassword = ctx.request.body.oldpassword;

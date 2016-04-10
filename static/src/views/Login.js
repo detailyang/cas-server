@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:16:47+08:00
+* @Last modified time: 2016-04-04T23:17:46+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -49,7 +49,7 @@ export default React.createClass({
     }).fail((msg, resp) => {
       this.setState({ loading: false });
       const info = resp.code
-        ? resp.data.value
+        ? resp.data.value || msg
         : msg;
       Antd.message.error(info, 3);
     });

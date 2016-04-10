@@ -13,6 +13,7 @@
         'new-cap': 0,
         'prefer-rest-params': 0,
         'camelcase': 0,
+        "no-confusing-arrow": 0,
     },
     'plugins': [
         'react',

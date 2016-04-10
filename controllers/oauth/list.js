@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 10:18:29
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-17T13:13:11+08:00
+* @Last modified time: 2016-04-04T23:22:27+08:00
  */
 import uuid from 'uuid';
 import sequelize from 'sequelize';
@@ -32,7 +32,7 @@ module.exports = {
 
     // it's not necessary to await in parallel for performance
     const ocs = await models.oauth.findAll({
-      attributes: ['id', 'name', 'secret', 'identify', 'domain',
+      attributes: ['id', 'name', 'secret', 'identify', 'domain', 'type',
                    'desc', 'callback', 'is_admin', 'callback_debug'],
       where: where,
       offset: (ctx.request.page - 1) * ctx.request.per_page,

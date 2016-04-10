@@ -8,58 +8,60 @@
 */
 
 
-import React from 'react';
+import React, { Component } from 'react';
 import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 
-import OauthEditModal from '../components/OauthEditModal';
+import OAuthEditModal from './OAuthEditModal';
 
 import { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth } from '../actions'
 
 
 const InputGroup = Input.Group;
 
-const OAuth = React.createClass({
 
-  componentWillMount() {
-    this.props.fetchOAuthList()
-  },
+class OAuth extends Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props)
+    this.state = {
       editModalVisible: false,
       editModalId: 0,
-    };
-  },
+    }
+  }
+
+  componentWillMount() {
+    this.fetchOAuthList()
+  }
 
   handleCreateClick() {
     this.setState({ editModalVisible: true, editModalId: 0 });
-  },
+  }
 
   handleEditClick(record) {
     this.setState({ editModalVisible: true, editModalId: record.id });
-  },
+  }
 
   handleDeleteClick(record) {
     this.props.deleteOAuth(record.id)
       .then(() => {
         Antd.message.success('删除成功');
-        this.props.fetchOAuthList();
+        this.fetchOAuthList();
       })
       .catch(() => {
         Antd.message.error('删除失败');  
       })
-  },
+  }
 
   handleKeywordKeyDown(e) {
     if (e.key === 'Enter') {
       this.handleSearchClick();
     }
-  },
+  }
 
   handleSearchClick() {
-    this.props.fetchOAuthList();
-  },
+    this.fetchOAuthList();
+  }
 
   renderEditModal() {
     if (!this.state.editModalVisible) {
@@ -68,7 +70,7 @@ const OAuth = React.createClass({
 
     const handleOk = () => {
       this.setState({ editModalVisible: false });
-      this.props.fetchOAuthList();
+      this.fetchOAuthList();
     };
 
     const handleCancel = () => {
@@ -76,13 +78,13 @@ const OAuth = React.createClass({
     };
 
     return (
-      <OauthEditModal
+      <OAuthEditModal
         id={this.state.editModalId}
         visible={this.state.editModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
       />);
-  },
+  }
 
   renderFilter() {
     const { setOAuthKeyword } = this.props;
@@ -107,7 +109,7 @@ const OAuth = React.createClass({
         </div>
       </div>
     );
-  },
+  }
 
   renderTable() {
     const columns = [
@@ -164,7 +166,7 @@ const OAuth = React.createClass({
 
     let {
         OAuth:{ list, loading, total, page, per_page },
-        setOAuthPage, fetchOAuthList
+        setOAuthPage
       } = this.props;
 
     list.forEach(item => item.key = item.id)
@@ -176,7 +178,7 @@ const OAuth = React.createClass({
       showTotal: (total) => `共 ${total} 条`,
       onChange: (page) => {
         setOAuthPage(page)
-        fetchOAuthList()
+        this.fetchOAuthList()
       },
     };
 
@@ -188,7 +190,12 @@ const OAuth = React.createClass({
         pagination={pagination}
       />
     );
-  },
+  }
+
+  fetchOAuthList() {
+    return this.props.fetchOAuthList()
+      .catch(error => Antd.message.error(error.message))
+  }
 
   render() {
     return (
@@ -198,8 +205,8 @@ const OAuth = React.createClass({
         {this.renderTable()}
       </div>
     );
-  },
-});
+  }
+};
 
 export default connect(
   ({OAuth}) => ({OAuth}),
