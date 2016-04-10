@@ -13,9 +13,8 @@ import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd';
 import { connect } from 'react-redux';
 
 import OauthEditModal from '../components/OauthEditModal';
-import OauthModel from '../models/Oauth';
 
-import { requestOAuthList, setOAuthPage } from '../actions'
+import { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth } from '../actions'
 
 
 const InputGroup = Input.Group;
@@ -23,16 +22,14 @@ const InputGroup = Input.Group;
 const OAuth = React.createClass({
 
   componentWillMount() {
-    this.props.requestOAuthList()
+    this.props.fetchOAuthList()
   },
 
   getInitialState() {
-    this.model = new OauthModel();
-
-    return Object.assign({
+    return {
       editModalVisible: false,
       editModalId: 0,
-    }, this.model.toJSON());
+    };
   },
 
   handleCreateClick() {
@@ -44,16 +41,14 @@ const OAuth = React.createClass({
   },
 
   handleDeleteClick(record) {
-    this.model.delete(record.id).done(() => {
-      Antd.message.success('删除成功');
-      this.model.fetch();
-    }).fail(() => {
-      Antd.message.error('删除失败');
-    });
-  },
-  handleKeywordChange(e) {
-    const keyword = e.target.value;
-    this.setState({ keyword });
+    this.props.deleteOAuth(record.id)
+      .then(() => {
+        Antd.message.success('删除成功');
+        this.props.fetchOAuthList();
+      })
+      .catch(() => {
+        Antd.message.error('删除失败');  
+      })
   },
 
   handleKeywordKeyDown(e) {
@@ -63,37 +58,21 @@ const OAuth = React.createClass({
   },
 
   handleSearchClick() {
-    this.setState({ loading: true });
-    this.model.set({
-      status: this.state.status,
-      field: this.state.field,
-      keyword: this.state.keyword,
-      page: 1,
-    }).fetch();
-  },
-
-  handleTableChange(pagination, filters) {
-    this.setState({ loading: true });
-    this.model.set({
-      page: pagination.current,
-      is_delete: filters.is_delete,
-      keyword: this.state.keyword || '',
-    }).fetch();
+    this.props.fetchOAuthList();
   },
 
   renderEditModal() {
-    const _this = this;
     if (!this.state.editModalVisible) {
       return '';
     }
 
     const handleOk = () => {
-      _this.setState({ editModalVisible: false });
-      _this.model.fetch();
+      this.setState({ editModalVisible: false });
+      this.props.fetchOAuthList();
     };
 
     const handleCancel = () => {
-      _this.setState({ editModalVisible: false });
+      this.setState({ editModalVisible: false });
     };
 
     return (
@@ -106,6 +85,7 @@ const OAuth = React.createClass({
   },
 
   renderFilter() {
+    const { setOAuthKeyword } = this.props;
     return (
       <div style={{ marginBottom: '10px' }}>
         <Button type="primary" onClick={this.handleCreateClick}>
@@ -115,7 +95,7 @@ const OAuth = React.createClass({
           <InputGroup className="ant-search-input" sytle={{ float: 'left' }} size="large">
             <Input
               defaultValue={this.state.keyword}
-              onChange={this.handleKeywordChange}
+              onChange={e => { setOAuthKeyword(e.target.value) }}
               onKeyDown={this.handleKeywordKeyDown}
             />
             <div className="ant-input-group-wrap">
@@ -130,8 +110,6 @@ const OAuth = React.createClass({
   },
 
   renderTable() {
-    const _this = this;
-    const model = this.model;
     const columns = [
       {
         title: 'id',
@@ -162,18 +140,18 @@ const OAuth = React.createClass({
         dataIndex: 'x',
         key: 'x',
         className: 'text-rigth',
-        render(value, record) {
+        render: (value, record) => {
           return (
             <div>
               <Button
                 type="ghost"
                 size="small"
-                onClick={_this.handleEditClick.bind(_this, record)}
+                onClick={() => this.handleEditClick(record)}
               >编辑</Button>
               <Popconfirm
                 placement="left"
                 title="确认删除？"
-                onConfirm={_this.handleDeleteClick.bind(_this, record)}
+                onConfirm={() => this.handleDeleteClick(record)}
               >
                 <Button type="ghost" size="small">删除</Button>
               </Popconfirm>
@@ -184,10 +162,12 @@ const OAuth = React.createClass({
     ];
     
 
-    const {
-            OAuth:{ list, loading, total, page, per_page },
-            setOAuthPage
-          } = this.props;
+    let {
+        OAuth:{ list, loading, total, page, per_page },
+        setOAuthPage, fetchOAuthList
+      } = this.props;
+
+    list.forEach(item => item.key = item.id)
 
     const pagination = {
       total,
@@ -196,7 +176,7 @@ const OAuth = React.createClass({
       showTotal: (total) => `共 ${total} 条`,
       onChange: (page) => {
         setOAuthPage(page)
-        //model.set('page', page).fetch();
+        fetchOAuthList()
       },
     };
 
@@ -206,8 +186,8 @@ const OAuth = React.createClass({
         loading={loading}
         columns={columns}
         pagination={pagination}
-        onChange={this.handleTableChange}
-      />);
+      />
+    );
   },
 
   render() {
@@ -223,5 +203,5 @@ const OAuth = React.createClass({
 
 export default connect(
   ({OAuth}) => ({OAuth}),
-  { requestOAuthList, setOAuthPage }
+  { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth }
 )(OAuth);

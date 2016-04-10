@@ -1,4 +1,4 @@
-import { OAUTH_LIST_REQUEST, OAUTH_LIST_SUCCESS, OAUTH_LIST_FAILURE, RESET_OAUTH_LIST, SET_OAUTH_PAGE } from '../constants'
+import { OAUTH_LIST_REQUEST, OAUTH_LIST_SUCCESS, OAUTH_LIST_FAILURE, RESET_OAUTH_LIST, SET_OAUTH_PAGE, SET_OAUTH_KEYWORD } from '../constants'
 
 const initialState = {
   list: [],
@@ -7,7 +7,8 @@ const initialState = {
   page: 1,
   fetching: false,
   field: 'name',
-  keyword: ''
+  keyword: '',
+  formErrors: {}
 }
 
 export default (state = initialState, action) => {
@@ -38,6 +39,12 @@ export default (state = initialState, action) => {
       return {
         ...state, ...{
           page: action.payload.page
+        }
+      }
+    case SET_OAUTH_KEYWORD:
+      return {
+        ...state, ...{
+          keyword: action.payload.keyword
         }
       }
     default:
