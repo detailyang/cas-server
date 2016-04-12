@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-12T19:32:59+08:00
+* @Last modified time: 2016-04-12T20:22:46+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -20,8 +20,11 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
-    const persistence = ctx.request.body.persistence;
+    let persistence = ctx.request.body.persistence;
 
+    if (persistence === undefined) {
+      persistence = true;
+    }
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
     }
