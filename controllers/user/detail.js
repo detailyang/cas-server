@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T10:42:28+08:00
+* @Last modified time: 2016-04-12T17:43:31+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -95,7 +95,7 @@ module.exports = {
   },
 
   async logout(ctx) {
-    ctx.session = {};
+    ctx.session = null;
     ctx.body = ctx.return;
   },
 
