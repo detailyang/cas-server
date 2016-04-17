@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:07:41+08:00
+* @Last modified time: 2016-04-17T15:01:40+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -201,7 +201,7 @@ export default Form.create()(React.createClass({
           <Form horizontal form={this.props.form}>
             <Row>
               <Col span="18">
-                <FormItem {...formItemLayout} label="原密码：">
+                <FormItem {...formItemLayout} label="旧密码：">
                   <Input
                     {...oldPassProps}
                     type="password"
@@ -215,7 +215,7 @@ export default Form.create()(React.createClass({
             </Row>
             <Row>
               <Col span="18">
-                <FormItem {...formItemLayout} label="密码：">
+                <FormItem {...formItemLayout} label="新密码：">
                   <Input
                     {...passProps}
                     type="password"
@@ -237,7 +237,7 @@ export default Form.create()(React.createClass({
 
             <Row>
               <Col span="18">
-                <FormItem {...formItemLayout} label="确认密码：">
+                <FormItem {...formItemLayout} label="确认新密码：">
                   <Input
                     {...rePassProps}
                     type="password"

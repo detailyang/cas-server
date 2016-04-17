@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T02:13:12+08:00
+* @Last modified time: 2016-04-17T14:56:23+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -11,7 +11,7 @@
 import './login.scss';
 
 import React from 'react';
-import Antd, { Form, Icon, Input, Row, Col, Button } from 'antd';
+import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import querystring from 'querystring';
 import Ajax from '../utils/ajax';
 import url from 'url';
