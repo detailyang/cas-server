@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-12T20:22:46+08:00
+* @Last modified time: 2016-04-17T14:55:03+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -315,8 +315,8 @@ module.exports = {
         where.id = ctx.session.id;
       }
 
-      if (avatar.size >= config.avatar.maxsize) {
-        throw new Error('avatar too large');
+      if (avatar.size * 1024 >= config.avatar.maxsize) {
+        throw new Error(`avatar too large, only suuport ${config.avatar.maxsize / 1024 / 1024}KB`);
       }
       if (!(where.id || where.username)) {
         throw new utils.error.ParamsError('lack username or id');
