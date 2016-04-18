@@ -6,9 +6,13 @@
  */
 
 
-const path = require('path');
+const path = require('path')
+const webpack = require('webpack')
 
-module.exports = {
+var env = process.env.NODE_ENV
+
+var config = {
+  devtool: env === 'dev' && 'cheap-module-eval-source-map',
   entry: {
     index: './static/src/index.js',
     oauth: './static/src/oauth.js',
@@ -41,4 +45,26 @@ module.exports = {
       },
     }],
   },
-};
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(env)
+    })
+  ]
+}
+
+if (env === 'production') {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true,
+        warnings: false
+      }
+    })
+  )
+}
+
+module.exports = config

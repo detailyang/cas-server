@@ -7,13 +7,21 @@
 * @License: The MIT License (MIT)
 */
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
+import configureStore from './store/configureStore';
+import Onetime from './containers/Onetime';
 import 'antd/lib/index.css';
 import './index.scss';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Onetime from './views/Onetime';
+const store = configureStore();
 
+ReactDOM.render(
+  <Provider store={store}>
+    <Onetime/>
+  </Provider>,
+  document.getElementById('onetime')
+)
 
-ReactDOM.render(React.createElement(Onetime), document.getElementById('onetime'));
