@@ -12,7 +12,7 @@ const webpack = require('webpack')
 var env = process.env.NODE_ENV
 
 var config = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: env === 'dev' && 'cheap-module-eval-source-map',
   entry: {
     index: './static/src/index.js',
     oauth: './static/src/oauth.js',

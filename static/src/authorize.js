@@ -13,7 +13,7 @@ import './index.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Authorize from './containers/Authorize';
+import { Authorize } from './containers';
 
 
 ReactDOM.render(React.createElement(Authorize), document.getElementById('authorize'));
