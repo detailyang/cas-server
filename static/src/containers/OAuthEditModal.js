@@ -124,13 +124,13 @@ const OAuthEditModal = React.createClass({
             <RadioGroup
               {...type}
               onChange={e => type.onChange(e.target.value)}
-              defaultValue={type.value}
+              value={+type.value}
               size="small"
             >
-              <Radio value="0">默认</Radio>
-              <Radio value="1">静态</Radio>
-              <Radio value="2">动态</Radio>
-              <Radio value="3">静动</Radio>
+              <Radio value={0}>默认</Radio>
+              <Radio value={1}>静态</Radio>
+              <Radio value={2}>动态</Radio>
+              <Radio value={3}>静动</Radio>
             </RadioGroup>
           </Form.Item>
           <Row>

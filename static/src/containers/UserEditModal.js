@@ -113,7 +113,9 @@ const UserEditModal = React.createClass({
           <Row>
             <Col span="8">
               <Form.Item label="性别：" validateStatus={errorStatus('gender')} help={help('gender')}>
-                <RadioGroup {...gender} value={gender.value ? 1 : 0}>
+                <RadioGroup {...gender}
+                  onChange={e => gender.onChange(e.target.value)}
+                  value={+gender.value}>
                   <Radio name="gender" value={0}>男</Radio>
                   <Radio name="gender" value={1}>女</Radio>
                 </RadioGroup>
@@ -125,7 +127,9 @@ const UserEditModal = React.createClass({
                 validateStatus={errorStatus('is_admin')}
                 help={help('is_admin')}
               >
-                <RadioGroup {...is_admin} value={is_admin.value ? 1: 0}>
+                <RadioGroup {...is_admin}
+                  onChange={e => is_admin.onChange(e.target.value)}
+                  value={+is_admin.value}>
                   <Radio name="is_admin" value={0}>普通</Radio>
                   <Radio name="is_admin" value={1}>管理员</Radio>
                 </RadioGroup>
@@ -137,7 +141,9 @@ const UserEditModal = React.createClass({
                 validateStatus={errorStatus('is_delete')}
                 help={help('is_delete')}
               >
-                <RadioGroup {...is_delete} value={is_delete.value ? 1 : 0}>
+                <RadioGroup {...is_delete} 
+                  onChange={e => is_delete.onChange(e.target.value)}
+                  value={+is_delete.value}>
                   <Radio name="is_delete" value={0}>在职</Radio>
                   <Radio name="is_delete" value={1}>离职</Radio>
                 </RadioGroup>

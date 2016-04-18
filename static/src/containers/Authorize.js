@@ -12,20 +12,18 @@ import { Icon, Button, Row, Col, message } from 'antd';
 import url from 'url';
 import querystring from 'querystring';
 import React from 'react';
-import Ajax from '../utils/ajax';
+import { fetch } from '../utils';
 
 export default React.createClass({
   handleClick(e) {
     e.preventDefault();
-    Ajax({
-      type: 'POST',
-    })
-    .done((res) => {
-      location.href = res.value;
-    })
-    .fail((err, resp) => {
-      message.error(resp.data.value, 3);
-    });
+    fetch('', { method: 'POST' })
+      .then((res) => {
+        location.href = res.value;
+      })
+      .catch((err, resp) => {
+        message.error(resp.data.value, 3);
+      });
   },
 
   render() {

@@ -13,21 +13,18 @@ import './login.scss';
 import React from 'react';
 import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import querystring from 'querystring';
-import Ajax from '../utils/ajax';
+import { reduxForm } from 'redux-form';
 import url from 'url';
 
-import FormValidate from '../mixins/FormValidate';
-import { authModelInstance } from '../models/Auth';
+import { fetch } from '../utils';
 
 const noop = () => {};
 
-export default React.createClass({
+let OnetimeForm = React.createClass({
 
   propTypes: {
     onOk: React.PropTypes.func,
   },
-
-  mixins: [FormValidate],
 
   getDefaultProps() {
     return {
@@ -35,38 +32,29 @@ export default React.createClass({
     };
   },
 
-  getInitialState() {
-    return { formData: authModelInstance.toJSON(), loading: false };
-  },
+  onSave(data) {
+    const { username, password } = data;
 
-  handleLoginClick(e) {
-    e.preventDefault();
-    const username = this.state.formData.username;
-    const password = this.state.formData.password;
-
-    this.setState({ loading: true });
-
-    Ajax({
-      url: `/public/oauth/onetime${location.search}`,
-      type: 'POST',
-      data: {
-        username,
-        password,
-      },
-    })
-    .done((res) => {
-      location.href = res.value;
-    })
-    .fail((err, resp) => {
-      Antd.message.error((resp.data && resp.data.value) || err, 3);
-    })
-    .always(() => {
-      this.setState({ loading: false });
-    });
+    fetch(`/public/oauth/onetime${location.search}`,
+      {
+        method: 'POST',
+        body: {
+          username,
+          password,
+        },
+      })
+      .then(res => {
+        location.href = res.value;
+      })
+      .catch(error => {
+        Antd.message.error(error.message, 3);
+      });
   },
 
   render() {
-    const formData = this.state.formData;
+    const { fields: {
+      username, password
+    }, submitting, handleSubmit } =  this.props;
     let passwordfield = '静态密码';
 
     switch (window._authtype) {
@@ -144,24 +132,16 @@ export default React.createClass({
           }}
         >
           <Form
-            onSubmit={this.handleSubmit}
+            onSubmit={handleSubmit(this.onSave)}
             horizontal
           >
             <Row>
               <Col>
                 <Form.Item {...formItemLayout} label="用户名：">
-                  <Input
-                    value={formData.username}
-                    placeholder="填写字母、下划线、数字"
-                    onChange={this.setValue.bind(this, 'username')}
-                  />
+                  <Input {...username} placeholder="填写字母、下划线、数字"/>
                 </Form.Item>
                 <Form.Item {...formItemLayout} label={`${passwordfield}：`}>
-                  <Input
-                    type="password"
-                    value={formData.password || ''}
-                    onChange={this.setValue.bind(this, 'password')}
-                  />
+                  <Input {...password} type="password"/>
                 </Form.Item>
               </Col>
             </Row>
@@ -172,8 +152,7 @@ export default React.createClass({
                   htmlType="submit"
                   size="large"
                   style={{ width: '100%' }}
-                  loading={this.state.loading}
-                  onClick={this.handleLoginClick}
+                  loading={submitting}
                 >
                   登录
                 </Button>
@@ -191,3 +170,10 @@ export default React.createClass({
   },
 
 });
+
+
+export default reduxForm({
+  form: 'onetime',
+  fields: ['username', 'password']
+})(OnetimeForm)
+
