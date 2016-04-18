@@ -1,3 +1,11 @@
+// @Author: BingWu Yang <detailyang>
+// @Date:   2016-04-07T15:11:59+08:00
+// @Email:  detailyang@gmail.com
+// @Last modified by:   detailyang
+// @Last modified time: 2016-04-07T20:47:23+08:00
+// @License: The MIT License (MIT)
+
+
 .login-backdrop {
     position: fixed;
     left: 0;
@@ -5,7 +13,7 @@
     right: 0;
     bottom: 0;
     z-index: 1000;
-    background-color: #BAEAFF;
+    background-color: black;
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }

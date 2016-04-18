@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T21:08:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T20:11:55+08:00
+* @Last modified time: 2016-04-17T15:25:55+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -22,6 +22,7 @@ const utils = require('../utils');
 const config = require('../config');
 const models = require('../models');
 const email = require('../utils/email');
+const qrCode = require('qrcode-npm');
 
 
 const masterQueue = Queue(
@@ -69,7 +70,11 @@ function* changePassword(user) {
     utils.password.encrypt(
       user.username + user.password, config.notp.salt),
     config.notp.label);
-  const text = `you google authorization secret is ${otp}`;
+  const qr = qrCode.qrcode(10, 'M');
+  qr.addData(otp);
+  qr.make();
+  const img = qr.createImgTag(4);
+  const text = `you google authorization secret is ${img}`;
   const rv = yield email.send('cas google authorization update', text, _user.email);
   console.log(rv);
 }
@@ -78,7 +83,7 @@ masterQueue.process((msg, done) => {
   console.log('master receive event', msg.data);
   co(function *() {
     const ocs = yield models.oauth.findAll({
-      attributes: ['id', 'name', 'secret', 'is_received', 'domain', 'desc', 'callback'],
+      attributes: ['id', 'name', 'secret', 'identify', 'is_received', 'domain', 'desc', 'callback'],
       where: {
         is_delete: false,
       },

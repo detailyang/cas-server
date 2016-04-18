@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T10:42:28+08:00
+* @Last modified time: 2016-04-17T14:55:03+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -20,8 +20,11 @@ module.exports = {
     const password = ctx.request.body.password;
     const dynamic = ctx.request.body.dynamic;
     const staticdynamic = ctx.request.body.staticdynamic;
-    const persistence = ctx.request.body.persistence || true;
+    let persistence = ctx.request.body.persistence;
 
+    if (persistence === undefined) {
+      persistence = true;
+    }
     if (!password || !(username || id)) {
       throw new utils.error.ParamsError('lack username or password');
     }
@@ -95,7 +98,7 @@ module.exports = {
   },
 
   async logout(ctx) {
-    ctx.session = {};
+    ctx.session = null;
     ctx.body = ctx.return;
   },
 
@@ -300,7 +303,7 @@ module.exports = {
       }
       const avatar = ctx.request.body.files.avatar;
       const where = {};
-      if (ctx.oauth.id) {
+      if (ctx.oauth && ctx.oauth.id) {
         const body = ctx.request.body.fields;
         if (body.id) {
           where.id = body.id;
@@ -312,8 +315,8 @@ module.exports = {
         where.id = ctx.session.id;
       }
 
-      if (avatar.size >= config.avatar.maxsize) {
-        throw new Error('avatar too large');
+      if (avatar.size * 1024 >= config.avatar.maxsize) {
+        throw new Error(`avatar too large, only suuport ${config.avatar.maxsize / 1024 / 1024}KB`);
       }
       if (!(where.id || where.username)) {
         throw new utils.error.ParamsError('lack username or id');

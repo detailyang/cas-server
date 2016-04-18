@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:37+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T16:33:04+08:00
+* @Last modified time: 2016-04-12T17:42:18+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -27,8 +27,12 @@ export default class RedisStore extends Store {
     this.ttl = ttl;
   }
 
+  getId(sid) {
+    return `${this.key}:${sid}`;
+  }
+
   async get(sid) {
-    const data = await this.redis.get(`${this.key}:${sid}`);
+    const data = await this.redis.get(`${this.getId(sid)}`);
     return JSON.parse(data);
   }
 
@@ -36,11 +40,14 @@ export default class RedisStore extends Store {
     if (!opts.sid) {
       opts.sid = this.getID(24);
     }
-    await this.redis.setex(`${this.key}:${opts.sid}`, this.ttl, JSON.stringify(session));
+    if (Object.keys(session).length !== 0) {
+      await this.redis.setex(`${this.getId(opts.sid)}`, this.ttl, JSON.stringify(session));
+    }
+
     return opts.sid;
   }
 
   async destory(sid) {
-    return await this.redis.del(sid);
+    return await this.redis.del(this.getId(sid));
   }
 }
