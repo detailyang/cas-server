@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import classNames from 'classnames'
 
 import UserEditModal from './UserEditModal'
-import { fetchUserList, setUserPage, setUserKeyword, deleteUser } from '../actions'
+import { fetchUserList, setUserPage, setUserKeyword, deleteUser, resetUser } from '../actions'
 
 const InputGroup = Input.Group
 
@@ -41,11 +41,9 @@ class User extends Component {
   }
 
   handleResetClick(record) {
-    this.model.reset(record.id).done(() => {
-      Antd.message.success('重置成功')
-    }).fail(() => {
-      Antd.message.error('重置失败')
-    })
+    this.props.resetUser(record.id)
+      .then(() => Antd.message.success('重置成功'))
+      .catch(() => Antd.message.error('重置失败'))
   }
 
   handleDeleteClick(record) {
@@ -250,5 +248,5 @@ class User extends Component {
 
 export default connect(
   ({user}) => ({user}),
-  { fetchUserList, setUserPage, setUserKeyword, deleteUser }
+  { fetchUserList, setUserPage, setUserKeyword, deleteUser, resetUser }
 )(User)

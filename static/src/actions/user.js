@@ -37,9 +37,9 @@ export const setUserPage = (page) => ({
   payload: { page }
 })
 
-export const deleteUser = (UserId) =>
+export const deleteUser = (userId) =>
   (dispatch, getState) => {
-    return fetch(`/admin/users/${UserId}`, { method: 'DELETE' })
+    return fetch(`/admin/users/${userId}`, { method: 'DELETE' })
   }
 
 export const saveUser = (values, dispatch) => 
@@ -50,3 +50,13 @@ export const saveUser = (values, dispatch) =>
   .catch(error => {
     return Promise.reject(error)
   })
+
+export const resetUser = (userId) =>
+  (dispatch, getState) => {
+    return fetch(`/admin/users/${userId}/staticpassword`, {
+      method: 'PUT',
+      body: {
+        reset: true
+      }
+    })
+  }
