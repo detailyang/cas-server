@@ -48,6 +48,5 @@ export const saveOAuth = (values, dispatch) =>
     body: values,
   })
   .catch(error => {
-    //dispatch(savePersonalFail(error.data.errors))
     return Promise.reject(error)
   })
