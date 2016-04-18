@@ -10,21 +10,6 @@
 
 import React from 'react';
 import { Menu, Dropdown } from 'antd';
-import $ from 'jquery';
-
-const HandleLogout = () => {
-  $.ajax({ url: '/public/users/logout', type: 'POST' }).done(() => {
-    location.href = '/';
-  });
-};
-
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="#" onClick={HandleLogout}>登出</a>
-    </Menu.Item>
-  </Menu>
-);
 
 const AvatarStyle = {
   height: 30,
@@ -46,6 +31,14 @@ const OptStyle = {
 
 export default React.createClass({
   render() {
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          <a href="javascript:;" onClick={this.props.handleLogout}>登出</a>
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <div style={HeaderStyle}>
         <Dropdown overlay={menu} trigger={['click']}>

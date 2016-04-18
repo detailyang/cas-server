@@ -7,17 +7,23 @@
 * @License: The MIT License (MIT)
 */
 
-
-import 'antd/lib/index.css';
-import './index.scss';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './views/Login';
+import { Provider } from 'react-redux';
+
+import configureStore from './store/configureStore';
+import Login from './containers/Login';
+import 'antd/lib/index.css';
+import './index.scss';
 
 
 const onOk = () => {
   location.href = location.href.replace('/public/oauth', '/public/oauth/authorize');
 };
 
-ReactDOM.render(<Login onOk={onOk} />, document.getElementById('oauth'));
+ReactDOM.render(
+  <Provider store={store}>
+    <Login onOk={onOk} />
+  </Provider>,
+  document.getElementById('oauth')
+)
