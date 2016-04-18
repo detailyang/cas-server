@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
-import { Login } from './containers';
+import Login from './containers/Login';
 import 'antd/lib/index.css';
 import './index.scss';
 

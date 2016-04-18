@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
-import { Onetime } from './containers';
+import Onetime from './containers/Onetime';
 import 'antd/lib/index.css';
 import './index.scss';
 
