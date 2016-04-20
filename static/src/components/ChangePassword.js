@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-17T15:01:40+08:00
+* @Last modified time: 2016-04-20T23:59:48+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -38,9 +38,9 @@ export default Form.create()(React.createClass({
 
   getInitialState() {
     return {
-      passBarShow: false, // 是否显示密码强度提示条
+      passBarShow: false,
       rePassBarShow: false,
-      passStrength: 'H', // 密码强度
+      passStrength: 'H',
       rePassStrength: 'H',
       visible: false,
       onSubmit: noop,
@@ -51,7 +51,6 @@ export default Form.create()(React.createClass({
     if (value) {
       const z = zxcvbn(value);
       let strength = 'L';
-      // 密码强度的校验规则自定义，这里只是做个简单的示例
       if (z.score <= 1) {
         strength = 'L';
       } else if (z.score <= 2) {

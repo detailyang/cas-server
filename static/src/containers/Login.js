@@ -3,14 +3,14 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:16:47+08:00
+* @Last modified time: 2016-04-21T00:33:27+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import './login.scss';
 
-import React, { Component } from 'react';
+import React from 'react';
 import Antd, { Form, Input, Row, Col, Button } from 'antd';
 import { reduxForm } from 'redux-form';
 
@@ -35,7 +35,7 @@ const Login = React.createClass({
       <div>
         <div className="login-backdrop"></div>
         <div className="login-modal">
-          <LoginForm/>
+          <LoginForm />
         </div>
       </div>
     );
@@ -44,10 +44,10 @@ const Login = React.createClass({
 });
 
 
-let LoginForm = ({ fields: {username, password}, submitting, handleSubmit }) => {
-  let loginWrapped = (...args) =>
+let LoginForm = ({ fields: { username, password }, submitting, handleSubmit }) => {
+  const loginWrapped = (...args) =>
     login(...args).catch(error =>
-      Antd.message.error(error.message, 3))
+      Antd.message.error(error.message, 3));
 
   return (
     <Form onSubmit={handleSubmit(loginWrapped)}>
@@ -75,14 +75,12 @@ let LoginForm = ({ fields: {username, password}, submitting, handleSubmit }) => 
         </Col>
       </Row>
     </Form>
-  )
-}
+  );
+};
 
 LoginForm = reduxForm({
   form: 'login',
-  fields: ['username', 'password']
-})(LoginForm)
-
-
+  fields: ['username', 'password'],
+})(LoginForm);
 
 export default Login;

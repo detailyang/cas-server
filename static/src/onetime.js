@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:17:03+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T00:22:00+08:00
+* @Last modified time: 2016-04-21T00:24:35+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -20,8 +20,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <Onetime/>
+    <Onetime />
   </Provider>,
   document.getElementById('onetime')
-)
-
+);

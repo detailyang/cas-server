@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-20T19:42:53+08:00
+* @Last modified time: 2016-04-21T00:16:43+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -144,33 +144,35 @@ class User extends Component {
               <Popconfirm
                 placement="left"
                 title="确认删除？"
-                onConfirm={() => handleDeleteClick(record)}
+                onConfirm={() => this.handleDeleteClick(record)}
               >
                 <Button type="ghost" size="small">删除</Button>
               </Popconfirm>
             </div>
-          )
+          );
         },
       },
-    ]
+    ];
 
-    let {
-      user:{ list, loading, total, page, per_page },
-      setOAuthPage
-    } = this.props
+    const {
+      user: { list, loading, page, per_page, total },
+      setOAuthPage,
+    } = this.props;
 
-    list.forEach(item => item.key = item.id)
+    list.forEach(item => {
+      item.key = item.i;
+    });
 
     const pagination = {
       total,
       current: page,
       pageSize: per_page,
-      showTotal: (total) => `共 ${total} 条`,
-      onChange: (page) => {
-        setOAuthPage(page)
-        this.fetchUserList()
-      }
-    }
+      showTotal: (_total) => `共 ${_total} 条`,
+      onChange: (_page) => {
+        setOAuthPage(_page);
+        this.fetchUserList();
+      },
+    };
 
     return (
       <Table
@@ -178,12 +180,12 @@ class User extends Component {
         loading={loading}
         columns={columns}
         pagination={pagination}
-      />)
+      />);
   }
 
   renderEditModal() {
     if (!this.state.editModalVisible) {
-      return ''
+      return '';
     }
 
     const handleOk = () => {

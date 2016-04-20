@@ -3,79 +3,83 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-13T21:56:43+08:00
+* @Last modified time: 2016-04-21T00:39:01+08:00
 * @License: The MIT License (MIT)
 */
 
 
-import React, { Component } from 'react'
-import Antd, { Table, Button, Row, Col, Input, Icon, Popconfirm } from 'antd'
-import { connect } from 'react-redux'
+import React, { Component } from 'react';
+import Antd, { Table, Button, Row, Col, Input, Icon, Popconfirm } from 'antd';
+import { connect } from 'react-redux';
 
-import OAuthEditModal from './OAuthEditModal'
+import OAuthEditModal from './OAuthEditModal';
+import { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth } from '../actions';
 
-import { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth } from '../actions'
 
-
-const InputGroup = Input.Group
+const InputGroup = Input.Group;
 
 
 class OAuth extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       editModalVisible: false,
       editModalId: 0,
-    }
+    };
   }
 
   componentWillMount() {
-    this.fetchOAuthList()
+    this.fetchOAuthList();
   }
 
   handleCreateClick() {
-    this.setState({ editModalVisible: true, editModalId: 0 })
+    this.setState({ editModalVisible: true, editModalId: 0 });
   }
 
   handleEditClick(record) {
-    this.setState({ editModalVisible: true, editModalId: record.id })
+    this.setState({ editModalVisible: true, editModalId: record.id });
   }
 
   handleDeleteClick(record) {
     this.props.deleteOAuth(record.id)
       .then(() => {
-        Antd.message.success('删除成功')
-        this.fetchOAuthList()
+        Antd.message.success('删除成功');
+        this.fetchOAuthList();
       })
       .catch(() => {
-        Antd.message.error('删除失败')  
-      })
+        Antd.message.error('删除失败');
+      });
   }
 
   handleKeywordKeyDown(e) {
     if (e.key === 'Enter') {
-      this.handleSearchClick()
+      this.handleSearchClick();
     }
   }
 
   handleSearchClick() {
-    this.fetchOAuthList()
+    this.fetchOAuthList();
+  }
+
+  fetchOAuthList() {
+    return this.props.fetchOAuthList()
+      .catch(error => Antd.message.error(error.message));
   }
 
   renderEditModal() {
     if (!this.state.editModalVisible) {
-      return ''
+      return '';
     }
 
     const handleOk = () => {
-      this.setState({ editModalVisible: false })
-      this.fetchOAuthList()
-    }
+      this.setState({ editModalVisible: false });
+      this.fetchOAuthList();
+    };
 
     const handleCancel = () => {
-      this.setState({ editModalVisible: false })
-    }
+      this.setState({ editModalVisible: false });
+    };
 
     return (
       <OAuthEditModal
@@ -83,11 +87,11 @@ class OAuth extends Component {
         visible={this.state.editModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-      />)
+      />);
   }
 
   renderFilter() {
-    const { setOAuthKeyword } = this.props
+    const { setOAuthKeyword } = this.props;
     return (
       <Row style={{ marginBottom: '10px' }}>
         <Col span="2">
@@ -95,11 +99,11 @@ class OAuth extends Component {
             <Icon type="plus" />新建
           </Button>
         </Col>
-        <Col span="8" offset="14" style={{left: '30px'}}>
+        <Col span="8" offset="14" style={{ left: '30px' }}>
           <InputGroup className="ant-search-input" size="large">
             <Input
               defaultValue={this.state.keyword}
-              onChange={e => { setOAuthKeyword(e.target.value) }}
+              onChange={e => { setOAuthKeyword(e.target.value); }}
               onKeyDown={::this.handleKeywordKeyDown}
             />
             <div className="ant-input-group-wrap">
@@ -110,7 +114,7 @@ class OAuth extends Component {
           </InputGroup>
         </Col>
       </Row>
-    )
+    );
   }
 
   renderTable() {
@@ -144,7 +148,7 @@ class OAuth extends Component {
         dataIndex: 'x',
         key: 'x',
         className: 'text-rigth',
-        render: (value, record) => {
+        render(value, record) {
           return (
             <div>
               <Button
@@ -160,29 +164,30 @@ class OAuth extends Component {
                 <Button type="ghost" size="small">删除</Button>
               </Popconfirm>
             </div>
-          )
+          );
         },
       },
-    ]
-    
+    ];
 
-    let {
-        OAuth:{ list, loading, total, page, per_page },
-        setOAuthPage
-      } = this.props
+    const {
+        OAuth: { list, loading, total, page, per_page },
+        setOAuthPage,
+      } = this.props;
 
-    list.forEach(item => item.key = item.id)
+    list.forEach(item => {
+      item.key = item.id;
+    });
 
     const pagination = {
       total,
       current: page,
       pageSize: per_page,
       showTotal: (total) => `共 ${total} 条`,
-      onChange: (page) => {
-        setOAuthPage(page)
-        this.fetchOAuthList()
+      onChange: (_page) => {
+        setOAuthPage(_page);
+        this.fetchOAuthList();
       },
-    }
+    };
 
     return (
       <Table
@@ -191,14 +196,8 @@ class OAuth extends Component {
         columns={columns}
         pagination={pagination}
       />
-    )
+  );
   }
-
-  fetchOAuthList() {
-    return this.props.fetchOAuthList()
-      .catch(error => Antd.message.error(error.message))
-  }
-
   render() {
     return (
       <div>
@@ -206,11 +205,11 @@ class OAuth extends Component {
         {this.renderFilter()}
         {this.renderTable()}
       </div>
-    )
+    );
   }
 }
 
 export default connect(
-  ({OAuth}) => ({OAuth}),
+  ({ OAuth }) => ({ OAuth }),
   { fetchOAuthList, setOAuthPage, setOAuthKeyword, deleteOAuth }
-)(OAuth)
+)(OAuth);

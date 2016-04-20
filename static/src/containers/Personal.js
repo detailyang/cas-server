@@ -3,20 +3,20 @@
 * @Date:   2016-03-11T12:16:28+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-17T15:00:59+08:00
+* @Last modified time: 2016-04-21T00:14:10+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import React from 'react';
 import Antd, {
-    Upload,
-    Form,
-    Button,
-    Input,
-    Radio,
-    Row,
-    Col,
+  Upload,
+  Form,
+  Button,
+  Input,
+  Radio,
+  Row,
+  Col,
 } from 'antd';
 import { reduxForm } from 'redux-form';
 
@@ -29,7 +29,7 @@ const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const noop = () => {};
 
-let PersonalForm = React.createClass({
+const PersonalForm = React.createClass({
   propTypes: {
     onOk: React.PropTypes.func,
     onUpload: React.PropTypes.func,
@@ -52,14 +52,18 @@ let PersonalForm = React.createClass({
 
   handleChangePassword(...args) {
     return this.props.changePassword(...args)
-      .then(() => Antd.message.success('修改密码成功,请重新扫描动态密码!', 5))
-      .catch(error => Antd.message.error(error.message))
+      .then(() => {
+        Antd.message.success('修改密码成功,请重新扫描动态密码!', 5);
+      })
+      .catch(error => {
+        Antd.message.error((error.data && error.data.value) || error.message);
+      });
   },
 
   changeDynamicPassword(...args) {
     return this.props.checkDynamicPassword(...args)
       .then(() => Antd.message.success('校验成功'))
-      .catch(error => Antd.message.error('校验失败'))
+      .catch(() => Antd.message.error('校验失败'));
   },
 
   savePersonal(...args) {
@@ -69,17 +73,17 @@ let PersonalForm = React.createClass({
         this.props.onOk();
       })
       .catch(error => {
-        Antd.message.error(error.message, 3)
-      })
+        Antd.message.error(error.message, 3);
+      });
   },
 
   render() {
     const {
-      fields: { id, username, realname, aliasname, mobile, email, is_delete, 
-        gender, key, notp, upload_url },
+      fields: { username, realname, aliasname, mobile, email,
+        gender, key, notp },
       handleSubmit,
       submitting,
-      personal: { formErrors }
+      personal: { formErrors },
     } = this.props;
 
     const errorStatus = (field) => formErrors[field] ? 'error' : '';
@@ -138,7 +142,7 @@ let PersonalForm = React.createClass({
                     validateStatus={errorStatus('realname')}
                     help={help('realname')}
                   >
-                    <Input {...realname}/>
+                    <Input {...realname} />
                   </Form.Item>
                 </Col>
                 <Col span="11" offset="2">
@@ -147,7 +151,7 @@ let PersonalForm = React.createClass({
                     validateStatus={errorStatus('aliasname')}
                     help={help('aliasname')}
                   >
-                    <Input {...aliasname}/>
+                    <Input {...aliasname} />
                   </Form.Item>
                 </Col>
               </Row>
@@ -158,7 +162,7 @@ let PersonalForm = React.createClass({
                     validateStatus={errorStatus('email')}
                     help={help('email')}
                   >
-                    <Input {...email}/>
+                    <Input {...email} />
                   </Form.Item>
                 </Col>
                 <Col span="11" offset="2">
@@ -167,7 +171,7 @@ let PersonalForm = React.createClass({
                     validateStatus={errorStatus('mobile')}
                     help={help('mobile')}
                   >
-                    <Input {...mobile}/>
+                    <Input {...mobile} />
                   </Form.Item>
                 </Col>
               </Row>
@@ -184,7 +188,12 @@ let PersonalForm = React.createClass({
                   onSubmit={this.changeDynamicPassword}
                   value={notp.value}
                 />
-                <Button style={style} type="primary" htmlType="submit" loading={submitting}>更新</Button>
+                <Button
+                  style={style}
+                  type="primary"
+                  htmlType="submit"
+                  loading={submitting}
+                >更新</Button>
               </Row>
             </Form>
           </div>
@@ -195,14 +204,13 @@ let PersonalForm = React.createClass({
 });
 
 export default reduxForm({
-    form: 'personal',
-    fields,
-  },
-  ({ personal }) => 
-    ({ 
-      personal,
-      initialValues: personal
-    }),
-  { changePassword, checkDynamicPassword }
-)(PersonalForm)
-
+  form: 'personal',
+  fields,
+},
+({ personal }) =>
+  ({
+    personal,
+    initialValues: personal,
+  }),
+{ changePassword, checkDynamicPassword }
+)(PersonalForm);

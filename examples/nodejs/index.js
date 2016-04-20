@@ -3,7 +3,7 @@
 * @Date:   2016-03-15T13:39:31+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-15T16:58:38+08:00
+* @Last modified time: 2016-04-20T23:53:30+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -13,18 +13,18 @@ const app = express();
 const request = require('superagent');
 const cas = {
   name: 'demo',
-  secret: '977beed4-ab6f-4e1f-b60c-9d84c60e1d5a',
+  secret: '2aa389bc-998b-4a5f-83f0-bdca1fa3e63f',
   identify: '24a03e6e-d1ad-4f11-bd02-566b06b39481',
 };
 
 app.get('/', (req, res) => {
-  res.redirect(`http://example.com/public/oauth/authorize?name=${cas.name}`);
+  res.redirect(`http://127.0.0.1:3000/public/oauth/authorize?name=${cas.name}`);
 });
 
 app.get('/cas/oauth/callback', (req, res) => {
   const code = req.query.code;
   request
-  .get(`http://example.com/oauth/users/self?code=${code}`)
+  .get(`http://127.0.0.1:3000/oauth/users/self?code=${code}`)
   .set('authorization', `oauth ${cas.secret}`)
   .end((err, r) => {
     if (err) return res.send('2333333333333333333333');
@@ -51,6 +51,6 @@ app.post('/cas/oauth/callback', (req, res) => {
   const data = req.body;
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log('Example app listening on port 3000!');
 });

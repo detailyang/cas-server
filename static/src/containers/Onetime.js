@@ -3,12 +3,10 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-17T14:56:23+08:00
+* @Last modified time: 2016-04-21T00:32:20+08:00
 * @License: The MIT License (MIT)
 */
 
-
-import './login.scss';
 
 import React from 'react';
 import Antd, { Form, Input, Row, Col, Button } from 'antd';
@@ -18,9 +16,12 @@ import url from 'url';
 
 import { fetch } from '../utils';
 
+import './login.scss';
+
+
 const noop = () => {};
 
-let OnetimeForm = React.createClass({
+const OnetimeForm = React.createClass({
 
   propTypes: {
     onOk: React.PropTypes.func,
@@ -53,8 +54,8 @@ let OnetimeForm = React.createClass({
 
   render() {
     const { fields: {
-      username, password
-    }, submitting, handleSubmit } =  this.props;
+      username, password,
+    }, submitting, handleSubmit } = this.props;
     let passwordfield = '静态密码';
 
     switch (window._authtype) {
@@ -76,14 +77,6 @@ let OnetimeForm = React.createClass({
       height: 100,
       width: 100,
       borderRadius: '50%',
-    };
-    const IconStyle = {
-      'fontSize': 16,
-      'marginRight': 16,
-    };
-    const CheckIconStyle = {
-      'fontSize': 16,
-      color: '#79d858',
     };
     const Style = {
       'marginTop': 100,
@@ -138,10 +131,10 @@ let OnetimeForm = React.createClass({
             <Row>
               <Col>
                 <Form.Item {...formItemLayout} label="用户名：">
-                  <Input {...username} placeholder="填写字母、下划线、数字"/>
+                  <Input {...username} placeholder="填写字母、下划线、数字" />
                 </Form.Item>
                 <Form.Item {...formItemLayout} label={`${passwordfield}：`}>
-                  <Input {...password} type="password"/>
+                  <Input {...password} type="password" />
                 </Form.Item>
               </Col>
             </Row>
@@ -163,8 +156,6 @@ let OnetimeForm = React.createClass({
         </Row>
       </div>
       </div>
-
-
       </div>
     );
   },
@@ -174,6 +165,5 @@ let OnetimeForm = React.createClass({
 
 export default reduxForm({
   form: 'onetime',
-  fields: ['username', 'password']
-})(OnetimeForm)
-
+  fields: ['username', 'password'],
+})(OnetimeForm);

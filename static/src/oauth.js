@@ -3,7 +3,7 @@
 * @Date:   2016-03-13T22:17:03+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T10:53:49+08:00
+* @Last modified time: 2016-04-21T00:24:28+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -17,6 +17,8 @@ import 'antd/lib/index.css';
 import './index.scss';
 
 
+const store = configureStore();
+
 const onOk = () => {
   location.href = location.href.replace('/public/oauth', '/public/oauth/authorize');
 };
@@ -26,4 +28,4 @@ ReactDOM.render(
     <Login onOk={onOk} />
   </Provider>,
   document.getElementById('oauth')
-)
+);
