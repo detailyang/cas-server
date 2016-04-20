@@ -208,11 +208,13 @@ class User extends Component {
     const { setUserKeyword } = this.props
 
     return (
-      <div style={{ marginBottom: '10px' }}>
-        <Button type="primary" onClick={::this.handleCreateClick}>
-          <Icon type="plus" />新建
-        </Button>
-        <div>
+      <Row style={{ marginBottom: '10px' }}>
+        <Col span="2">
+          <Button type="primary" onClick={::this.handleCreateClick}>
+            <Icon type="plus" />新建
+          </Button>
+        </Col>
+        <Col span="8" offset="14" style={{left: '30px'}}>
           <InputGroup className="ant-search-input" size="large">
             <Input
               defaultValue={this.state.keyword}
@@ -225,8 +227,8 @@ class User extends Component {
               </Button>
             </div>
           </InputGroup>
-        </div>
-      </div>
+        </Col>
+      </Row>
     )
   }
 

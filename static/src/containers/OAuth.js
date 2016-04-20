@@ -9,7 +9,7 @@
 
 
 import React, { Component } from 'react'
-import Antd, { Table, Button, Input, Icon, Popconfirm } from 'antd'
+import Antd, { Table, Button, Row, Col, Input, Icon, Popconfirm } from 'antd'
 import { connect } from 'react-redux'
 
 import OAuthEditModal from './OAuthEditModal'
@@ -89,11 +89,13 @@ class OAuth extends Component {
   renderFilter() {
     const { setOAuthKeyword } = this.props
     return (
-      <div style={{ marginBottom: '10px' }}>
-        <Button type="primary" onClick={::this.handleCreateClick}>
-          <Icon type="plus" />新建
-        </Button>
-        <div style={{ float: 'right' }}>
+      <Row style={{ marginBottom: '10px' }}>
+        <Col span="2">
+          <Button type="primary" onClick={::this.handleCreateClick}>
+            <Icon type="plus" />新建
+          </Button>
+        </Col>
+        <Col span="8" offset="14" style={{left: '30px'}}>
           <InputGroup className="ant-search-input" size="large">
             <Input
               defaultValue={this.state.keyword}
@@ -106,8 +108,8 @@ class OAuth extends Component {
               </Button>
             </div>
           </InputGroup>
-        </div>
-      </div>
+        </Col>
+      </Row>
     )
   }
 
