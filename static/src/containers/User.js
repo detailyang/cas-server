@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T11:10:59+08:00
+* @Last modified time: 2016-04-20T19:42:53+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -19,7 +19,7 @@ import { fetchUserList, setUserPage, setUserKeyword, deleteUser, resetUser } fro
 const InputGroup = Input.Group
 
 class User extends Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -53,7 +53,7 @@ class User extends Component {
         this.fetchUserList()
       })
       .catch(() => {
-        Antd.message.error('删除失败')  
+        Antd.message.error('删除失败')
       })
   }
 
@@ -212,7 +212,7 @@ class User extends Component {
         <Button type="primary" onClick={::this.handleCreateClick}>
           <Icon type="plus" />新建
         </Button>
-        <div style={{ float: 'right' }}>
+        <div>
           <InputGroup className="ant-search-input" size="large">
             <Input
               defaultValue={this.state.keyword}

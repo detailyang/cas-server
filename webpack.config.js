@@ -2,16 +2,16 @@
  * @Author: detailyang
  * @Date:   2016-03-02 15:21:55
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T00:37:27+08:00
+* @Last modified time: 2016-04-20T19:01:16+08:00
  */
 
 
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
-var env = process.env.NODE_ENV
+const env = process.env.NODE_ENV;
 
-var config = {
+const config = {
   devtool: env === 'dev' && 'cheap-module-eval-source-map',
   entry: {
     index: './static/src/index.js',
@@ -48,10 +48,10 @@ var config = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
-    })
-  ]
-}
+      'process.env.NODE_ENV': JSON.stringify(env),
+    }),
+  ],
+};
 
 if (env === 'production') {
   config.plugins.push(
@@ -61,10 +61,10 @@ if (env === 'production') {
         unsafe: true,
         unsafe_comps: true,
         screw_ie8: true,
-        warnings: false
-      }
+        warnings: false,
+      },
     })
-  )
+  );
 }
 
-module.exports = config
+module.exports = config;
