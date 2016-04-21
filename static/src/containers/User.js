@@ -105,6 +105,7 @@ class User extends Component {
             </div>
           );
         },
+        onFilter: (value, record) => record.is_delete == value
       }, {
         title: '用户名',
         dataIndex: 'username',
@@ -130,7 +131,7 @@ class User extends Component {
         dataIndex: 'x',
         key: 'x',
         className: 'text-rigth',
-        render(value, record) {
+        render: (value, record) => {
           return (
             <div>
               <Popconfirm
