@@ -148,7 +148,7 @@ class OAuth extends Component {
         dataIndex: 'x',
         key: 'x',
         className: 'text-rigth',
-        render(value, record) {
+        render: (value, record) => {
           return (
             <div>
               <Button
