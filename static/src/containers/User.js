@@ -3,68 +3,72 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-21T00:16:43+08:00
+* @Last modified time: 2016-04-21T17:23:02+08:00
 * @License: The MIT License (MIT)
 */
 
 
-import React, { Component } from 'react'
-import Antd, { Table, Button, Row, Col, Input, Icon, Popconfirm } from 'antd'
-import { connect } from 'react-redux'
-import classNames from 'classnames'
+import React, { Component } from 'react';
+import Antd, { Table, Button, Row, Col, Input, Icon, Popconfirm } from 'antd';
+import { connect } from 'react-redux';
 
-import UserEditModal from './UserEditModal'
-import { fetchUserList, setUserPage, setUserKeyword, deleteUser, resetUser } from '../actions'
+import UserEditModal from './UserEditModal';
+import { fetchUserList, setUserPage, setUserKeyword, deleteUser, resetUser } from '../actions';
 
-const InputGroup = Input.Group
+const InputGroup = Input.Group;
 
 class User extends Component {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       editModalVisible: false,
       editModalId: 0,
-    }
+    };
   }
 
   componentWillMount() {
-    this.fetchUserList()
+    this.fetchUserList();
   }
 
   handleCreateClick() {
-    this.setState({ editModalVisible: true, editModalId: 0 })
+    this.setState({ editModalVisible: true, editModalId: 0 });
   }
 
   handleEditClick(record) {
-    this.setState({ editModalVisible: true, editModalId: record.id })
+    this.setState({ editModalVisible: true, editModalId: record.id });
   }
 
   handleResetClick(record) {
     this.props.resetUser(record.id)
       .then(() => Antd.message.success('重置成功'))
-      .catch(() => Antd.message.error('重置失败'))
+      .catch(() => Antd.message.error('重置失败'));
   }
 
   handleDeleteClick(record) {
     this.props.deleteUser(record.id)
       .then(() => {
-        Antd.message.success('删除成功')
-        this.fetchUserList()
+        Antd.message.success('删除成功');
+        this.fetchUserList();
       })
       .catch(() => {
-        Antd.message.error('删除失败')
-      })
+        Antd.message.error('删除失败');
+      });
   }
 
   handleKeywordKeyDown(e) {
     if (e.key === 'Enter') {
-      this.handleSearchClick()
+      this.handleSearchClick();
     }
   }
 
   handleSearchClick() {
-    this.fetchUserList()
+    this.fetchUserList();
+  }
+
+  fetchUserList() {
+    return this.props.fetchUserList()
+      .catch(error => Antd.message.error(error.message));
   }
 
   renderTable() {
@@ -99,7 +103,7 @@ class User extends Component {
                 ? '在职'
                 : '离职'}
             </div>
-          )
+          );
         },
       }, {
         title: '用户名',
@@ -126,7 +130,7 @@ class User extends Component {
         dataIndex: 'x',
         key: 'x',
         className: 'text-rigth',
-        render: (value, record) => {
+        render(value, record) {
           return (
             <div>
               <Popconfirm
@@ -189,13 +193,13 @@ class User extends Component {
     }
 
     const handleOk = () => {
-      this.setState({ editModalVisible: false })
-      this.fetchUserList()
-    }
+      this.setState({ editModalVisible: false });
+      this.fetchUserList();
+    };
 
     const handleCancel = () => {
-      this.setState({ editModalVisible: false })
-    }
+      this.setState({ editModalVisible: false });
+    };
 
     return (
       <UserEditModal
@@ -203,11 +207,11 @@ class User extends Component {
         visible={this.state.editModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-      />)
+      />);
   }
 
   renderFilter() {
-    const { setUserKeyword } = this.props
+    const { setUserKeyword } = this.props;
 
     return (
       <Row style={{ marginBottom: '10px' }}>
@@ -216,11 +220,11 @@ class User extends Component {
             <Icon type="plus" />新建
           </Button>
         </Col>
-        <Col span="8" offset="14" style={{left: '30px'}}>
+        <Col span="8" offset="14" style={{ left: '30px' }}>
           <InputGroup className="ant-search-input" size="large">
             <Input
               defaultValue={this.state.keyword}
-              onChange={e => { setUserKeyword(e.target.value) }}
+              onChange={e => { setUserKeyword(e.target.value); }}
               onKeyDown={::this.handleKeywordKeyDown}
             />
           <div className="ant-input-group-wrap">
@@ -231,7 +235,7 @@ class User extends Component {
           </InputGroup>
         </Col>
       </Row>
-    )
+    );
   }
 
   render() {
@@ -241,12 +245,7 @@ class User extends Component {
         {this.renderFilter()}
         {this.renderTable()}
       </div>
-    )
-  }
-
-  fetchUserList() {
-    return this.props.fetchUserList()
-      .catch(error => Antd.message.error(error.message))
+    );
   }
 }
 
