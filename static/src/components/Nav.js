@@ -3,60 +3,49 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T11:50:05+08:00
+* @Last modified time: 2016-04-21T00:42:57+08:00
 * @License: The MIT License (MIT)
 */
 
 
-import Backbone from 'backbone';
 import React from 'react';
+import { Link } from 'react-router';
 import { Menu } from 'antd';
 
-export default React.createClass({
-  propTypes: {
-    current: React.PropTypes.string,
-    isAdmin: React.PropTypes.bool,
+const navMap = [
+  {
+    router: '/dashboard/user',
+    text: '用户列表',
+    needAdmin: true,
   },
-
-  getDefaultProps() {
-    return {
-      current: '',
-      isAdmin: false,
-    };
+  {
+    router: '/dashboard/oauth',
+    text: 'OAuth列表',
+    needAdmin: true,
   },
-
-  getInitialState() {
-    return { current: this.props.current };
+  {
+    router: '/dashboard',
+    text: '个人信息',
+    needAdmin: false,
   },
+];
 
-  componentDidMount() {
+export default ({ isAdmin, currentPath }) => {
+  const hiddenStyle = { display: 'none' };
 
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({ current: nextProps.current });
-  },
-
-  handleClick(e) {
-    Backbone.history.navigate(`!/${e.key}`, { trigger: true });
-  },
-
-  render() {
-    const style = {
-      display: this.props.isAdmin ? 'block' : 'none',
-    };
-
-    return (
-      <Menu
-        onClick={this.handleClick}
-        selectedKeys={[this.state.current]}
-        theme=""
-        mode="horizontal"
-      >
-        <Menu.Item style={style} key="user">用户列表</Menu.Item>
-        <Menu.Item style={style} key="oauth">OAuth列表</Menu.Item>
-        <Menu.Item key="personal">个人信息</Menu.Item>
-      </Menu>
-    );
-  },
-});
+  return (
+    <Menu
+      selectedKeys={[currentPath]}
+      theme=""
+      mode="horizontal"
+    >
+      {
+        navMap.map((navItem) =>
+          <Menu.Item key={navItem.router} style={ !isAdmin && navItem.needAdmin && hiddenStyle }>
+            <Link to={navItem.router}>{navItem.text}</Link>
+          </Menu.Item>
+        )
+      }
+    </Menu>
+  );
+};

@@ -3,36 +3,27 @@
 * @Date:   2016-03-11T19:48:51+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-01T16:50:51+08:00
+* @Last modified time: 2016-04-21T00:23:52+08:00
 * @License: The MIT License (MIT)
 */
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { hashHistory } from 'react-router';
+import { Provider } from 'react-redux';
+import { syncHistoryWithStore } from 'react-router-redux';
 
+import { Root } from './containers';
+import configureStore from './store/configureStore';
 import 'antd/lib/index.css';
 import './index.scss';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Backbone from 'backbone';
-import Router from './router';
+const store = configureStore();
+const history = syncHistoryWithStore(hashHistory, store);
 
-import { authModelInstance } from './models/Auth';
-import CheckLogin from './views/CheckLogin';
-import Login from './views/Login';
-
-function initApplication(data) {
-  new Router({ isAdmin: (data && data.value && data.value.is_admin)
-    || authModelInstance.get('is_admin') });
-  Backbone.history.start();
-}
-
-function show(component, node) {
-  ReactDOM.render(React.createElement(component), node);
-}
-
-show(CheckLogin, document.getElementById('app'));
-
-authModelInstance.self().done(initApplication).fail(() => {
-  authModelInstance.on('login-success', initApplication);
-  show(Login, document.getElementById('app'));
-});
+ReactDOM.render(
+  <Provider store={store}>
+    <Root history={history} />
+  </Provider>,
+  document.getElementById('app')
+)
