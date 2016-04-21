@@ -160,11 +160,11 @@ class User extends Component {
 
     const {
       user: { list, loading, page, per_page, total },
-      setOAuthPage,
+      setUserPage,
     } = this.props;
 
     list.forEach(item => {
-      item.key = item.i;
+      item.key = item.id;
     });
 
     const pagination = {
@@ -173,7 +173,7 @@ class User extends Component {
       pageSize: per_page,
       showTotal: (_total) => `共 ${_total} 条`,
       onChange: (_page) => {
-        setOAuthPage(_page);
+        setUserPage(_page);
         this.fetchUserList();
       },
     };
