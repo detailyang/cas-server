@@ -2,13 +2,17 @@
  * @Author: detailyang
  * @Date:   2016-03-02 15:21:55
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T00:37:27+08:00
+* @Last modified time: 2016-04-20T19:01:16+08:00
  */
 
 
 const path = require('path');
+const webpack = require('webpack');
 
-module.exports = {
+const env = process.env.NODE_ENV;
+
+const config = {
+  devtool: env === 'dev' && 'cheap-module-eval-source-map',
   entry: {
     index: './static/src/index.js',
     oauth: './static/src/oauth.js',
@@ -41,4 +45,26 @@ module.exports = {
       },
     }],
   },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(env),
+    }),
+  ],
 };
+
+if (env === 'production') {
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true,
+        warnings: false,
+      },
+    })
+  );
+}
+
+module.exports = config;

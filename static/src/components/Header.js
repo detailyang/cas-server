@@ -3,28 +3,13 @@
 * @Date:   2016-03-14T10:30:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-14T16:46:31+08:00
+* @Last modified time: 2016-04-21T00:35:16+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import React from 'react';
 import { Menu, Dropdown } from 'antd';
-import $ from 'jquery';
-
-const HandleLogout = () => {
-  $.ajax({ url: '/public/users/logout', type: 'POST' }).done(() => {
-    location.href = '/';
-  });
-};
-
-const menu = (
-  <Menu>
-    <Menu.Item key="0">
-      <a href="#" onClick={HandleLogout}>登出</a>
-    </Menu.Item>
-  </Menu>
-);
 
 const AvatarStyle = {
   height: 30,
@@ -46,6 +31,14 @@ const OptStyle = {
 
 export default React.createClass({
   render() {
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          <a href="javascript:;" onClick={this.props.handleLogout}>登出</a>
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <div style={HeaderStyle}>
         <Dropdown overlay={menu} trigger={['click']}>
