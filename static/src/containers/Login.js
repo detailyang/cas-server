@@ -46,8 +46,9 @@ const Login = React.createClass({
 
 let LoginForm = ({ fields: { username, password }, submitting, handleSubmit }) => {
   const loginWrapped = (...args) =>
-    login(...args).catch(error =>
-      Antd.message.error(error.message, 3));
+    login(...args).catch(error => {
+        Antd.message.error((error.data && error.data.value) || error.message);
+    });
 
   return (
     <Form onSubmit={handleSubmit(loginWrapped)}>
