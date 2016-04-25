@@ -23,6 +23,7 @@ const onOk = () => {
   location.href = location.href.replace('/public/oauth', '/public/oauth/authorize');
 };
 
+
 ReactDOM.render(
   <Provider store={store}>
     <Login onOk={onOk} />

@@ -35,7 +35,7 @@ const Login = React.createClass({
       <div>
         <div className="login-backdrop"></div>
         <div className="login-modal">
-          <LoginForm />
+          <LoginForm onOk={this.props.onOk}/>
         </div>
       </div>
     );
@@ -44,11 +44,13 @@ const Login = React.createClass({
 });
 
 
-let LoginForm = ({ fields: { username, password }, submitting, handleSubmit }) => {
+let LoginForm = ({ fields: { username, password }, submitting, handleSubmit, onOk }) => {
   const loginWrapped = (...args) =>
-    login(...args).catch(error => {
+    login(...args)
+      .then(onOk)
+      .catch(error => {
         Antd.message.error((error.data && error.data.value) || error.message);
-    });
+      });
 
   return (
     <Form onSubmit={handleSubmit(loginWrapped)}>
