@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-03-08 11:49:43
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-12T17:21:06+08:00
+* @Last modified time: 2016-04-28T21:34:34+08:00
  */
 import session from 'koa-session2';
 import Store from '../utils/redis.js';
@@ -15,5 +15,5 @@ module.exports = session({
   secure: config.session.secure,
   httpOnly: config.session.http_only,
   domain: config.session.domain,
-  expires: new Date(Date.now() + config.session.ttl * 1000),
+  maxAge: config.session.ttl * 1000,
 });
