@@ -76,7 +76,7 @@
     "eslint-plugin-react": "^4.2.1",
     "express": "^4.13.4",
     "isomorphic-fetch": "^2.2.1",
-    "istanbul": "^0.4.3",
+    "istanbul": "^1.0.0-alpha.2",
     "jquery": "^2.2.1",
     "mocha": "^2.4.5",
     "node-sass": "^3.4.2",
@@ -95,6 +95,7 @@
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "supertest": "^1.2.0",
+    "supertest-as-promised": "^3.1.0",
     "underscore": "^1.8.3",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
