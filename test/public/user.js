@@ -31,7 +31,7 @@ describe('/public/users/key/:username(.+)', () => {
 });
 
 describe('/public/users/login', () => {
-  it('should return ok', (done) => {
+  it('right password should ok', (done) => {
     request()
     .post('/public/users/login')
     .send({
@@ -55,7 +55,7 @@ describe('/public/users/login', () => {
     })
   })
 
-  it('should return ok', (done) => {
+  it('wrong password should ok', (done) => {
     request()
     .post('/public/users/login')
     .send({
@@ -74,4 +74,44 @@ describe('/public/users/login', () => {
       return done();
     })
   })
+});
+
+
+describe('/public/users/logout', () => {
+  it('logout should ok', (done) => {
+    request()
+    .post('/public/users/logout')
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+      expect(json.data.value).to.equal(null);
+
+
+      return done();
+    })
+  })
+
+  // it('wrong password should ok', (done) => {
+  //   request()
+  //   .post('/public/users/login')
+  //   .send({
+  //     username: 'admin',
+  //     password: 'asdfasdf',
+  //   })
+  //   .expect(200)
+  //   .end((err, res) => {
+  //     if (err) return done(err);
+  //     const text = res.text;
+  //     const json = JSON.parse(text);
+  //     expect(json.code).to.equal(40000);
+  //     expect(json.msg).to.equal('param not right');
+  //     expect(json.data.value).to.equal('password not right');
+
+  //     return done();
+  //   })
+  // })
 });
