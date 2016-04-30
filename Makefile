@@ -2,7 +2,7 @@
 # @Date:   2016-04-30T19:31:45+08:00
 # @Email:  detailyang@gmail.com
 # @Last modified by:   detailyang
-# @Last modified time: 2016-04-30T20:12:00+08:00
+# @Last modified time: 2016-04-30T20:47:21+08:00
 # @License: The MIT License (MIT)
 
 
@@ -18,3 +18,5 @@ test:
 			$(REQUIRED) \
 			$(TESTS) \
 			--bail
+pre-test:
+		@NODE_ENV=test node scripts/init_table.js
