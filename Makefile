@@ -2,21 +2,16 @@
 # @Date:   2016-04-30T19:31:45+08:00
 # @Email:  detailyang@gmail.com
 # @Last modified by:   detailyang
-# @Last modified time: 2016-04-30T19:37:14+08:00
+# @Last modified time: 2016-04-30T19:47:35+08:00
 # @License: The MIT License (MIT)
 
 
-TESTS = test/public/*
+TESTS = test/babel.index.js
+.PHONY: test
 
 test:
-		echo node \
-        ./node_modules/.bin/_mocha \
-        $(TESTS) \
-        --bail
-    @NODE_ENV=test node \
-        ./node_modules/.bin/_mocha \
-        $(REQUIRED) \
-        $(TESTS) \
-        --bail
-
-.PHONY: test
+		@NODE_ENV=test node \
+			./node_modules/.bin/_mocha \
+			$(REQUIRED) \
+			$(TESTS) \
+			--bail
