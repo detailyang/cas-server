@@ -4,7 +4,7 @@
   "description": "cas",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js",
+    "test": "make test",
     "build": "NODE_ENV=production webpack --progress",
     "dev": "npm run dev_server | npm run webpack",
     "webpack": "NODE_ENV=dev node webpack-dev-server.js",
@@ -67,6 +67,7 @@
     "ava": "^0.13.0",
     "babel-core": "^6.6.5",
     "babel-loader": "^6.2.4",
+    "chai": "^3.5.0",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "eslint": "^2.3.0",
@@ -75,6 +76,7 @@
     "express": "^4.13.4",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.2.1",
+    "mocha": "^2.4.5",
     "node-sass": "^3.4.2",
     "qrcode.react": "^0.6.0",
     "react": "^0.14.7",
@@ -90,6 +92,7 @@
     "redux-thunk": "^2.0.1",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
+    "supertest": "^1.2.0",
     "underscore": "^1.8.3",
     "webpack": "^1.12.14",
     "webpack-dev-server": "^1.14.1"
