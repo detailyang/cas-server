@@ -25,7 +25,6 @@ if (process.env.NODE_ENV === 'dev') {
 } else {
   app.use(middlewares.serve);
 }
-// use acl
 app.use(middlewares.acl);
 app.use(bodyParser());
 app.use(middlewares.page);
