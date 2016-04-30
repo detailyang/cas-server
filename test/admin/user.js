@@ -98,7 +98,7 @@ describe('admin', function() {
                     .expect(200)
       })
       .then((res) => {
-
+        done();
       })
       .catch((err) => {
         done(err);
