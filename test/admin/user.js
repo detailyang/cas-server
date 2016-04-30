@@ -18,22 +18,46 @@
 const supertest = require('supertest');
 const app = require('../../');
 const expect = require('chai').expect;
-const request = () => supertest(app.listen());
+const agent = supertest.agent(app.listen());
 
-describe('/admin/users', () => {
-  it('should get admin users', (done) => {
-    request()
+
+describe('admin', function() {
+  before(loginUser(agent));
+  it('get admin users should be ok', (done) => {
+    agent
     .get('/admin/users')
     .expect(200)
     .end((err, res) => {
       if (err) return done(err);
       const text = res.text;
       const json = JSON.parse(text);
-      console.log(res.text);
-      expect(json.code).to.equal(40004);
-      expect(json.msg).to.equal('not found');
-      expect(json.data.value).to.equal('dont find user');
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+      expect(json.data.value[0].id).to.equal(1);
+      expect(json.data.value[0].username).to.equal('admin');
       return done();
     });
   });
-});
+})
+
+function loginUser(agent) {
+  return (done) => {
+    agent
+    .post('/public/users/login')
+    .send({ username: 'admin', password: 'password' })
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+      expect(json.data.value.id).to.equal(1);
+      expect(json.data.value.username).to.equal('admin');
+      expect(json.data.value.realname).to.equal('admin');
+      expect(json.data.value.aliasname).to.equal('admin');
+      expect(json.data.value.is_admin).to.equal(true);
+
+      return done();
+    });
+  };
+}

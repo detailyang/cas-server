@@ -9,3 +9,4 @@
 
 
 require('./public/user.js')
+require('./admin/user.js')
