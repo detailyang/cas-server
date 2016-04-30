@@ -9,11 +9,11 @@ Table of Contents
 -----------------
 
   * [Requirements](#requirements)
-  * [Development](#Development)
+  * [Development](#development)
   * [Production](#production)
   * [Contributing](#contributing)
   * [License](#license)
-  * [Author](#Author)
+  * [Author](#author)
 
 
 Requirements
