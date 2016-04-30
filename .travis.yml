@@ -3,6 +3,9 @@ language: node_js
 node_js:
   - "4"
   - "5"
+services:
+  - mysql
+  - redis-server
 addons:
   apt:
     sources:
@@ -15,10 +18,6 @@ before_install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
   - gcc --version
   - g++ --version
-services:
-  - mysql
-  - redis-server
-before_install:
   - mysql -e "create database IF NOT EXISTS cas;" -uroot
 script:
   - make test
