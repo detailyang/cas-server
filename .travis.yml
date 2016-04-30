@@ -24,4 +24,5 @@ before_script:
 script:
   - make cover-test
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - npm install codecov
+  - node_modules/.bin/codecov
