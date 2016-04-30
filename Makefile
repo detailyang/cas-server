@@ -2,16 +2,32 @@
 # @Date:   2016-04-30T19:31:45+08:00
 # @Email:  detailyang@gmail.com
 # @Last modified by:   detailyang
-# @Last modified time: 2016-04-30T19:59:28+08:00
+# @Last modified time: 2016-04-30T20:47:21+08:00
 # @License: The MIT License (MIT)
 
 
 TESTS = test/babel.index.js
-.PHONY: test
+TIMEOUT = 5000
+.PHONY: test cover-test pre-test
 
 test:
 		@NODE_ENV=test node \
+			./node_modules/.bin/istanbul cover \
 			./node_modules/.bin/_mocha \
+			--report lcovonly \
+			-- -u exports \
+			-t $(TIMEOUT) \
 			$(REQUIRED) \
 			$(TESTS) \
 			--bail
+cover-test:
+		@NODE_ENV=test node \
+			./node_modules/.bin/istanbul cover \
+			./node_modules/mocha/bin/_mocha \
+			--report lcovonly \
+			-- -R spec \
+			&& cat ./coverage/lcov.info \
+			| ./node_modules/coveralls/bin/coveralls.js
+pre-test:
+		@NODE_ENV=test node scripts/init_table.js
+		@NODE_ENV=test node scripts/create_user.js --id 1 --username admin --admin

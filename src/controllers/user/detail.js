@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-18T21:40:50+08:00
+* @Last modified time: 2016-04-26T16:01:57+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -47,35 +47,36 @@ module.exports = {
       throw new utils.error.NotFoundError(`no username: ${ctx.request.body.username}`);
     }
 
-    if (dynamic) {
-      if (staticdynamic) {
-        const _dynamic = password.slice(-6);
-        const _static = password.slice(0, -6);
-        const rv = utils.password.otpcheck(_dynamic, utils.password.encrypt(
-          user.username + user.password, config.notp.salt));
-        if (!rv) {
-          throw new utils.error.ParamsError('optcode not right');
-        } else {
-          if (rv.delta < config.notp.delta) {
-            throw new utils.error.ParamsError('optcode not right');
-          }
-        }
-
-        if (!utils.password.check(_static, user.dataValues.password)) {
-          throw new utils.error.ParamsError('password not right');
-        }
+    if (staticdynamic) {
+      const _dynamic = password.slice(-6);
+      const _static = password.slice(0, -6);
+      const rv = utils.password.otpcheck(_dynamic, utils.password.encrypt(
+        user.username + user.password, config.notp.salt));
+      if (!rv) {
+        throw new utils.error.ParamsError('optcode not right');
       } else {
-        const rv = utils.password.otpcheck(password, utils.password.encrypt(
-          user.username + user.password, config.notp.salt));
-        if (!rv) {
+        if (rv.delta < config.notp.delta) {
           throw new utils.error.ParamsError('optcode not right');
-        } else {
-          if (rv.delta < config.notp.delta) {
-            throw new utils.error.ParamsError('optcode not right');
-          }
         }
       }
-    } else {
+      if (!utils.password.check(_static, user.dataValues.password)) {
+        throw new utils.error.ParamsError('password not right');
+      }
+    }
+
+    if (dynamic) {
+      const rv = utils.password.otpcheck(password, utils.password.encrypt(
+        user.username + user.password, config.notp.salt));
+      if (!rv) {
+        throw new utils.error.ParamsError('optcode not right');
+      } else {
+        if (rv.delta < config.notp.delta) {
+          throw new utils.error.ParamsError('optcode not right');
+        }
+      }
+    }
+
+    if (!dynamic && !staticdynamic) {
       if (!utils.password.check(password, user.dataValues.password)) {
         throw new utils.error.ParamsError('password not right');
       }

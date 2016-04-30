@@ -15,7 +15,7 @@ require('babel-polyfill');
 
 const minimist = require('minimist');
 const uuid = require('uuid');
-const utils = require('../src/tils');
+const utils = require('../src/utils');
 const config = require('../src/config');
 const models = require('../src/models');
 const co = require('co');
@@ -23,6 +23,7 @@ const co = require('co');
 
 const argv = minimist(process.argv.slice(2));
 const username = argv.username;
+const id = argv.id;
 const realname = argv.realname || 'admin';
 const aliasname = argv.aliasname || 'admin';
 const email = argv.email || 'admin@admin.com';
@@ -44,14 +45,16 @@ const createUser = function*(data) {
     gender ? 'female' : 'male', width);
   data.avatar = avatar;
   yield models.user.create(data);
+  return;
 };
 
 if (!username) {
   throw new Error('please input username');
 }
 
-try {
-  const rv = co(createUser({
+co(function *(){
+  yield createUser({
+    id: id,
     username: username,
     is_admin: admin,
     gender: gender,
@@ -59,8 +62,12 @@ try {
     aliasname: aliasname,
     email: email,
     mobile: mobile,
-  }));
-  console.log(rv);
-} catch (e) {
-  console.log('create user failed');
-}
+  });
+})
+.then((val) => {
+  process.exit(0);
+})
+.catch((err) => {
+  console.log(err);
+  process.exit(1);
+});
