@@ -3,5 +3,10 @@ language: node_js
 node_js:
   - "4"
   - "5"
+services:
+  - mysql
+  - redis-server
+before_install:
+  - mysql -e "create database IF NOT EXISTS cas;" -uroot
 script:
   - make test
