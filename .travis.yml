@@ -23,5 +23,5 @@ before_script:
   - make pre-test
 script:
   - make test
-after_script:
-  - npm install coveralls && cat ./coverage/lcov.info | coveralls
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
