@@ -3,7 +3,7 @@
 * @Date:   2016-04-30T18:55:11+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-30T20:12:06+08:00
+* @Last modified time: 2016-04-30T21:00:57+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -13,8 +13,8 @@ const app = require('../../');
 const expect = require('chai').expect;
 const request = () => supertest(app.listen());
 
-describe('/avatar/:username(.+)', () => {
-  it('should not get abcdefghijk key', (done) => {
+describe('/public/users/key/:username(.+)', () => {
+  it('should do not get abcdefghijk key', (done) => {
     request()
     .get('/public/users/key/abcdefghijk')
     .expect(200)
@@ -28,4 +28,50 @@ describe('/avatar/:username(.+)', () => {
       return done();
     });
   });
+});
+
+describe('/public/users/login', () => {
+  it('should return ok', (done) => {
+    request()
+    .post('/public/users/login')
+    .send({
+      username: 'admin',
+      password: 'password',
+    })
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+      expect(json.data.value.id).to.equal(1);
+      expect(json.data.value.username).to.equal('admin');
+      expect(json.data.value.realname).to.equal('admin');
+      expect(json.data.value.aliasname).to.equal('admin');
+      expect(json.data.value.is_admin).to.equal(true);
+
+      return done();
+    })
+  })
+
+  it('should return ok', (done) => {
+    request()
+    .post('/public/users/login')
+    .send({
+      username: 'admin',
+      password: 'asdfasdf',
+    })
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(40000);
+      expect(json.msg).to.equal('param not right');
+      expect(json.data.value).to.equal('password not right');
+
+      return done();
+    })
+  })
 });

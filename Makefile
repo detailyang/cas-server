@@ -7,6 +7,7 @@
 
 
 TESTS = test/babel.index.js
+TIMEOUT = 5000
 .PHONY: test
 
 test:
@@ -15,8 +16,10 @@ test:
 			./node_modules/.bin/_mocha \
 			--report lcovonly \
 			-- -u exports \
+			-t $(TIMEOUT) \
 			$(REQUIRED) \
 			$(TESTS) \
 			--bail
 pre-test:
 		@NODE_ENV=test node scripts/init_table.js
+		@NODE_ENV=test node scripts/create_user.js --id 1 --username admin --admin
