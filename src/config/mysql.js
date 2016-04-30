@@ -3,7 +3,7 @@
 * @Date:   2016-03-16T22:03:58+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-17T14:55:08+08:00
+* @Last modified time: 2016-04-30T20:36:16+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'dev') {
 } else if (process.env.NODE_ENV === 'test') {
   module.exports = {
     username: 'root',
-    password: '123456',
+    password: '',
     database: 'cas',
     host: '127.0.0.1',
     port: '3306',
