@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T01:12:45+08:00
+* @Last modified time: 2016-04-30T19:54:15+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -16,10 +16,10 @@ require('babel-polyfill');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const config = require('../config').mysql;
+const config = require('../src/config').mysql;
 const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
-const modeldir = `${__dirname}/../models`;
+const modeldir = `${__dirname}/../src/models`;
 const basename = 'index.js';
 
 

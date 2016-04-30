@@ -3,7 +3,7 @@
 * @Date:   2016-03-14T10:30:41+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-03-16T01:13:05+08:00
+* @Last modified time: 2016-04-30T19:57:03+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -15,9 +15,9 @@ require('babel-polyfill');
 
 const minimist = require('minimist');
 const uuid = require('uuid');
-const utils = require('../utils');
-const config = require('../config');
-const models = require('../models');
+const utils = require('../src/tils');
+const config = require('../src/config');
+const models = require('../src/models');
 const co = require('co');
 
 
@@ -50,12 +50,17 @@ if (!username) {
   throw new Error('please input username');
 }
 
-co(createUser({
-  username: username,
-  is_admin: admin,
-  gender: gender,
-  realname: realname,
-  aliasname: aliasname,
-  email: email,
-  mobile: mobile,
-}));
+try {
+  const rv = co(createUser({
+    username: username,
+    is_admin: admin,
+    gender: gender,
+    realname: realname,
+    aliasname: aliasname,
+    email: email,
+    mobile: mobile,
+  }));
+  console.log(rv);
+} catch (e) {
+  console.log('create user failed');
+}
