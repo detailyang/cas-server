@@ -1,18 +1,11 @@
-/*
- * @Author: detailyang
- * @Date:   2016-03-07 19:59:56
-* @Last modified by:   detailyang
-* @Last modified time: 2016-04-30T21:07:11+08:00
- */
-
- /**
+/**
  * @Author: BingWu Yang (https://github.com/detailyang) <detailyang>
  * @Date:   2016-04-30T18:55:11+08:00
  * @Email:  detailyang@gmail.com
-* @Last modified by:   detailyang
-* @Last modified time: 2016-04-30T21:07:11+08:00
+ * @Last modified by:   detailyang
+ * @Last modified time: 2016-04-30T21:07:11+08:00
  * @License: The MIT License (MIT)
- */
+*/
 
 
 const supertest = require('supertest');
@@ -116,6 +109,29 @@ describe('admin', function() {
       })
       .catch((err) => {
         done(err);
+      })
+    });
+    it('username shoule be unique', (done) => {
+      agent
+      .post('/admin/users')
+      .send({
+        username:"test",
+        realname:"test",
+        aliasname:"test",
+        email: "test@example.com",
+        mobile:"0123456789",
+        gender:0,
+        is_admin:0,
+        is_delete:0
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        const text = res.text;
+        const json = JSON.parse(text);
+        expect(json.code).to.equal(40001);
+        expect(json.msg).to.equal('bad request');
+        expect(json.data.errors.username).to.equal('username must be unique');
+        done();
       })
     });
   })
