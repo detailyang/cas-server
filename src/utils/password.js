@@ -37,7 +37,12 @@ function otpcheck(token, key) {
   return notp.totp.verify(token, key);
 }
 
+function otpgen(key, opt) {
+  return notp.totp.gen(key, opt || {});
+}
+
 module.exports = {
+  otpgen: otpgen,
   check: check,
   encrypt: encrypt,
   genSalt: bcrypt.genSaltSync,

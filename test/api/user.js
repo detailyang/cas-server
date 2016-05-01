@@ -10,6 +10,8 @@
 
 const supertest = require('supertest');
 const app = require('../../');
+const password = require('../../src/utils/password');
+const config = require('../../src/config');
 const expect = require('chai').expect;
 const agent = require("supertest-as-promised").agent(app.listen());
 
@@ -75,7 +77,7 @@ describe('api', function() {
     it('post user avatar should be ok', (done) => {
         agent
         .post('/api/users/self/avatar')
-        .attach('avatar', 'test/resouces/avatar.jpg')
+        .attach('avatar', 'test/resources/avatar.jpg')
         .expect(200)
         .end((err, res) => {
             if (err) return done(err);
@@ -86,6 +88,39 @@ describe('api', function() {
             done();
         });
     });
+    it('check dynamic password should be ok', (done) => {
+        const key = password.encrypt('adminpassword', config.notp.salt);
+        const token = password.otpgen(key);
+        const rv = password.otpcheck(token, key);
+        if (!rv) {
+            return done(new Error('otpcode not right'));
+        } else {
+            if (rv.delta < config.notp.delta) {
+                return done(new Error('otpcode expires'));
+            }
+        }
+
+        return done();
+    });
+    it('change static password should be ok', (done) => {
+        agent
+        .put('/api/users/self/staticpassword')
+        .send({
+            oldpassword: 'password',
+            newpassword: 'EX3H4)rjU2shT'
+        })
+        .expect(200)
+        .end((err, res) => {
+            if (err) return done(err);
+            const text = res.text;
+            const json = JSON.parse(text);
+            expect(json.code).to.equal(0);
+            expect(json.msg).to.equal('ok');
+            done();
+        })
+    })
+    // router.post('/self/dynamicpassword', controllers.user.detail.dynamicpassword.post);
+    // router.put('/self/staticpassword', controllers.user.detail.staticpassword.put);
 })
 
 function loginUser(agent) {
