@@ -11,31 +11,81 @@
 const supertest = require('supertest');
 const app = require('../../');
 const expect = require('chai').expect;
-// const agent = supertest.agent(app.listen());
 const agent = require("supertest-as-promised").agent(app.listen());
 
 
 describe('api', function() {
   before(loginUser(agent));
   it('get user should be ok', (done) => {
-    agent
-    .get('/api/users/self')
-    .expect(200)
-    .end((err, res) => {
-      if (err) return done(err);
-      const text = res.text;
-      const json = JSON.parse(text);
-      expect(json.code).to.equal(0);
-      expect(json.msg).to.equal('ok');
-      expect(json.data.value.id).to.equal(1);
-      expect(json.data.value.username).to.equal('admin');
-      expect(json.data.value.realname).to.equal('admin');
-      expect(json.data.value.aliasname).to.equal('admin');
-      expect(json.data.value.mobile).to.equal('01234567890');
-      expect(json.data.value.email).to.equal('admin@admin.com');
-      return done();
+        agent
+        .get('/api/users/self')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          const text = res.text;
+          const json = JSON.parse(text);
+          expect(json.code).to.equal(0);
+          expect(json.msg).to.equal('ok');
+          expect(json.data.value.id).to.equal(1);
+          expect(json.data.value.username).to.equal('admin');
+          expect(json.data.value.realname).to.equal('admin');
+          expect(json.data.value.aliasname).to.equal('admin');
+          expect(json.data.value.mobile).to.equal('01234567890');
+          expect(json.data.value.email).to.equal('admin@admin.com');
+          return done();
+        });
     });
-  });
+    it('update user should be ok', (done) => {
+        agent
+        .put('/api/users/self')
+        .send({
+            mobile: '88888888'
+        })
+        .expect(200)
+        .then((res) => {
+          const text = res.text;
+          const json = JSON.parse(text);
+          expect(json.code).to.equal(0);
+          expect(json.msg).to.equal('ok');
+
+          return agent.get('/api/users/self')
+          .expect(200)
+        })
+        .then((res) => {
+          const text = res.text;
+          const json = JSON.parse(text);
+          expect(json.code).to.equal(0);
+          expect(json.msg).to.equal('ok');
+          expect(json.data.value.id).to.equal(1);
+          expect(json.data.value.mobile).to.equal('88888888');
+          done();
+        })
+        .catch((err) => done(err));
+    });
+    it('get user avatar should be ok', (done) => {
+        agent
+        .get('/api/users/self/avatar')
+        .expect(200)
+        .expect('Content-Type', 'image/jpeg')
+        .end((err, res) => {
+            if (err) return done(err);
+            done();
+        });
+    });
+    it('post user avatar should be ok', (done) => {
+        agent
+        .post('/api/users/self/avatar')
+        .attach('avatar', 'test/resouces/avatar.jpg')
+        .expect(200)
+        .end((err, res) => {
+            if (err) return done(err);
+            const text = res.text;
+            const json = JSON.parse(text);
+            expect(json.code).to.equal(0);
+            expect(json.msg).to.equal('ok');
+            done();
+        });
+    });
 })
 
 function loginUser(agent) {
@@ -56,6 +106,6 @@ function loginUser(agent) {
       expect(json.data.value.is_admin).to.equal(true);
 
       return done();
-    });
-  };
+  });
+};
 }
