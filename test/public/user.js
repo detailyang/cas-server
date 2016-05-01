@@ -13,6 +13,20 @@ const app = require('../../');
 const expect = require('chai').expect;
 const request = () => supertest(app.listen());
 
+
+describe('/public/users/avatar/:username', () => {
+  it('get user avatar should be ok', (done) => {
+    request()
+    .get('/public/users/avatar/admin')
+    .expect(200)
+    .expect('Content-Type', 'image/jpeg')
+    .end((err, res) => {
+        if (err) return done(err);
+        done();
+    });
+  });
+});
+
 describe('/public/users/key/:username(.+)', () => {
   it('should do not get abcdefghijk key', (done) => {
     request()
@@ -75,7 +89,6 @@ describe('/public/users/login', () => {
     })
   })
 });
-
 
 describe('/public/users/logout', () => {
   it('logout should ok', (done) => {

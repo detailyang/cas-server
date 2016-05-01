@@ -10,4 +10,5 @@
 
 require('./admin/user.js');
 require('./public/user.js');
+require('./public/oauth.js');
 require('./api/user.js');

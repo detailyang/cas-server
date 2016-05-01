@@ -11,7 +11,6 @@
 const supertest = require('supertest');
 const app = require('../../');
 const expect = require('chai').expect;
-// const agent = supertest.agent(app.listen());
 const agent = require("supertest-as-promised").agent(app.listen());
 
 

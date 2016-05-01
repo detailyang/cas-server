@@ -119,8 +119,6 @@ describe('api', function() {
             done();
         })
     })
-    // router.post('/self/dynamicpassword', controllers.user.detail.dynamicpassword.post);
-    // router.put('/self/staticpassword', controllers.user.detail.staticpassword.put);
 })
 
 function loginUser(agent) {

@@ -31,3 +31,4 @@ cover-test:
 pre-test:
 	@NODE_ENV=test node scripts/init_table.js
 	@NODE_ENV=test node scripts/create_user.js --id 1 --username admin --admin
+	mysql -e "INSERT INTO `oauth` (`id`, `name`, `secret`, `identify`, `domain`, `desc`, `callback`, `callback_debug`, `is_admin`, `is_received`, `is_delete`, `type`, `created_at`, `updated_at`) VALUES (1, 'test', 'a067b5ce-48b6-4494-ae2e-9613ff3eb238', 'ea10ae8d-7b43-4e32-9c71-3f0448842147', 'test.com', 'test', 'http://test.com/callback', 'http://test.com/callbackdebug', 1, 1, 0, 0, '2016-05-01 11:46:01', '2016-05-01 11:46:01');"

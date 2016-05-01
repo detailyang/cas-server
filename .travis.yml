@@ -19,6 +19,7 @@ before_install:
   - gcc --version
   - g++ --version
   - mysql -e "create database IF NOT EXISTS cas;" -uroot
+  - mysql -e ""
 before_script:
   - make pre-test
 script:
