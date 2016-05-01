@@ -11,23 +11,23 @@ TIMEOUT = 5000
 .PHONY: test cover-test pre-test
 
 test:
-		@NODE_ENV=test node \
-			./node_modules/.bin/istanbul cover \
-			./node_modules/.bin/_mocha \
-			--report lcovonly \
-			-- -u exports \
-			-t $(TIMEOUT) \
-			$(REQUIRED) \
-			$(TESTS) \
-			--bail
+	@NODE_ENV=test node \
+		./node_modules/.bin/istanbul cover \
+		./node_modules/.bin/_mocha \
+		--report lcovonly \
+		-- -u exports \
+		-t $(TIMEOUT) \
+		$(REQUIRED) \
+		$(TESTS) \
+		--bail
 cover-test:
-		@NODE_ENV=test node \
-			./node_modules/.bin/istanbul cover \
-			./node_modules/mocha/bin/_mocha \
-			--report lcovonly \
-			-- -R spec \
-			&& cat ./coverage/lcov.info \
-			| ./node_modules/coveralls/bin/coveralls.js
+	@NODE_ENV=test node \
+		./node_modules/.bin/istanbul cover \
+		./node_modules/mocha/bin/_mocha \
+		--report lcovonly \
+		-- -R spec \
+		&& cat ./coverage/lcov.info \
+		| ./node_modules/coveralls/bin/coveralls.js
 pre-test:
-		@NODE_ENV=test node scripts/init_table.js
-		@NODE_ENV=test node scripts/create_user.js --id 1 --username admin --admin
+	@NODE_ENV=test node scripts/init_table.js
+	@NODE_ENV=test node scripts/create_user.js --id 1 --username admin --admin
