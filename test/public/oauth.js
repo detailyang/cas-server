@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-05-01 19:23:33
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-05-01 20:04:16
+* @Last Modified time: 2016-05-01 22:51:49
 */
 
 'use strict';
@@ -59,6 +59,21 @@ describe('/public/oauth', function() {
       expect(json.data.value).to.match(/http:\/\/test\.com\/callback\?code=.*/)
       done();
     })
+  });
+  it('authorized oauth onetime should be ok', (done) => {
+    agent
+    .post('/public/oauth/onetime?name=test')
+    .send({
+      username: 'admin',
+      password: 'password'
+    })
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      console.log(json);
+      done();
+    });
   });
 });
 
