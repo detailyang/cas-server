@@ -8,5 +8,6 @@
 */
 
 
-require('./public/user.js')
-require('./admin/user.js')
+require('./public/user.js');
+require('./api/user.js');
+require('./admin/user.js');
