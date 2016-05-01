@@ -95,9 +95,23 @@ describe('admin', function() {
         expect(json.msg).to.equal('ok');
         expect(json.data.value.is_delete).to.equal(true);
         return agent.put(`/admin/users/${id}`)
+                    .send({is_delete: 0})
                     .expect(200)
       })
       .then((res) => {
+        const text = res.text;
+        const json = JSON.parse(text);
+        expect(json.code).to.equal(0);
+        expect(json.msg).to.equal('ok');
+        return agent.get(`/admin/users/${id}`)
+                    .expect(200)
+      })
+      .then((res) => {
+        const text = res.text;
+        const json = JSON.parse(text);
+        expect(json.code).to.equal(0);
+        expect(json.msg).to.equal('ok');
+        expect(json.data.value.is_delete).to.equal(false);
         done();
       })
       .catch((err) => {
