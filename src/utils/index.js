@@ -8,7 +8,6 @@
 
 module.exports = {
   'return': require('./return'),
-  'validator': require('./validator'),
   'password': require('./password'),
   'avatar': require('./avatar'),
   'error': require('./error'),
