@@ -95,12 +95,13 @@ masterQueue.process((msg, done) => {
           break;
         }
         const where = {};
-        if (user.id) {
-          where.id = user.id;
+        const _user = msg.data.value;
+        if (_user.id) {
+          where.id = _user.id;
         }
 
-        if (user.username) {
-          where.username = user.username;
+        if (_user.username) {
+          where.username = _user.username;
         }
         where.is_delete = false;
         const user = yield models.user.findOne({
