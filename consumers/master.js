@@ -17,12 +17,11 @@ require('babel-polyfill');
 const Queue = require('bull');
 const request = require('superagent');
 const co = require('co');
-const utils = require('../utils');
-
-const config = require('../config');
-const models = require('../models');
-const email = require('../utils/email');
 const qrCode = require('qrcode-npm');
+const utils = require('../src/utils');
+const config = require('../src/config');
+const models = require('../src/models');
+const email = require('../src/utils/email');
 
 
 const masterQueue = Queue(

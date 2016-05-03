@@ -18,7 +18,7 @@ const Queue = require('bull');
 const request = require('superagent');
 const co = require('co');
 
-const config = require('../config');
+const config = require('../src/config');
 
 
 const agentQueue = Queue(
