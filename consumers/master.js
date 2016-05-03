@@ -114,7 +114,7 @@ masterQueue.process((msg, done) => {
             where.username = user.username;
           }
           where.is_delete = false;
-          const user = await models.user.findOne({
+          const user = yield models.user.findOne({
             attributes: ['id', 'username', 'is_admin', 'gender', 'password',
             'realname', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
             where
