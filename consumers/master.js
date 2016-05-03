@@ -104,6 +104,28 @@ masterQueue.process((msg, done) => {
           const data = JSON.parse(JSON.stringify(msg.data));
           data.callback = oc.callback;
           data.identify = oc.identify;
+
+          const where = {};
+          if (user.id) {
+            where.id = user.id;
+          }
+
+          if (user.username) {
+            where.username = user.username;
+          }
+          where.is_delete = false;
+          const user = await models.user.findOne({
+            attributes: ['id', 'username', 'is_admin', 'gender', 'password',
+            'realname', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
+            where
+          });
+          if (!user) {
+            throw new utils.error.NotFoundError('dont find user');
+          }
+
+          data.value = data.dataValues;
+          delete data.value.password;
+          delete data.value.avatar;
           return agentQueue
           .add(data, { timeout: 1 })
           .then(() => {
