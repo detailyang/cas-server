@@ -121,6 +121,7 @@ masterQueue.process((msg, done) => {
           }
           const data = JSON.parse(JSON.stringify(msg.data));
           delete data.value.password;
+          delete data.value.avatar;
           data.callback = oc.callback;
           data.identify = oc.identify;
           return agentQueue
