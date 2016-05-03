@@ -94,6 +94,25 @@ masterQueue.process((msg, done) => {
           yield changePassword(msg.data.value);
           break;
         }
+        const where = {};
+        if (user.id) {
+          where.id = user.id;
+        }
+
+        if (user.username) {
+          where.username = user.username;
+        }
+        where.is_delete = false;
+        const user = yield models.user.findOne({
+          attributes: ['id', 'username', 'is_admin', 'gender', 'password',
+          'realname', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
+          where
+        });
+        if (!user) {
+          throw new utils.error.NotFoundError('dont find user');
+        }
+        delete user.dataValues.password;
+        delete user.dataValues.avatar;
         ocs.map((oc) => {
           if (msg.data.value.avatar) {
             return true;
@@ -105,27 +124,7 @@ masterQueue.process((msg, done) => {
           data.callback = oc.callback;
           data.identify = oc.identify;
 
-          const where = {};
-          if (user.id) {
-            where.id = user.id;
-          }
-
-          if (user.username) {
-            where.username = user.username;
-          }
-          where.is_delete = false;
-          const user = yield models.user.findOne({
-            attributes: ['id', 'username', 'is_admin', 'gender', 'password',
-            'realname', 'is_delete', 'aliasname', 'mobile', 'email', 'key'],
-            where
-          });
-          if (!user) {
-            throw new utils.error.NotFoundError('dont find user');
-          }
-
-          data.value = data.dataValues;
-          delete data.value.password;
-          delete data.value.avatar;
+          data.value = user.dataValues;
           return agentQueue
           .add(data, { timeout: 1 })
           .then(() => {
