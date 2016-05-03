@@ -116,6 +116,9 @@ masterQueue.process((msg, done) => {
         break;
       case 'user.add':
         ocs.map((oc) => {
+          if (!oc.is_received) {
+            return true;
+          }
           const data = JSON.parse(JSON.stringify(msg.data));
           delete data.value.password;
           data.callback = oc.callback;
