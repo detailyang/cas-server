@@ -115,6 +115,22 @@ masterQueue.process((msg, done) => {
           });
         });
         break;
+      case 'user.add':
+        ocs.map((oc) => {
+          const data = JSON.parse(JSON.stringify(msg.data));
+          delete data.value.password;
+          data.callback = oc.callback;
+          data.identify = oc.identify;
+          return agentQueue
+          .add(data, { timeout: 1 })
+          .then(() => {
+            console.log('add agent queue success');
+          })
+          .catch(() => {
+            console.log('add agent queue error');
+          });
+        });
+        break;
       default:
         break;
     }

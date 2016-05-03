@@ -50,6 +50,9 @@ fs.readdirSync(__dirname)
           masterQueue.add({ type: 'user.update', value: object.attributes });
           fn();
         });
+        model.afterCreate((object, fn) => {
+          masterQueue.add({ type: 'user.add', value: object.dataValues });
+        });
         break;
       default:
         break;

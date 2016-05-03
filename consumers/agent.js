@@ -36,6 +36,7 @@ agentQueue.process((msg, done) => {
   console.log('agent receive event ', msg.data);
   co(function *() {
     switch (msg.data.type) {
+      case 'user.add':
       case 'user.update':
         request
           .post(msg.data.callback)
