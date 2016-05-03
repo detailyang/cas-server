@@ -185,12 +185,12 @@ module.exports = {
   },
 
   async put(ctx) {
+    delete ctx.request.body.username;
     delete ctx.request.body.password;
     delete ctx.request.body.id;
     const user = await models.user.update(ctx.request.body, {
       where: {
-        id: ctx.session.id,
-        username: ctx.request.body.username,
+        id: ctx.session.id
       },
     });
     if (!user) {
