@@ -8,7 +8,7 @@
 */
 
 
-import {
+import Antd, {
   Button,
   Form,
   Input,
@@ -19,13 +19,13 @@ import {
 } from 'antd';
 import React from 'react';
 import QRCode from 'qrcode.react';
+import { fetch } from '../utils';
 
 const FormItem = Form.Item;
 const noop = () => {};
 
 export default Form.create()(React.createClass({
   propTypes: {
-    value: React.PropTypes.string,
     form: React.PropTypes.object,
     onSubmit: React.PropTypes.func,
   },
@@ -35,7 +35,7 @@ export default Form.create()(React.createClass({
   },
 
   getInitialState() {
-    return { loading: false, visible: false };
+    return { loading: false, visible: false, qrcodeValue: '' };
   },
 
   hideModal() {
@@ -43,6 +43,11 @@ export default Form.create()(React.createClass({
   },
 
   showModal() {
+    fetch('/api/users/self/dynamicpassword')
+      .then(data => {
+        this.setState({ qrcodeValue: data.value.notp })
+      })
+      .catch(error => Antd.message.error(error.message));
     this.setState({ visible: true });
   },
 
@@ -94,12 +99,14 @@ export default Form.create()(React.createClass({
     const style = {
       'margin': '10px',
     };
-    let otpsecret = this.props.value.split('secret=');
+    const { qrcodeValue } = this.state;
+    let otpsecret = qrcodeValue.split('secret=');
     if (otpsecret.length !== 2) {
-      otpsecret = this.props.value;
+      otpsecret = qrcodeValue;
     } else {
       otpsecret = otpsecret[1];
     }
+
 
     return (
       <div style={style}>
@@ -113,7 +120,7 @@ export default Form.create()(React.createClass({
           <Form horizontal form={this.props.form}>
             <Row>
               <div className="qrcode">
-                <QRCode value={this.props.value} />
+                <QRCode value={qrcodeValue} />
               </div>
               <div className="text-center">
                 <Alert message="使用Google Authorization扫描二维码或者手动输入secret并校验" type="info" />

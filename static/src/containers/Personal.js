@@ -186,7 +186,6 @@ const PersonalForm = React.createClass({
                 <ChangePassword onSubmit={this.handleChangePassword} />
                 <DynamicPassword
                   onSubmit={this.changeDynamicPassword}
-                  value={notp.value}
                 />
                 <Button
                   style={style}
