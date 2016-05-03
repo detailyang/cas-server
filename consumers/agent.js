@@ -48,7 +48,8 @@ agentQueue.process((msg, done) => {
               done(err);
               return;
             }
-            done(null);
+            console.log(`${msg.data.callback} send success`);
+            done();
           });
         break;
       default:
