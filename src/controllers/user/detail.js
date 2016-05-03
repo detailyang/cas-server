@@ -370,6 +370,26 @@ module.exports = {
       }
       ctx.body = ctx.return;
     },
+
+    async get(ctx) {
+      const user = await models.user.findOne({
+        attributes: ['id', 'username', 'password'],
+        where: {
+          is_delete: false,
+          id: ctx.session.id,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+      user.dataValues.notp = utils.password.otpqrcode(
+        utils.password.encrypt(
+          user.username + user.password, config.notp.salt),
+        config.notp.label);
+      delete user.dataValues.password;
+      ctx.return.data.value = user;
+      ctx.body = ctx.return;
+    }
   },
 
   staticpassword: {

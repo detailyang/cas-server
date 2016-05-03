@@ -23,4 +23,5 @@ router.put('/self', controllers.user.detail.put);
 router.get('/self/avatar', controllers.user.detail.avatar.get);
 router.post('/self/avatar', convert(koabody), controllers.user.detail.avatar.post);
 router.post('/self/dynamicpassword', controllers.user.detail.dynamicpassword.post);
+router.get('/self/dynamicpassword', controllers.user.detail.dynamicpassword.get);
 router.put('/self/staticpassword', controllers.user.detail.staticpassword.put);
