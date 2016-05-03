@@ -58,7 +58,7 @@ function* changePassword(user) {
   where.is_delete = false;
 
   const _user = yield models.user.findOne({
-    attributes: ['email'],
+    attributes: ['email', 'username', 'password'],
     where,
   });
   if (!_user) {
@@ -67,7 +67,7 @@ function* changePassword(user) {
 
   const otp = utils.password.otpqrcode(
     utils.password.encrypt(
-      user.username + user.password, config.notp.salt),
+      _user.username + _user.password, config.notp.salt),
     config.notp.label);
   const qr = qrCode.qrcode(10, 'M');
   qr.addData(otp);
