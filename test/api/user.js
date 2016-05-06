@@ -2,8 +2,8 @@
  * @Author: BingWu Yang (https://github.com/detailyang) <detailyang>
  * @Date:   2016-04-30T18:55:11+08:00
  * @Email:  detailyang@gmail.com
- * @Last modified by:   detailyang
- * @Last modified time: 2016-04-30T21:07:11+08:00
+* @Last modified by:   detailyang
+* @Last modified time: 2016-05-07T00:00:12+08:00
  * @License: The MIT License (MIT)
 */
 
@@ -38,31 +38,31 @@ describe('api', function() {
         });
     });
     it('update user should be ok', (done) => {
-        agent
-        .put('/api/users/self')
-        .send({
-            mobile: '88888888'
-        })
-        .expect(200)
-        .then((res) => {
-          const text = res.text;
-          const json = JSON.parse(text);
-          expect(json.code).to.equal(0);
-          expect(json.msg).to.equal('ok');
+      agent
+      .put('/api/users/self')
+      .send({
+        mobile: '88888888',
+      })
+      .expect(200)
+      .then((res) => {
+        const text = res.text;
+        const json = JSON.parse(text);
+        expect(json.code).to.equal(0);
+        expect(json.msg).to.equal('ok');
 
-          return agent.get('/api/users/self')
-          .expect(200)
-        })
-        .then((res) => {
-          const text = res.text;
-          const json = JSON.parse(text);
-          expect(json.code).to.equal(0);
-          expect(json.msg).to.equal('ok');
-          expect(json.data.value.id).to.equal(1);
-          expect(json.data.value.mobile).to.equal('88888888');
-          done();
-        })
-        .catch((err) => done(err));
+        return agent.get('/api/users/self')
+        .expect(200)
+      })
+      .then((res) => {
+        const text = res.text;
+        const json = JSON.parse(text);
+        expect(json.code).to.equal(0);
+        expect(json.msg).to.equal('ok');
+        expect(json.data.value.id).to.equal(1);
+        expect(json.data.value.mobile).to.equal('88888888');
+        done();
+      })
+      .catch((err) => done(err));
     });
     it('get user avatar should be ok', (done) => {
         agent
