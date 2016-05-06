@@ -3,7 +3,7 @@
  * @Date:   2016-04-30T18:55:11+08:00
  * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-05-06T23:26:08+08:00
+* @Last modified time: 2016-05-06T23:47:18+08:00
  * @License: The MIT License (MIT)
 */
 
@@ -34,7 +34,7 @@ describe('admin oauth', () => {
     });
   });
 
-  it('post admin oauth should be ok', (done) => {
+  it('CRUD admin oauth should be ok', (done) => {
     agent
     .post('/admin/oauths')
     .send({
@@ -77,6 +77,21 @@ describe('admin oauth', () => {
     })
     .catch((err) => {
       done(err);
+    });
+  });
+  it('search admin oauth should be ok', (done) => {
+    agent
+    .get('/admin/oauths?keyword=test')
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+      expect(json.data.value[0].id).to.equal(1);
+      expect(json.data.value[0].name).to.equal('test');
+      return done();
     });
   });
 });
