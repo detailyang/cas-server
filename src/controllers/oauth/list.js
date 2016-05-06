@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 10:18:29
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-04T23:22:27+08:00
+* @Last modified time: 2016-05-06T23:33:41+08:00
  */
 import uuid from 'uuid';
 import sequelize from 'sequelize';
@@ -13,7 +13,7 @@ import utils from '../../utils';
 
 module.exports = {
   async get(ctx) {
-    const keyword = ctx.request.query.keyword;
+    const keyword = ctx.request.query.keyword || '';
     const where = {
       is_delete: 0,
     };
