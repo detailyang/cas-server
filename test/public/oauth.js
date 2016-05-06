@@ -1,8 +1,8 @@
 /*
 * @Author: detailyang
 * @Date:   2016-05-01 19:23:33
-* @Last Modified by:   detailyang
-* @Last Modified time: 2016-05-01 22:51:49
+* @Last modified by:   detailyang
+* @Last modified time: 2016-05-06T23:25:25+08:00
 */
 
 'use strict';
@@ -67,11 +67,11 @@ describe('/public/oauth', function() {
       username: 'admin',
       password: 'password'
     })
+    .expect(200)
     .end((err, res) => {
       if (err) return done(err);
       const text = res.text;
       const json = JSON.parse(text);
-      console.log(json);
       done();
     });
   });
