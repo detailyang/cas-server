@@ -1,0 +1,48 @@
+/**
+* @Author: BingWu Yang <detailyang>
+* @Date:   2016-03-13T21:08:41+08:00
+* @Email:  detailyang@gmail.com
+* @Last modified by:   detailyang
+* @Last modified time: 2016-05-06T22:23:17+08:00
+* @License: The MIT License (MIT)
+*/
+
+
+require('babel-core/register')({
+  presets: ['es2015-node5', 'stage-3'],
+});
+require('babel-polyfill');
+
+const Queue = require('bull');
+const co = require('co');
+const utils = require('../src/utils');
+const config = require('../src/config');
+const models = require('../src/models');
+
+
+const masterQueue = Queue(
+  `${config.queue.name}:master`,
+  {
+    redis: {
+      port: config.queue.port,
+      host: config.queue.hostname,
+      DB: config.queue.db,
+    },
+  }
+);
+
+setInterval(() => {
+  models.user.findAll().then((_users) => {
+    const users = _users.map((user) => {
+      delete user.dataValues.password;
+      delete user.dataValues.avatar;
+      delete user.dataValues.created_at;
+      delete user.dataValues.updated_at;
+      return user.dataValues;
+    });
+    masterQueue.add({ type: 'user.sync', value: users });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}, 24 * 60 * 60 * 1000);
