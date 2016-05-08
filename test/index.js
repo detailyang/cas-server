@@ -11,6 +11,7 @@
 require('./utils/return.js');
 require('./utils/avatar.js');
 require('./utils/error.js');
+require('./config/index.js');
 require('./oauth/user.js');
 require('./admin/oauth.js');
 require('./public/user.js');
