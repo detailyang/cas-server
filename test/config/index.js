@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-05-08 22:43:25
 * @Last Modified by:   detailyang
-* @Last Modified time: 2016-05-08 23:10:24
+* @Last Modified time: 2016-05-08 23:33:42
 */
 
 'use strict';
@@ -57,6 +57,8 @@ const expect = require('chai').expect;
 
 describe('config should be ok', () => {
     it('mysql test should be ok', (done) => {
+        require.uncache('../../src/config/mysql');
+        process.env.NODE_ENV='test';
         let mysql = require('../../src/config/mysql');
         expect(mysql.username).not.to.be.an('undefined');
         expect(mysql.database).not.to.be.an('undefined');
@@ -88,11 +90,13 @@ describe('config should be ok', () => {
         done();
     });
     it('cache test should be ok', (done) => {
+        require.uncache('../../src/config/cache');
+        process.env.NODE_ENV='test';
         let cache = require('../../src/config/cache');
-        expect(cache.host).to.be.an('undefined');
-        expect(cache.port).to.be.an('undefined');
-        expect(cache.ttl).to.be.an('undefined');
-        expect(cache.db).to.be.an('undefined');
+        expect(cache.host).to.equal('127.0.0.1');
+        expect(cache.port).to.equal('6379');
+        expect(cache.ttl).to.equal(3600);
+        expect(cache.db).to.equal('2');
         done();
     });
     it('cache dev should be ok', (done) => {
@@ -116,11 +120,13 @@ describe('config should be ok', () => {
         done();
     });
     it('queue test should be ok', (done) => {
+        require.uncache('../../src/config/queue');
+        process.env.NODE_ENV='test';
         let queue = require('../../src/config/queue');
-        expect(queue.name).to.be.an('undefined');
-        expect(queue.hostname).to.be.an('undefined');
-        expect(queue.port).to.be.an('undefined');
-        expect(queue.db).to.be.an('undefined');
+        expect(queue.name).to.equal('cas');
+        expect(queue.hostname).to.equal('127.0.0.1');
+        expect(queue.port).to.equal(6379);
+        expect(queue.db).to.equal('1');
         done();
     });
     it('queue dev should be ok', (done) => {
@@ -144,12 +150,14 @@ describe('config should be ok', () => {
         done();
     });
     it('session test should be ok', (done) => {
+        require.uncache('../../src/config/session');
+        process.env.NODE_ENV='test';
         let session = require('../../src/config/session');
-        expect(session.host).to.be.an('undefined');
+        expect(session.host).to.equal('127.0.0.1');
         expect(session.ttl).to.equal(3600);
         expect(session.db).to.equal(0);
         expect(session.cookiekey).to.equal('cas');
-        expect(session.key).to.equal('iamyoufather');
+        expect(session.key).to.equal('momtellmewhy');
         expect(session.secure).to.be.false;
         expect(session.http_only).to.be.false;
         expect(session.domain).to.be.an('undefined');
@@ -186,11 +194,13 @@ describe('config should be ok', () => {
         done();
     });
     it('syslog test should be ok', (done) => {
+        require.uncache('../../src/config/syslog');
+        process.env.NODE_ENV='test';
         let syslog = require('../../src/config/syslog');
-        expect(syslog.tag).to.be.an('undefined');
-        expect(syslog.facility).to.be.an('undefined');
-        expect(syslog.hostname).to.be.an('undefined');
-        expect(syslog.port).to.be.an('undefined');
+        expect(syslog.tag).to.equal('cas');
+        expect(syslog.facility).to.equal('local6');
+        expect(syslog.hostname).to.equal('127.0.0.1');
+        expect(syslog.port).to.equal(514);
         done();
     });
     it('syslog dev should be ok', (done) => {
