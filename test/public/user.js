@@ -11,6 +11,7 @@
 const supertest = require('supertest');
 const app = require('../../');
 const expect = require('chai').expect;
+const md5 = require('utility').md5;
 const request = () => supertest(app.listen());
 
 
@@ -107,4 +108,25 @@ describe('/public/users/logout', () => {
       return done();
     })
   })
+});
+
+describe('/public/users/md5/login', () => {
+  it('right password should ok', (done) => {
+    request()
+    .post('/public/users/md5/login')
+    .send({
+      username: 'admin',
+      password: md5('password'),
+    })
+    .expect(200)
+    .end((err, res) => {
+      if (err) return done(err);
+      const text = res.text;
+      const json = JSON.parse(text);
+      expect(json.code).to.equal(0);
+      expect(json.msg).to.equal('ok');
+
+      return done();
+    });
+  });
 });
