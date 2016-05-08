@@ -9,6 +9,7 @@
 import sequelize from 'sequelize';
 import uuid from 'uuid';
 import crypto from 'crypto';
+import { md5 } from 'utility';
 
 import models from '../../models';
 import config from '../../config';
@@ -76,18 +77,19 @@ module.exports = {
   async post(ctx) {
     delete ctx.request.body.id;
     const salt = utils.password.genSalt(config.password.bcryptlength);
-    const md5_password = crypto.createHash('md5').update(config.password.default).digest().toString();
 
     if (!ctx.request.body.password) {
       ctx.request.body.password = utils.password.encrypt(
         config.password.default, salt);
+      let md5_password = md5(config.password.default);
       ctx.request.body.md5_password = utils.password.encrypt(
         md5_password, salt);
     } else {
       ctx.request.body.password = utils.password.encrypt(
         ctx.request.body.password, salt);
-    ctx.request.body.md5_password = utils.password.encrypt(
-        md5_password, salt);
+      let md5_password = md5(ctx.request.body.password);
+      ctx.request.body.md5_password = utils.password.encrypt(
+          md5_password, salt);
     }
     const width = ctx.request.query.width || config.avatar.width;
     const avatar = await utils.avatar.generate(uuid.v1(),
@@ -159,7 +161,7 @@ module.exports = {
         }
 
         const salt = utils.password.genSalt(+config.password.bcryptlength);
-        const md5_password = crypto.createHash('md5').update(config.password.default).digest().toString();
+        const md5_password = md5(config.password.default);
         ctx.request.body.password = utils.password.encrypt(config.password.default, salt);
         ctx.request.body.md5_password = utils.password.encrypt(
           md5_password, salt);

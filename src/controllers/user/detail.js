@@ -7,6 +7,8 @@
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
 import sshpk from 'sshpk';
+import crypto from 'crypto';
+import { md5 } from 'utility';
 
 import models from '../../models';
 import utils from '../../utils';
@@ -212,6 +214,27 @@ module.exports = {
       throw new utils.error.ServerError('update user error');
     }
     ctx.body = ctx.return;
+  },
+
+  md5: {
+    async login(ctx) {
+      const username = ctx.request.body.username;
+      const password = ctx.request.body.password;
+      const user = await models.user.findOne({
+        attributes: ['id', 'username', 'md5_password'],
+        where: {
+          is_delete: false,
+          username: username,
+        },
+      });
+      if (!user) {
+        throw new utils.error.NotFoundError('dont find user');
+      }
+      if (!utils.password.check(password, user.dataValues.md5_password)) {
+        throw new utils.error.ParamsError('md5 password not right');
+      }
+      ctx.body = ctx.return;
+    },
   },
 
   ssh: {

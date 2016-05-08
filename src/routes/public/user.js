@@ -17,5 +17,8 @@ module.exports = router;
 router.get('/avatar/:username(.+)', controllers.user.detail.avatar.getByUsername);
 router.get('/key/:username(.+)', controllers.user.detail.key.getByUsername);
 router.post('/ssh/login', controllers.user.detail.ssh.login);
+router.post('/md5/login', controllers.user.detail.md5.login);
+router.post('/login', controllers.user.detail.login);
+router.post('/logout', controllers.user.detail.logout);
 router.post('/login', controllers.user.detail.login);
 router.post('/logout', controllers.user.detail.logout);

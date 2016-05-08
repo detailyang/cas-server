@@ -56,6 +56,7 @@
     "sshpk": "^1.7.4",
     "superagent": "^1.8.3",
     "thirty-two": "^1.0.1",
+    "utility": "^1.7.1",
     "uuid": "^2.0.1",
     "validator": "^4.9.0",
     "winston": "^2.2.0",
