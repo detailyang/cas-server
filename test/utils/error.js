@@ -15,35 +15,35 @@ const expect = require('chai').expect;
 describe('utils error', () => {
   it('utils code ParamsError should be ok', (done) => {
     try {
-      throw new utils.error.ParamsError()
+      throw new utils.error.ParamsError('message');
     } catch (e) {
     }
     done();
   });
   it('utils code PermissionError should be ok', (done) => {
     try {
-      throw new utils.error.PermissionError()
+      throw new utils.error.PermissionError('message');
     } catch (e) {
     }
     done();
   });
   it('utils code NotFoundError should be ok', (done) => {
     try {
-      throw new utils.error.NotFoundError()
+      throw new utils.error.NotFoundError('message');
     } catch (e) {
     }
     done();
   });
   it('utils code ServerError should be ok', (done) => {
     try {
-      throw new utils.error.ServerError()
+      throw new utils.error.ServerError('message');
     } catch (e) {
     }
     done();
   });
   it('utils code ParamsError should be ok', (done) => {
     try {
-      throw new utils.error.ParamsError()
+      throw new utils.error.ParamsError('message');
     } catch (e) {
     }
     done();

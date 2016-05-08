@@ -13,13 +13,13 @@ require('babel-core/register')({
 });
 require('babel-polyfill');
 
+const md5 = require('utility').md5;
 const minimist = require('minimist');
 const uuid = require('uuid');
 const utils = require('../src/utils');
 const config = require('../src/config');
 const models = require('../src/models');
 const co = require('co');
-
 
 const argv = minimist(process.argv.slice(2));
 const username = argv.username;
@@ -36,9 +36,13 @@ const createUser = function*(data) {
   if (!data.password) {
     data.password = utils.password.encrypt(
       config.password.default, salt);
+    data.md5_password = utils.password.encrypt(
+      md5(config.password.default), salt);
   } else {
     data.password = utils.password.encrypt(
       data.password, salt);
+    data.md5_password = utils.password.encrypt(
+      md5(data.password), salt);
   }
   const width = config.avatar.width;
   const avatar = yield utils.avatar.generate(uuid.v1(),
