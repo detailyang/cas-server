@@ -8,6 +8,9 @@
 */
 
 
+'use strict';
+
+
 const fs = require('fs');
 
 const babelrc = fs.readFileSync('./.babelrc');

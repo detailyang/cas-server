@@ -15,9 +15,6 @@ import config from '../../config';
 import utils from '../../utils';
 
 
-const md5 = crypto.createHash('md5');
-
-
 module.exports = {
   async get(ctx) {
     let is_delete = ctx.request.query['is_delete[]'] || [];
@@ -79,17 +76,18 @@ module.exports = {
   async post(ctx) {
     delete ctx.request.body.id;
     const salt = utils.password.genSalt(config.password.bcryptlength);
+    const md5_password = crypto.createHash('md5').update(config.password.default).digest().toString();
 
     if (!ctx.request.body.password) {
       ctx.request.body.password = utils.password.encrypt(
         config.password.default, salt);
       ctx.request.body.md5_password = utils.password.encrypt(
-        md5.digest(config.password.default), salt);
+        md5_password, salt);
     } else {
       ctx.request.body.password = utils.password.encrypt(
         ctx.request.body.password, salt);
     ctx.request.body.md5_password = utils.password.encrypt(
-        md5.digest(ctx.request.body.password), salt);
+        md5_password, salt);
     }
     const width = ctx.request.query.width || config.avatar.width;
     const avatar = await utils.avatar.generate(uuid.v1(),
@@ -161,9 +159,10 @@ module.exports = {
         }
 
         const salt = utils.password.genSalt(+config.password.bcryptlength);
+        const md5_password = crypto.createHash('md5').update(config.password.default).digest().toString();
         ctx.request.body.password = utils.password.encrypt(config.password.default, salt);
         ctx.request.body.md5_password = utils.password.encrypt(
-          md5.digest(config.password.default), salt);
+          md5_password, salt);
         const user = await models.user.update({
           password: ctx.request.body.password ,
           md5_password: ctx.request.body.md5_password
