@@ -86,6 +86,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: '',
     },
+    md5_password: {
+      type: DataTypes.STRING(128),
+      allowNull: false,
+      defaultValue: '',
+    },
     is_delete: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
