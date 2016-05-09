@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-05-09T13:33:21+08:00
+* @Last modified time: 2016-05-09T13:35:05+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -441,6 +441,7 @@ module.exports = {
       const salt = utils.password.genSalt(config.password.bcryptlength);
       await models.user.update({
         password: utils.password.encrypt(newpassword, salt),
+        md5_password: utils.password.encrypt(md5(newpassword), salt),
       }, {
         where: {
           id: ctx.session.id,
