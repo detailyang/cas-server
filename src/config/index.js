@@ -17,6 +17,9 @@ module.exports = {
     'domain': process.env.CAS_MAILGUN_DOMAIN,
     'from': process.env.CAS_MAILGUN_FROM,
   },
+  'cors': {
+    domain: process.env.CAS_CORS_DOMAIN,
+  },
   'email': {
     host: process.env.CAS_EMAIL_HOST,
     port: process.env.CAS_EMAIL_PORT,

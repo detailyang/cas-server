@@ -101,6 +101,13 @@ module.exports = {
   },
 
   async logout(ctx) {
+    console.log(new RegExp(config.cors.domain));
+    if (ctx.request.header.origin
+     && ctx.request.header.origin.match(new RegExp(config.cors.domain))) {
+      ctx.set('Access-Control-Allow-Credentials', 'true');
+      ctx.set('Access-Control-Allow-Methods',  'GET,POST,PUT,DELETE,OPTIONS');
+      ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
+    }
     ctx.session = null;
     ctx.body = ctx.return;
   },
