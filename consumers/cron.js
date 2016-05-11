@@ -35,6 +35,7 @@ setInterval(() => {
   models.user.findAll().then((_users) => {
     const users = _users.map((user) => {
       delete user.dataValues.password;
+      delete user.dataValues.md5_password;
       delete user.dataValues.avatar;
       delete user.dataValues.created_at;
       delete user.dataValues.updated_at;
