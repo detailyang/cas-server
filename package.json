@@ -32,7 +32,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
-    "bcrypt": "^0.8.5",
+    "bcryptjs": "^2.3.0",
     "bull": "^1.0.0-rc1",
     "co": "^4.6.0",
     "ioredis": "^1.15.1",
