@@ -24,6 +24,7 @@ cover-test:
 	@NODE_ENV=test node \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/mocha/bin/_mocha \
+    --t 5000 \
 		--report lcovonly \
 		-- -R spec \
 		&& cat ./coverage/lcov.info \
