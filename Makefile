@@ -26,7 +26,7 @@ cover-test:
 		./node_modules/mocha/bin/_mocha \
 		--report lcovonly \
 		-- -R spec \
-    -t $(TIMEOUT) \
+		-t $(TIMEOUT) \
 		&& cat ./coverage/lcov.info \
 		| ./node_modules/coveralls/bin/coveralls.js
 pre-test:
