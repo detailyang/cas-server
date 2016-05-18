@@ -5,7 +5,7 @@
 * @Last modified time: 2016-03-18T13:12:20+08:00
  */
 
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import base32 from 'thirty-two';
 import notp from 'notp';
 
