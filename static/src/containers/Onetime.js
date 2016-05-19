@@ -48,7 +48,7 @@ const OnetimeForm = React.createClass({
         location.href = res.value;
       })
       .catch(error => {
-        Antd.message.error(error.message, 3);
+        Antd.message.error((error.data && error.data.value) || error.message, 3);
       });
   },
 
