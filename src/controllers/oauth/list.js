@@ -70,7 +70,6 @@ module.exports = {
     async get(ctx) {
       const oc = await models.oauth.findOne({
         where: {
-          is_delete: false,
           id: ctx.params.id,
         },
       });

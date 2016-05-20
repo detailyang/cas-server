@@ -160,13 +160,13 @@ module.exports = {
   async getOne(ctx) {
     const field = ctx.request.query.field;
     const value = ctx.request.query.value;
-    const where = { is_delete: false };
+    const where = {};
     if (field && value) {
       where[field] = value;
     }
     const user = await models.user.findOne({
       attributes: ['id', 'username', 'gender',
-                   'realname', 'aliasname', 'mobile', 'email', 'key'],
+                   'realname', 'aliasname', 'mobile', 'email', 'key', 'is_delete'],
       where: where,
     });
     if (!user) {
