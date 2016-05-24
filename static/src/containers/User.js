@@ -221,8 +221,8 @@ class User extends Component {
             <Icon type="plus" />新建
           </Button>
         </Col>
-        <Col span="8" offset="14" style={{ left: '30px' }}>
-          <InputGroup className="ant-search-input" size="large">
+        <Col span="4" offset="18">
+          <InputGroup className="ant-search-input" size="default">
             <Input
               defaultValue={this.state.keyword}
               onChange={e => { setUserKeyword(e.target.value); }}

@@ -15,7 +15,8 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import { Root } from './containers';
 import configureStore from './store/configureStore';
-import 'antd/lib/index.css';
+
+import 'antd/dist/antd.css';
 import './index.scss';
 
 const store = configureStore();

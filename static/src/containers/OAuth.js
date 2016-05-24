@@ -99,8 +99,8 @@ class OAuth extends Component {
             <Icon type="plus" />新建
           </Button>
         </Col>
-        <Col span="8" offset="14" style={{ left: '30px' }}>
-          <InputGroup className="ant-search-input" size="large">
+        <Col span="4" offset="18">
+          <InputGroup className="ant-search-input" size="default">
             <Input
               defaultValue={this.state.keyword}
               onChange={e => { setOAuthKeyword(e.target.value); }}
@@ -140,14 +140,9 @@ class OAuth extends Component {
         dataIndex: 'secret',
         key: 'secret',
       }, {
-        title: 'identify',
-        dataIndex: 'identify',
-        key: 'identify',
-      }, {
         title: '操作',
         dataIndex: 'x',
         key: 'x',
-        className: 'text-rigth',
         render: (value, record) => {
           return (
             <div>

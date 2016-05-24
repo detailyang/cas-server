@@ -64,7 +64,7 @@
     "zxcvbn": "^4.2.0"
   },
   "devDependencies": {
-    "antd": "^0.12.12",
+    "antd": "^1.1.0",
     "ava": "^0.13.0",
     "babel-core": "^6.6.5",
     "babel-loader": "^6.2.4",

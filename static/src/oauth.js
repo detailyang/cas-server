@@ -13,7 +13,8 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 import Login from './containers/Login';
-import 'antd/lib/index.css';
+
+import 'antd/dist/antd.css';
 import './index.scss';
 
 
