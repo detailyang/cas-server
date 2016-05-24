@@ -9,6 +9,7 @@
 
 
 import Redis from 'ioredis';
+import uuid from 'uuid';
 import { Store } from 'koa-session2';
 
 
@@ -38,7 +39,7 @@ export default class RedisStore extends Store {
 
   async set(session, opts) {
     if (!opts.sid) {
-      opts.sid = this.getID(24);
+      opts.sid = uuid.v1();
     }
     if (Object.keys(session).length !== 0) {
       await this.redis.setex(`${this.getId(opts.sid)}`, this.ttl, JSON.stringify(session));

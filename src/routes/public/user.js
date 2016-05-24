@@ -20,5 +20,3 @@ router.post('/ssh/login', controllers.user.detail.ssh.login);
 router.post('/md5/login', controllers.user.detail.md5.login);
 router.post('/login', controllers.user.detail.login);
 router.post('/logout', controllers.user.detail.logout);
-router.post('/login', controllers.user.detail.login);
-router.post('/logout', controllers.user.detail.logout);
