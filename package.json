@@ -33,7 +33,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-preset-stage-3": "^6.5.0",
     "bcrypt": "^0.8.6",
-    "bull": "^1.0.0-rc1",
+    "bull": "^1.0.0-rc2",
     "co": "^4.6.0",
     "ioredis": "^1.15.1",
     "koa": "^2.0.0-alpha.3",

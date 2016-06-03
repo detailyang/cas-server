@@ -29,8 +29,10 @@ const masterQueue = Queue(
       port: config.queue.port,
       host: config.queue.hostname,
       DB: config.queue.db,
+      opts: {
+        db: {},
+      },
     },
-    opts: {}
   }
 );
 
