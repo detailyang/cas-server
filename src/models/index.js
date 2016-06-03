@@ -30,6 +30,7 @@ const masterQueue = Queue(
       host: config.queue.hostname,
       DB: config.queue.db,
     },
+    opts: {}
   }
 );
 
