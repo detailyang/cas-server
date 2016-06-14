@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-05-09T13:35:05+08:00
+* @Last modified time: 2016-06-14T17:38:20+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -17,12 +17,24 @@ import config from '../../config';
 
 module.exports = {
   async login(ctx) {
-    const id = ctx.request.body.id;
-    const username = ctx.request.body.username;
-    const password = ctx.request.body.password;
-    const dynamic = ctx.request.body.dynamic;
-    const staticdynamic = ctx.request.body.staticdynamic;
-    let persistence = ctx.request.body.persistence;
+    const id = ctx.request.body.id
+      || ctx.request.query.id
+      || ctx.request.headers['cas-id'];
+    const username = ctx.request.body.username
+      || ctx.request.query.username
+      || ctx.request.headers['cas-username'];
+    const password = ctx.request.body.password
+      || ctx.request.query.password
+      || ctx.request.headers['cas-password'];
+    const dynamic = ctx.request.body.dynamic
+      || ctx.request.query.dynamic
+      || ctx.request.headers['cas-dynamic'];
+    const staticdynamic = ctx.request.body.staticdynamic
+      || ctx.request.query.staticdynamic
+      || ctx.request.headers['cas-staticdynamic'];
+    let persistence = ctx.request.body.persistence
+      || ctx.request.query.persistence
+      || ctx.request.headers['cas-persistence'];
 
     if (persistence === undefined) {
       persistence = true;
@@ -46,7 +58,7 @@ module.exports = {
       where: where,
     });
     if (!user) {
-      throw new utils.error.NotFoundError(`no username: ${ctx.request.body.username}`);
+      throw new utils.error.NotFoundError(`no username: ${username}`);
     }
 
     if (staticdynamic) {
@@ -96,6 +108,7 @@ module.exports = {
     if (+persistence) {
       ctx.session = value;
     }
+    ctx.set('Cas-Username', user.username);
     ctx.body = ctx.return;
     return;
   },
@@ -104,7 +117,7 @@ module.exports = {
     if (ctx.request.header.origin
      && ctx.request.header.origin.match(new RegExp(config.cors.domain))) {
       ctx.set('Access-Control-Allow-Credentials', 'true');
-      ctx.set('Access-Control-Allow-Methods',  'GET,POST,PUT,DELETE,OPTIONS');
+      ctx.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
       ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
     }
     ctx.session = null;
