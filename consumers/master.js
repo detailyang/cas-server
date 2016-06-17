@@ -35,12 +35,10 @@ const masterQueue = Queue(
 
 const agentQueue = Queue(
   `${config.queue.name}:agent`,
+  config.queue.port,
+  config.queue.hostname,
   {
-    redis: {
-      port: config.queue.port,
-      host: config.queue.hostname,
-      DB: config.queue.db,
-    },
+    db: config.queue.db,
   }
 );
 
