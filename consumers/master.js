@@ -26,12 +26,10 @@ const email = require('../src/utils/email');
 
 const masterQueue = Queue(
   `${config.queue.name}:master`,
+  port: config.queue.port,
+  host: config.queue.hostname,
   {
-    redis: {
-      port: config.queue.port,
-      host: config.queue.hostname,
-      DB: config.queue.db,
-    },
+    db: config.queue.db,
   }
 );
 

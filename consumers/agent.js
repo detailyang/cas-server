@@ -23,12 +23,10 @@ const config = require('../src/config');
 
 const agentQueue = Queue(
   `${config.queue.name}:agent`,
+  port: config.queue.port,
+  host: config.queue.hostname,
   {
-    redis: {
-      port: config.queue.port,
-      host: config.queue.hostname,
-      DB: config.queue.db,
-    },
+    db: config.queue.db,
   }
 );
 

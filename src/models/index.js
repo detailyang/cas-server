@@ -24,15 +24,10 @@ const sequelize = new Sequelize(config.mysql.database, config.mysql.username,
 
 const masterQueue = Queue(
   `${config.queue.name}:master`,
+  port: config.queue.port,
+  host: config.queue.hostname,
   {
-    redis: {
-      port: config.queue.port,
-      host: config.queue.hostname,
-      DB: config.queue.db,
-      opts: {
-        db: {},
-      },
-    },
+    db: config.queue.db,
   }
 );
 

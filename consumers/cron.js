@@ -22,12 +22,10 @@ const models = require('../src/models');
 
 const masterQueue = Queue(
   `${config.queue.name}:master`,
+  port: config.queue.port,
+  host: config.queue.hostname,
   {
-    redis: {
-      port: config.queue.port,
-      host: config.queue.hostname,
-      DB: config.queue.db,
-    },
+    db: config.queue.db,
   }
 );
 
