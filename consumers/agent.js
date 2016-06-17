@@ -23,8 +23,8 @@ const config = require('../src/config');
 
 const agentQueue = Queue(
   `${config.queue.name}:agent`,
-  port: config.queue.port,
-  host: config.queue.hostname,
+  config.queue.port,
+  config.queue.hostname,
   {
     db: config.queue.db,
   }

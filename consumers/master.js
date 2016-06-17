@@ -26,8 +26,8 @@ const email = require('../src/utils/email');
 
 const masterQueue = Queue(
   `${config.queue.name}:master`,
-  port: config.queue.port,
-  host: config.queue.hostname,
+  config.queue.port,
+  config.queue.hostname,
   {
     db: config.queue.db,
   }
