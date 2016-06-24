@@ -3,12 +3,13 @@
 * @Date:   2016-03-13T22:06:56+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-05T01:11:14+08:00
+* @Last modified time: 2016-06-24T10:30:01+08:00
 * @License: The MIT License (MIT)
 */
 
 
 import uuid from 'uuid';
+import querystring from 'querystring';
 
 import models from '../../models';
 import utils from '../../utils';
@@ -18,6 +19,7 @@ import config from '../../config';
 module.exports = {
   authorize: {
     async onetime(ctx) {
+      const qs = querystring.escape(ctx.request.query.qs || '');
       const name = ctx.request.query.name;
       const debug = ctx.request.query.debug;
       const username = ctx.request.body.username;
@@ -104,11 +106,14 @@ module.exports = {
       } else {
         callback += `?code=${code}`;
       }
+      callback += `&qs=${qs}`;
+
       ctx.return.data.value = callback;
       ctx.body = ctx.return;
     },
 
     async get(ctx) {
+      const qs = querystring.escape(ctx.request.query.qs || '');
       const name = ctx.request.query.name;
       const debug = ctx.request.query.debug;
 
@@ -127,9 +132,9 @@ module.exports = {
         case 0:
           if (!ctx.session || !ctx.session.id) {
             if (debug) {
-              return ctx.redirect(`/public/oauth?name=${name}&debug=${debug}`);
+              return ctx.redirect(`/public/oauth?name=${name}&qs=${qs}&debug=${debug}`);
             }
-            return ctx.redirect(`/public/oauth?name=${name}`);
+            return ctx.redirect(`/public/oauth?name=${name}&qs=${qs}`);
           }
           return await ctx.render('authorize.html');
         case 1:
@@ -147,6 +152,7 @@ module.exports = {
       if (!ctx.session || !ctx.session.id) {
         throw new utils.error.PermissionError('you havent login');
       }
+      const qs = querystring.escape(ctx.request.query.qs || '');
       const name = ctx.request.query.name;
       const debug = ctx.request.query.debug;
       const oc = await models.oauth.findOne({
@@ -198,6 +204,9 @@ module.exports = {
       } else {
         callback += `?code=${code}`;
       }
+      callback += `&qs=${qs}`;
+      console.log(qs);
+
       ctx.return.data.value = callback;
       ctx.body = ctx.return;
     },
@@ -205,9 +214,10 @@ module.exports = {
 
   oauth: {
     async get(ctx) {
+      const qs = querystring.escape(ctx.request.query.qs || '');
       const name = ctx.request.query.name || '';
       if (ctx.session && ctx.session.id) {
-        return ctx.redirect(`/public/oauth/authorize?name=${name}`);
+        return ctx.redirect(`/public/oauth/authorize?name=${name}&qs=${qs}`);
       }
       await ctx.render('oauth.html');
       return true;
