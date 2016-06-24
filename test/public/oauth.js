@@ -2,7 +2,7 @@
 * @Author: detailyang
 * @Date:   2016-05-01 19:23:33
 * @Last modified by:   detailyang
-* @Last modified time: 2016-05-06T23:25:25+08:00
+* @Last modified time: 2016-06-24T10:47:40+08:00
 */
 
 'use strict';
@@ -19,11 +19,11 @@ describe('/public/oauth', function() {
   before(loginUser(agent));
   it('authorized user should be ok', (done) => {
     agent
-    .get('/public/oauth?name=test')
+    .get('/public/oauth?name=test&qs=1')
     .expect(302)
     .end((err, res) => {
       if (err) return done(err);
-      expect(res.header.location).to.equal('/public/oauth/authorize?name=test');
+      expect(res.header.location).to.equal('/public/oauth/authorize?name=test&qs=1');
       done();
     });
   });
