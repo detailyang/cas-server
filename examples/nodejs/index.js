@@ -47,8 +47,17 @@ app.post('/cas/oauth/callback', (req, res) => {
     return res.send('fuck you');
   }
 
-  // TODO maybe i will add some event
   const data = req.body;
+  switch (data.type) {
+    case 'user.update':
+      // revoke on update user
+    case ‘user.add’:
+      // revoke on add user
+    case 'user.delete':
+      // revoke on delete user
+    case 'user.sync':
+      // revoke on every day
+    default:
 });
 
 app.listen(3001, () => {
