@@ -3,7 +3,7 @@
 * @Date:   2016-03-15T13:39:31+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-20T23:53:30+08:00
+* @Last modified time: 2016-06-24T10:25:30+08:00
 * @License: The MIT License (MIT)
 */
 
@@ -18,7 +18,7 @@ const cas = {
 };
 
 app.get('/', (req, res) => {
-  res.redirect(`http://127.0.0.1:3000/public/oauth/authorize?name=${cas.name}`);
+  res.redirect(`http://127.0.0.1:3000/public/oauth/authorize?name=${cas.name}&qs=http%3a%2f%2fwww.google.com%26a%3d1`);
 });
 
 app.get('/cas/oauth/callback', (req, res) => {
@@ -31,7 +31,7 @@ app.get('/cas/oauth/callback', (req, res) => {
     if (r.body.code !== 0) {
       return res.send(r.body.data.value);
     }
-    res.send(`hello, big brother: ${r.body.data.value.username}`);
+    return res.send(`hello, big brother: ${r.body.data.value.username}`);
   });
 });
 
