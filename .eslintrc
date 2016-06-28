@@ -18,6 +18,7 @@
         'prefer-rest-params': 0,
         'camelcase': 0,
         'no-confusing-arrow': 0,
+        'arrow-body-style': 0,
     },
     'plugins': [
         'react',

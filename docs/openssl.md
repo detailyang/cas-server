@@ -1,7 +1,7 @@
-  // ca private key openssl genrsa -des3 -out ca.key 4096 -sha256
+  // ca private key openssl genrsa -des3 -out ca.key 4096
   // ca certificate openssl req -new -x509 -days 365 -key ca.key -out ca.crt -sha256
 
-  // server private key openssl genrsa -des3 -out server.key 4096 -sha256
+  // server private key openssl genrsa -des3 -out server.key 4096
   // server csr openssl req -new -key server.key -out server.csr -sha256
   // server certificate openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
 

@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-17 15:18:34
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-30T19:01:33+08:00
+* @Last modified time: 2016-06-24T13:07:39+08:00
  */
 
 
@@ -36,6 +36,7 @@ app.use(routes.admin.user.routes());
 app.use(routes.admin.oauth.routes());
 app.use(routes.oauth.user.routes());
 app.use(routes.api.user.routes());
+app.use(routes.api.pki.routes());
 app.use(routes.public.user.routes());
 app.use(routes.public.oauth.routes());
 

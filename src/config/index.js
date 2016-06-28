@@ -2,11 +2,12 @@
  * @Author: detailyang
  * @Date:   2016-02-18 16:08:50
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-17T14:45:46+08:00
+* @Last modified time: 2016-06-24T13:09:28+08:00
  */
 
 
 module.exports = {
+  'pki': require('./pki'),
   'mysql': require('./mysql'),
   'session': require('./session'),
   'syslog': require('./syslog'),
