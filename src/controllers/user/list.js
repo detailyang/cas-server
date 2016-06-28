@@ -3,12 +3,11 @@
 * @Date:   2016-03-13T02:41:52+08:00
 * @Email:  detailyang@gmail.com
 * @Last modified by:   detailyang
-* @Last modified time: 2016-04-07T15:10:58+08:00
+* @Last modified time: 2016-06-28T14:08:56+08:00
 * @License: The MIT License (MIT)
 */
 import sequelize from 'sequelize';
 import uuid from 'uuid';
-import crypto from 'crypto';
 import { md5 } from 'utility';
 
 import models from '../../models';
@@ -81,13 +80,13 @@ module.exports = {
     if (!ctx.request.body.password) {
       ctx.request.body.password = utils.password.encrypt(
         config.password.default, salt);
-      let md5_password = md5(config.password.default);
+      const md5_password = md5(config.password.default);
       ctx.request.body.md5_password = utils.password.encrypt(
         md5_password, salt);
     } else {
       ctx.request.body.password = utils.password.encrypt(
         ctx.request.body.password, salt);
-      let md5_password = md5(ctx.request.body.password);
+      const md5_password = md5(ctx.request.body.password);
       ctx.request.body.md5_password = utils.password.encrypt(
           md5_password, salt);
     }
@@ -166,8 +165,8 @@ module.exports = {
         ctx.request.body.md5_password = utils.password.encrypt(
           md5_password, salt);
         const user = await models.user.update({
-          password: ctx.request.body.password ,
-          md5_password: ctx.request.body.md5_password
+          password: ctx.request.body.password,
+          md5_password: ctx.request.body.md5_password,
         }, {
           where: {
             id: ctx.params.id,

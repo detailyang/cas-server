@@ -2,7 +2,7 @@
  * @Author: detailyang
  * @Date:   2016-02-29 14:32:13
 * @Last modified by:   detailyang
-* @Last modified time: 2016-06-14T17:40:21+08:00
+* @Last modified time: 2016-06-28T14:09:14+08:00
  */
 import fs from 'fs';
 import zxcvbn from 'zxcvbn';
@@ -210,7 +210,7 @@ module.exports = {
     delete ctx.request.body.id;
     const user = await models.user.update(ctx.request.body, {
       where: {
-        id: ctx.session.id
+        id: ctx.session.id,
       },
     });
     if (!user) {
