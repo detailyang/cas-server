@@ -97,7 +97,7 @@
     "redux-thunk": "^2.0.1",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.0",
-    "supertest": "^1.2.0",
+    "supertest": "^2.0.0",
     "supertest-as-promised": "^3.1.0",
     "underscore": "^1.8.3",
     "webpack": "^1.12.14",
