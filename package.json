@@ -48,7 +48,7 @@
     "minimist": "^1.2.0",
     "mysql": "^2.10.2",
     "nodemailer": "^2.3.0",
-    "nodemailer-smtp-transport": "^2.4.1",
+    "nodemailer-smtp-transport": "^2.7.2",
     "notp": "^2.0.3",
     "nunjucks": "^2.4.1",
     "qrcode-npm": "0.0.3",
