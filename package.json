@@ -68,7 +68,7 @@
     "antd": "^1.1.0",
     "ava": "^0.15.1",
     "babel-core": "^6.6.5",
-    "babel-loader": "^6.2.4",
+    "babel-loader": "^6.2.7",
     "chai": "^3.5.0",
     "chai-json-equal": "0.0.1",
     "classnames": "^2.2.3",
