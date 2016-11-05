@@ -50,7 +50,7 @@
     "nodemailer": "^2.3.0",
     "nodemailer-smtp-transport": "^2.4.1",
     "notp": "^2.0.3",
-    "nunjucks": "^2.4.1",
+    "nunjucks": "^3.0.0",
     "qrcode-npm": "0.0.3",
     "sequelize": "^3.20.0",
     "shelljs": "^0.7.0",
