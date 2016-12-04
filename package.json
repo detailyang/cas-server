@@ -35,7 +35,7 @@
     "bcrypt": "^0.8.6",
     "bull": "^1.0.0-rc2",
     "co": "^4.6.0",
-    "ioredis": "^2.0.1",
+    "ioredis": "^2.4.2",
     "koa": "^2.0.0-alpha.3",
     "koa-body": "^1.4.0",
     "koa-bodyparser": "^3.0.0",
