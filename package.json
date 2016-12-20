@@ -52,7 +52,7 @@
     "notp": "^2.0.3",
     "nunjucks": "^2.4.1",
     "qrcode-npm": "0.0.3",
-    "sequelize": "^3.20.0",
+    "sequelize": "^3.28.0",
     "shelljs": "^0.7.0",
     "sshpk": "^1.7.4",
     "superagent": "^2.0.0",
