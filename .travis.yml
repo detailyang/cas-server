@@ -1,0 +1,28 @@
+sudo: true
+language: node_js
+node_js:
+  - "4"
+  - "5"
+services:
+  - mysql
+  - redis-server
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.9
+    - gcc-4.9
+before_install:
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 20
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 20
+  - gcc --version
+  - g++ --version
+  - mysql -e "create database IF NOT EXISTS cas;" -uroot
+before_script:
+  - make pre-test
+script:
+  - make cover-test
+after_success:
+  - npm install codecov
+  - node_modules/.bin/codecov

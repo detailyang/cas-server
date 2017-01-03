@@ -1,0 +1,128 @@
+// @Author: BingWu Yang <detailyang>
+// @Date:   2016-03-08T15:48:11+08:00
+// @Email:  detailyang@gmail.com
+// @Last modified by:   detailyang
+// @Last modified time: 2016-04-01T10:54:15+08:00
+// @License: The MIT License (MIT)
+
+
+.dashboard-container {
+  padding: 20px;
+}
+
+.text-rigth {
+  text-align: right;
+}
+
+.gray {
+  filter:grayscale(1) opacity(.2);
+  -webkit-filter: grayscale(1) opacity(.4);
+}
+
+.green-point {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: #00CC33;
+}
+
+.black-point {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: #000000;
+}
+
+.avatar {
+  border-radius: 20px;
+  width: 100px;
+  height: 100px;
+}
+
+.span {
+  margin: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.box {
+  border: 1px solid #E9E9E9;
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  padding: 25px;
+  margin: 0 0 16px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.qrcode {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 20px;
+}
+
+.qrcode:hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -64px;
+  margin-top: -60px;
+  zoom: 4;
+  z-index: 1000;
+}
+
+.ant-pwd-strength {
+  display: inline-block;
+  margin-left: 8px;
+  line-height: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.ant-pwd-strength-item {
+  float: left;
+  margin-right: 1px;
+  margin-top: 12px;
+  width: 19px;
+  height: 8px;
+  line-height: 8px;
+  list-style: none;
+  background-color: #f3f3f3;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.ant-pwd-strength-item-1 {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.ant-pwd-strength-item-2 {
+  width: 20px;
+}
+
+.ant-pwd-strength-item-3 {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-right: 8px;
+}
+
+.ant-pwd-strength-low .ant-pwd-strength-item-1,
+.ant-pwd-strength-medium .ant-pwd-strength-item-1,
+.ant-pwd-strength-high .ant-pwd-strength-item-1 {
+  background-color: #FAC450;
+}
+
+.ant-pwd-strength-medium .ant-pwd-strength-item-2,
+.ant-pwd-strength-high .ant-pwd-strength-item-2 {
+  background-color: rgba(135, 208, 104, .6);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#9987D068,endColorstr=#9987D068);
+}
+
+.ant-pwd-strength-high .ant-pwd-strength-item-3 {
+  background-color: #87D068;
+}
