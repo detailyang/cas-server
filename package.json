@@ -94,7 +94,7 @@
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
     "redux-form": "^5.2.5",
-    "redux-thunk": "^2.0.1",
+    "redux-thunk": "^2.2.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.0",
     "supertest": "^1.2.0",
