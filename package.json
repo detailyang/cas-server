@@ -74,7 +74,7 @@
     "classnames": "^2.2.3",
     "coveralls": "^2.11.11",
     "css-loader": "^0.26.1",
-    "eslint": "^3.0.0",
+    "eslint": "^3.14.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-react": "^5.1.1",
     "express": "^4.13.4",
