@@ -72,7 +72,7 @@
     "chai": "^3.5.0",
     "chai-json-equal": "0.0.1",
     "classnames": "^2.2.3",
-    "coveralls": "^2.11.11",
+    "coveralls": "^2.11.16",
     "css-loader": "^0.26.1",
     "eslint": "^3.0.0",
     "eslint-config-airbnb": "^9.0.1",
