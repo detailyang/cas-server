@@ -54,7 +54,7 @@
     "qrcode-npm": "0.0.3",
     "sequelize": "^3.20.0",
     "shelljs": "^0.7.0",
-    "sshpk": "^1.7.4",
+    "sshpk": "^1.11.0",
     "superagent": "^2.0.0",
     "thirty-two": "^1.0.1",
     "utility": "^1.7.1",
