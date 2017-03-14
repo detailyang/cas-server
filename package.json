@@ -36,7 +36,7 @@
     "bull": "^1.0.0-rc2",
     "co": "^4.6.0",
     "ioredis": "^2.0.1",
-    "koa": "^2.0.0-alpha.3",
+    "koa": "^2.2.0",
     "koa-body": "^1.4.0",
     "koa-bodyparser": "^3.0.0",
     "koa-convert": "^1.2.0",
